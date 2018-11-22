@@ -24,3 +24,6 @@ do
   echo -n "Link "
   ln -v -s "$F/$file" $INSTALLATION_ADDRESS
 done
+
+# OSX hack to get rid of the dock
+defaults write com.apple.Dock autohide-delay -float 5 && killall Dock
