@@ -10,7 +10,7 @@ fi
 cd $HomeDir
 F=`pwd |sed -e "s#$HOME/\?##"`
 
-configs=("gitconfig" "bashrc" "bash_profile")
+configs=("gitconfig" "bashrc" "bash_profile" "bash")
 
 for file in ${configs[@]}
 do

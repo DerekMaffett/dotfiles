@@ -1,0 +1,9 @@
+#!/bin/bash
+
+alias ls='ls -G'
+alias ll='ls -Al'
+alias l='ls -lrthG'
+alias mkdir='mkdir -p'
+alias ..='cd ..'
+
+alias filecount='find . | cut -d/ -f2 | sort | uniq -c | sort -bn'
