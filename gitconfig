@@ -1,0 +1,34 @@
+[user]
+  name = Derek Maffett
+  email = derekgmaffett@gmail.com
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = always
+[alias]
+  ci = commit
+  cim = commit -m
+  co = checkout
+  br = branch
+  cp = cherry-pick
+  puo = push -u origin HEAD
+[format]
+  pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
+[merge]
+  summary = false
+  tool = p4merge
+  conflictstyle = diff3
+[rerere]
+  enabled = true
+[push]
+  default = tracking
+[core]
+  autocrlf = input
+[pull]
+  rebase = preserve
+[credential]
+  helper = osxkeychain
+[status]
+  showUntrackedFiles = all
