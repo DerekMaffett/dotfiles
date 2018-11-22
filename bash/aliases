@@ -6,4 +6,6 @@ alias l='ls -lrthG'
 alias mkdir='mkdir -p'
 alias ..='cd ..'
 
+alias g='git status -s'
+
 alias filecount='find . | cut -d/ -f2 | sort | uniq -c | sort -bn'
