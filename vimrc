@@ -35,7 +35,9 @@ Plug 'AndrewRadev/sideways.vim'
 nnoremap (( :SidewaysLeft<cr>
 nnoremap )) :SidewaysRight<cr>
 
-Plug 'Shougo/deoplete.nvim'
+" Plug 'Shougo/deoplete.nvim'
+
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
@@ -84,3 +86,8 @@ map <Right> :echo "no!"<cr>
 map <Up> :echo "no!"<cr>
 map <Down> :echo "no!"<cr>
 
+" Copy paste system clipboard
+map <leader>y "*y
+map <leader>p "*p
+map <leader>P "*P
+map <leader>gr "*gr
