@@ -3,6 +3,7 @@
 brew install jump
 brew install neovim
 brew install cloc
+brew install tmux
 
 # Vim-plug package manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
