@@ -4,6 +4,7 @@ brew install jump
 brew install neovim
 brew install cloc
 brew install tmux
+brew install the_silver_searcher
 
 # Vim-plug package manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \

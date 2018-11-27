@@ -5,6 +5,9 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 nnoremap <c-p> :Files<cr>
+nnoremap <Leader>a :Ag<cr>
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+" command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path="0;33"', <bang>0)
 
 Plug 'srcery-colors/srcery-vim'
 
@@ -92,6 +95,8 @@ map <leader>p "*p
 map <leader>P "*P
 map <leader>gr "*gr
 
+" Disable wrapping
+set wrap!
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -124,3 +129,4 @@ endfunction
 autocmd WinEnter * call ResizeWindow()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+

@@ -21,7 +21,7 @@ link() {
 }
 
 # Create symlinks for each config file
-configs=("gitconfig" "bashrc" "bash_profile" "bash" "vim" "vimrc", "tmux.conf")
+configs=("gitconfig" "bashrc" "bash_profile" "bash" "vim" "vimrc", "tmux.conf", "agignore")
 
 F=`pwd |sed -e "s#$HOME/\?##"`
 for file in ${configs[@]}

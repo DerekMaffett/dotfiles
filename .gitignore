@@ -1,5 +1,5 @@
 *.DS_Store
-vim/undo/*
+vim/undo
 vim/.netrwhist
 tmux-server*
 tmux-client*
