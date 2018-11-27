@@ -4,10 +4,6 @@ Plug 'tpope/vim-surround'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-nnoremap <c-p> :Files<cr>
-nnoremap <Leader>a :Ag<cr>
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
-" command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path="0;33"', <bang>0)
 
 Plug 'srcery-colors/srcery-vim'
 
@@ -47,8 +43,11 @@ call plug#end()
 
 """"""""""""""""""""""""""""""
 
-
 let mapleader = ","
+
+nnoremap <c-p> :Files<cr>
+nnoremap <Leader>a :Ag<cr>
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
 " Window management
 nnoremap <C-h> <C-w>h
