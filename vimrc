@@ -128,5 +128,3 @@ endfunction
 autocmd WinEnter * call ResizeWindow()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-source local.vimrc
