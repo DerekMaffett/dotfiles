@@ -5,10 +5,14 @@ brew install neovim
 brew install cloc
 brew install tmux
 brew install the_silver_searcher
+brew install python
 
 # Vim-plug package manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Required for deoplete
+pip3 install --user pynvim
 
 # Installs nvm, sets node version, and implicitly installs npm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash

@@ -34,7 +34,8 @@ Plug 'AndrewRadev/sideways.vim'
 nnoremap (( :SidewaysLeft<cr>
 nnoremap )) :SidewaysRight<cr>
 
-" Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim'
+let g:deoplete#enable_at_startup = 1
 
 Plug 'christoomey/vim-tmux-navigator'
 
