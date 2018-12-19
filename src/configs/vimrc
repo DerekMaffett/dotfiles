@@ -19,6 +19,9 @@ Plug 'tpope/vim-sleuth'
 
 Plug 'sbdchd/neoformat'
 
+Plug 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
 " 'vitality'
 
 Plug 'tpope/vim-abolish'
