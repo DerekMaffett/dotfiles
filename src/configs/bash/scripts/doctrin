@@ -8,6 +8,7 @@ REPOS=(
     "start-questionnaire-components"
     "react-elm"
     "battrebesok"
+    "river"
 )
 DIR="$HOME/projects/doctrin"
 

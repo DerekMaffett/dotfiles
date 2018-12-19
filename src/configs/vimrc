@@ -5,20 +5,23 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'srcery-colors/srcery-vim'
+Plug 'phanviet/vim-monokai-pro'
 
 Plug 'tomtom/tcomment_vim'
 
 Plug 'leafgarland/typescript-vim'
-
-Plug 'elmcast/elm-vim'
-" let g:elm_format_autosave = 1
 
 Plug 'tpope/vim-eunuch'
 
 Plug 'tpope/vim-rsi'
 
 Plug 'tpope/vim-sleuth'
+
+Plug 'sbdchd/neoformat'
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
 
 " 'vitality'
 
@@ -28,7 +31,7 @@ Plug 'tpope/vim-vinegar'
 set wildignore+=.git/,.DS_Store
 
 Plug '907th/vim-auto-save'
-let g:auto_save = 1
+let g:auto_save = 0
 
 Plug 'AndrewRadev/sideways.vim'
 nnoremap (( :SidewaysLeft<cr>
@@ -64,7 +67,7 @@ nnoremap <Leader>sv :source $MYVIMRC<cr>
 
 " Colors
 set termguicolors
-colorscheme srcery
+colorscheme monokai_pro
 
 " Searching
 set hlsearch
@@ -80,7 +83,6 @@ set undoreload=10000
 
 " Misc
 nnoremap <Leader>qq :qa!<cr>
-cnoremap w<cr> echoerr "Use the autosave or :w!"<cr>
 inoremap <C-c> <Esc>
 
 " No arrows allowed
