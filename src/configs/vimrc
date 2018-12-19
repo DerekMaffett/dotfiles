@@ -18,10 +18,6 @@ Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-sleuth'
 
 Plug 'sbdchd/neoformat'
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
-augroup END
 
 " 'vitality'
 
@@ -68,6 +64,12 @@ nnoremap <Leader>sv :source $MYVIMRC<cr>
 " Colors
 set termguicolors
 colorscheme monokai_pro
+
+" Neoformat on save
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
 
 " Searching
 set hlsearch

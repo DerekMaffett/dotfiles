@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e0ed31f9890dd36c6541c061301d354053347e33c4f1b233a6768e0986790d07
+-- hash: 9742fc8be873ca0c64542bef24df86ed00f439fb38c758a997b81e8d5f0ff1af
 
 name:           setup
 version:        0.1.0.0
@@ -23,12 +23,14 @@ source-repository head
 
 library
   exposed-modules:
+      CustomScripts
       Dependencies
       Symlinks
   other-modules:
       Paths_setup
   hs-source-dirs:
       src
+  default-extensions: OverloadedStrings NamedFieldPuns
   build-depends:
       base >=4.7 && <5
     , directory
@@ -42,6 +44,7 @@ executable setup-exe
       Paths_setup
   hs-source-dirs:
       ./.
+  default-extensions: OverloadedStrings NamedFieldPuns
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
