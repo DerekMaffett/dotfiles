@@ -5,11 +5,11 @@ import           Options.Applicative
 import           Control.Monad
 
 data Command
-  = Clone
+  = Clone Bool
 
-cloneOpts :: ParserInfo a
+cloneOpts :: ParserInfo Bool
 cloneOpts = info
-  empty
+  (switch (long "force" <> short 'f' <> help "force re-clone") <**> helper)
   (fullDesc <> progDesc "Clones all relevant Doctrin projects" <> header
     "Doctrin project cloning"
   )
@@ -17,11 +17,11 @@ cloneOpts = info
 opts :: ParserInfo Command
 opts = info optsParser desc
  where
-  optsParser =
-    const Clone <$> subparser (command "clone" cloneOpts) <**> helper
-  desc = fullDesc <> progDesc "Doctrin-specific commands"
+  optsParser = Clone <$> subparser (command "clone" cloneOpts) <**> helper
+  desc       = fullDesc <> progDesc "Doctrin-specific commands"
 
 main = do
   command <- execParser opts
   case command of
-    Clone -> Doctrin.clone
+    Clone forceRemove -> Doctrin.clone forceRemove
+  putStrLn "Done!"

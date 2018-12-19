@@ -5,6 +5,7 @@ where
 
 import qualified System.Directory              as Dir
 import           System.Process                 ( callCommand )
+import           Control.Monad
 
 repos =
   [ "anamnesis-report-renderer"
@@ -17,11 +18,18 @@ repos =
   , "river"
   ]
 
-cloneProject repo =
-  callCommand $ "git clone git@bitbucket.org:doctrin/" <> repo <> ".git"
+cloneProject doctrinDir repo = do
+  repoExists <- Dir.doesPathExist $ doctrinDir <> "/" <> repo
+  unless
+    repoExists
+    (callCommand $ "git clone git@bitbucket.org:doctrin/" <> repo <> ".git")
 
-clone = do
-  homeDir <- Dir.getHomeDirectory
-  Dir.createDirectoryIfMissing True $ homeDir <> "/projects/doctrin"
-  Dir.withCurrentDirectory (homeDir <> "/projects/doctrin")
-    $ mapM_ cloneProject repos
+clone forceRemove = do
+  doctrinDir <- getDoctrinDir
+  when forceRemove $ Dir.removePathForcibly doctrinDir
+  Dir.createDirectoryIfMissing True doctrinDir
+  Dir.withCurrentDirectory doctrinDir $ mapM_ (cloneProject doctrinDir) repos
+ where
+  getDoctrinDir = do
+    homeDir <- Dir.getHomeDirectory
+    return $ homeDir <> "/projects/doctrin"

@@ -29,7 +29,7 @@ default-extensions:
   - NamedFieldPuns
 
 executables:
-  setup-exe:
+  setup:
     main:                Main.hs
     source-dirs:         .
     ghc-options:
