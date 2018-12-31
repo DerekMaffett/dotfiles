@@ -8,14 +8,7 @@ import           Data.Semigroup                 ( (<>) )
 import           Control.Monad
 
 configs =
-  [ "gitconfig"
-  , "bashrc"
-  , "bash_profile"
-  , "bash"
-  , "vimrc"
-  , "tmux.conf"
-  , "agignore"
-  ]
+  ["gitconfig", "zshrc", "zprofile", "shell", "vimrc", "tmux.conf", "agignore"]
 
 append = flip (<>)
 

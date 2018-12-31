@@ -7,3 +7,9 @@ command -v stack || curl -sSL https://get.haskellstack.org/ | sh
 # to ensure that a single setup step can comprehensively set everything up.
 stack build
 stack exec setup -- --include-dependencies --include-custom-scripts
+
+# Install vim plugins. This can't be done from the haskell script because
+# vim won't start within the spawned processes for some reason.
+nvim +PlugInstall +PlugClean! +qall
+
+echo "Finished! Please restart your terminal and everything should work :)"

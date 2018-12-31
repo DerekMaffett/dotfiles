@@ -9,7 +9,7 @@ import           Control.Monad
 import           Data.Semigroup                 ( (<>) )
 
 brewPrograms =
-  ["jump", "neovim", "cloc", "tmux", "the_silver_searcher", "python"]
+  ["autojump", "neovim", "cloc", "tmux", "the_silver_searcher", "python"]
 
 stackPrograms = ["brittany"]
 
@@ -25,40 +25,43 @@ unlessExists dir action = do
   unless exists action
 
 brewInstall package = callCommand $ "brew install " <> package
-npmInstall package = callCommand $ "npm install -g " <> package
+
+npmInstall package =
+  callCommand $ "source ~/.nvm/nvm.sh && npm install -g " <> package
+
 stackInstall package = callCommand $ "stack install " <> package
 
-installBrewDependencies = sequence_ $ map brewInstall brewPrograms
+installBrewDependencies = mapM_ brewInstall brewPrograms
 installStackDependencies = mapM_ stackInstall stackPrograms
 
-installVimPlug = do
+installVimPlug =
   callCommand
     "curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-  callCommand "vim +PlugInstall +PlugClean! +qall"
 
 installDeopleteDependency = callCommand "pip3 install --user pynvim"
 
 installNVM = mapM_
   callCommand
-  [ "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash"
+  [ "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | zsh"
   , "source ~/.nvm/nvm.sh && nvm install v11.2.0"
   ]
 
-installBashGitPrompt = do
-  path <- getRelativePath ".bash-git-prompt"
-  unlessExists path $ callCommand
-    (  "git clone https://github.com/magicmonty/bash-git-prompt.git "
-    <> path
-    <> " --depth=1"
-    )
+installZsh = callCommand "chsh -s $(which zsh)"
 
-installNpmPackages = mapM_ callCommand globalNpmPackages
+installOhMyZsh = do
+  path <- getRelativePath ".oh-my-zsh"
+  unlessExists path
+    $ mapM_ callCommand
+    $ ["git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh"]
+
+installNpmPackages = mapM_ npmInstall globalNpmPackages
 
 installDependencies = do
   installBrewDependencies
   installStackDependencies
   installNVM
   installNpmPackages
-  installBashGitPrompt
+  installZsh
+  installOhMyZsh
   installVimPlug
   installDeopleteDependency

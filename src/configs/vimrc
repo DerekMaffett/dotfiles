@@ -68,12 +68,13 @@ nnoremap <Leader>sv :source $MYVIMRC<cr>
 set termguicolors
 colorscheme monokai_pro
 
-" Neoformat on save
+" Neoformat on save and on ,f
 augroup fmt
   autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
+  au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
 augroup END
-
+nnoremap <Leader>f :Neoformat<cr>
+ 
 " Searching
 set hlsearch
 set incsearch
@@ -85,6 +86,9 @@ set undofile
 set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
+
+" Line numbers
+set number
 
 " Misc
 nnoremap <Leader>qq :qa!<cr>
