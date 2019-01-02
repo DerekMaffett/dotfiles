@@ -54,6 +54,14 @@ installOhMyZsh = do
     $ mapM_ callCommand
     $ ["git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh"]
 
+installPowerlineFonts = do
+  path <- getRelativePath ".powerline-fonts"
+  unlessExists path $ mapM_
+    callCommand
+    [ "git clone https://github.com/powerline/fonts.git --depth=1 ~/.powerline-fonts"
+    , "~/.powerline-fonts/install.sh"
+    ]
+
 installNpmPackages = mapM_ npmInstall globalNpmPackages
 
 installDependencies = do
@@ -63,5 +71,6 @@ installDependencies = do
   installNpmPackages
   installZsh
   installOhMyZsh
+  installPowerlineFonts
   installVimPlug
   installDeopleteDependency

@@ -12,4 +12,6 @@ stack exec setup -- --include-dependencies --include-custom-scripts
 # vim won't start within the spawned processes for some reason.
 nvim +PlugInstall +PlugClean! +qall
 
+echo "Activate powerline fonts for non-ascii text in iterm2 if necessary - 
+https://github.com/powerline/fonts"
 echo "Finished! Please restart your terminal and everything should work :)"
