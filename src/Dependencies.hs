@@ -34,7 +34,7 @@ gems = ["tmuxinator"]
 
 stackPrograms = ["brittany"]
 
-globalNpmPackages = ["elm-format"]
+globalNpmPackages = ["elm", "elm-format"]
 
 data PluginType = Theme
 
