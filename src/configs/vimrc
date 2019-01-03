@@ -5,7 +5,8 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'phanviet/vim-monokai-pro'
+" Plug 'phanviet/vim-monokai-pro'
+Plug 'neutaaaaan/iosvkem'
 
 Plug 'tomtom/tcomment_vim'
 
@@ -66,7 +67,7 @@ nnoremap <Leader>sv :source $MYVIMRC<cr>
 
 " Colors
 set termguicolors
-colorscheme monokai_pro
+colorscheme iosvkem
 
 " Neoformat on save and on ,f
 augroup fmt

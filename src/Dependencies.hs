@@ -9,8 +9,28 @@ import           System.Environment             ( lookupEnv )
 import           Control.Monad
 import           Data.Semigroup                 ( (<>) )
 
+append = flip (<>)
+
+getRelativePath :: String -> IO String
+getRelativePath dir = (append $ "/" <> dir) <$> Dir.getHomeDirectory
+
+unlessExists dir action = do
+  exists <- Dir.doesPathExist dir
+  unless exists action
+
+--------------------------------------------------
+
 brewPrograms =
-  ["autojump", "neovim", "cloc", "tmux", "the_silver_searcher", "python"]
+  [ "autojump"
+  , "neovim"
+  , "cloc"
+  , "tmux"
+  , "the_silver_searcher"
+  , "python"
+  , "rbenv"
+  ]
+
+gems = ["tmuxinator"]
 
 stackPrograms = ["brittany"]
 
@@ -25,14 +45,7 @@ data ZshPlugin = ZshPlugin { author :: String
 
 zshPlugins = [ZshPlugin "bhilburn" "powerlevel9k" Theme]
 
-append = flip (<>)
-
-getRelativePath :: String -> IO String
-getRelativePath dir = (append $ "/" <> dir) <$> Dir.getHomeDirectory
-
-unlessExists dir action = do
-  exists <- Dir.doesPathExist dir
-  unless exists action
+--------------------------------------------------
 
 brewInstall package = callCommand $ "brew install " <> package
 
@@ -40,6 +53,9 @@ npmInstall package =
   callCommand $ "source ~/.nvm/nvm.sh && npm install -g " <> package
 
 stackInstall package = callCommand $ "stack install " <> package
+
+gemInstall package =
+  callCommand $ "eval \"$(rbenv init -)\" && gem install " <> package
 
 zshInstall package = do
   path <- getRelativePath $ packagePath
@@ -56,8 +72,13 @@ zshInstall package = do
   installLocation = case pluginType package of
     Theme -> "themes"
 
+--------------------------------------------------
+
 installBrewDependencies = mapM_ brewInstall brewPrograms
 installStackDependencies = mapM_ stackInstall stackPrograms
+installOhMyZshPlugins = mapM_ zshInstall zshPlugins
+installNpmPackages = mapM_ npmInstall globalNpmPackages
+installGems = mapM_ gemInstall gems
 
 installVimPlug =
   callCommand
@@ -83,11 +104,8 @@ installZsh = do
 
 installOhMyZsh = do
   path <- getRelativePath ".oh-my-zsh"
-  unlessExists path
-    $ mapM_ callCommand
-    $ ["git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh"]
-
-installOhMyZshPlugins = mapM_ zshInstall zshPlugins
+  unlessExists path $ callCommand
+    "git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh"
 
 installPowerlineFonts = do
   path <- getRelativePath ".powerline-fonts"
@@ -97,19 +115,29 @@ installPowerlineFonts = do
     , "~/.powerline-fonts/install.sh"
     ]
 
+-- `rbenv init` has an error exit code for some reason even when it works
+installRuby =
+  callCommand "rbenv init || rbenv install 2.6.0 && rbenv global 2.6.0"
+
 installTerminalColors = do
   path <- getRelativePath "iterm-colors"
   unlessExists path
     $ callCommand
         "git clone git@github.com:mbadolato/iTerm2-Color-Schemes.git ~/iterm-colors"
 
-installNpmPackages = mapM_ npmInstall globalNpmPackages
+installTmuxinatorCompletions = do
+  path <- getRelativePath ".tmuxinator"
+  unlessExists path $ callCommand
+    "git clone git@github.com:tmuxinator/tmuxinator.git ~/.tmuxinator"
 
 installDependencies = do
   installBrewDependencies
   installStackDependencies
+  installRuby
+  installGems
   installNVM
   installNpmPackages
+  installTmuxinatorCompletions
   installZsh
   installOhMyZsh
   installOhMyZshPlugins
