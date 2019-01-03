@@ -7,7 +7,7 @@ plugins=(
    fzf
 )
 
-ZSH_THEME="miloshadzic"
+ZSH_THEME="cloud"
 
 source $ZSH/oh-my-zsh.sh
 
