@@ -16,7 +16,8 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs time)
 
 source $ZSH/oh-my-zsh.sh
 
-# Tmuxinator autocompletions
+# Tmuxinator
+export TMUXINATOR_CONFIG="$HOME/dotfiles/src/configs/tmuxinator"
 source ~/.tmuxinator/completion/tmuxinator.zsh
 
 export EDITOR='nvim'
