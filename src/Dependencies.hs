@@ -41,14 +41,19 @@ globalNpmPackages = ["elm", "elm-format"]
 
 data PluginType = Theme | Plugin
 
-data ZshPlugin = ZshPlugin { author :: String
-                           , name :: String
-                           , pluginType :: PluginType
-                           }
+data ZshPlugin =
+  ZshPlugin { author :: String
+            , name :: String
+            , pluginType :: PluginType
+            }
 
 zshPlugins =
-    [ ZshPlugin "bhilburn"  "powerlevel9k"    Theme
-    , ZshPlugin "zsh-users" "zsh-completions" Plugin
+    [ ZshPlugin {author = "bhilburn", name = "powerlevel9k", pluginType = Theme}
+    , ZshPlugin
+        { author     = "zsh-users"
+        , name       = "zsh-completions"
+        , pluginType = Plugin
+        }
     ]
 
 --------------------------------------------------
