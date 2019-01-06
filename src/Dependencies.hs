@@ -36,14 +36,17 @@ stackPrograms = ["brittany"]
 
 globalNpmPackages = ["elm", "elm-format"]
 
-data PluginType = Theme
+data PluginType = Theme | Plugin
 
 data ZshPlugin = ZshPlugin { author :: String
                            , name :: String
                            , pluginType :: PluginType
                            }
 
-zshPlugins = [ZshPlugin "bhilburn" "powerlevel9k" Theme]
+zshPlugins =
+  [ ZshPlugin "bhilburn"  "powerlevel9k"    Theme
+  , ZshPlugin "zsh-users" "zsh-completions" Plugin
+  ]
 
 --------------------------------------------------
 
@@ -70,7 +73,8 @@ zshInstall package = do
  where
   packagePath = ".oh-my-zsh/custom/" <> installLocation <> "/" <> name package
   installLocation = case pluginType package of
-    Theme -> "themes"
+    Theme  -> "themes"
+    Plugin -> "plugins"
 
 --------------------------------------------------
 
@@ -89,7 +93,7 @@ installDeopleteDependency = callCommand "pip3 install --user pynvim"
 installNVM = mapM_
   callCommand
   [ "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | zsh"
-  , "source ~/.nvm/nvm.sh && nvm install v11.2.0"
+  , "source ~/.nvm/nvm.sh && nvm install v10.15.0"
   ]
 
 installZsh = do
@@ -133,7 +137,7 @@ installTmuxinatorCompletions = do
 installDependencies = do
   installBrewDependencies
   installStackDependencies
-  installRuby
+  -- installRuby
   installGems
   installNVM
   installNpmPackages

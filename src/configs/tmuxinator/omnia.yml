@@ -52,13 +52,33 @@ windows:
           - git co master
           - git pull
           - npm run start-dev
-        - #Shell
+        - #SHELL
   - anamnesis-reports:
       layout: main-vertical
       root: ~/projects/doctrin/anamnesis-report-renderer
       panes:
         - vim
-        - compiler:
+        - SHELL:
           - git co elm-master
           - git pull
           - elm make
+  - react-elm:
+      layout: main-vertical
+      root: ~/projects/doctrin/react-elm
+      panes:
+        - vim
+        - js-compiler:
+          - git co master
+          - git pull
+          - npm run start
+        - #SHELL
+  - questionnaire-components:
+      layout: main-vertical
+      root: ~/projects/doctrin/start-questionnaire-components
+      panes:
+        - vim
+        - js-compiler:
+          - git co master
+          - git pull
+          - npm run start
+        - #SHELL
