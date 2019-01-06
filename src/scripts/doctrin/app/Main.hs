@@ -9,19 +9,19 @@ data Command
 
 cloneOpts :: ParserInfo Bool
 cloneOpts = info
-  (switch (long "force" <> short 'f' <> help "force re-clone") <**> helper)
-  (fullDesc <> progDesc "Clones all relevant Doctrin projects" <> header
-    "Doctrin project cloning"
-  )
+    (switch (long "force" <> short 'f' <> help "force re-clone") <**> helper)
+    (fullDesc <> progDesc "Clones all relevant Doctrin projects" <> header
+        "Doctrin project cloning"
+    )
 
 opts :: ParserInfo Command
 opts = info optsParser desc
- where
-  optsParser = Clone <$> subparser (command "clone" cloneOpts) <**> helper
-  desc       = fullDesc <> progDesc "Doctrin-specific commands"
+  where
+    optsParser = Clone <$> subparser (command "clone" cloneOpts) <**> helper
+    desc       = fullDesc <> progDesc "Doctrin-specific commands"
 
 main = do
-  command <- execParser opts
-  case command of
-    Clone forceRemove -> Doctrin.clone forceRemove
-  putStrLn "Done!"
+    command <- execParser opts
+    case command of
+        Clone forceRemove -> Doctrin.clone forceRemove
+    putStrLn "Done!"
