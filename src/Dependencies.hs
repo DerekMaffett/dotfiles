@@ -1,5 +1,5 @@
 module Dependencies
-    ( installDependencies
+    ( install
     )
 where
 
@@ -137,7 +137,7 @@ installTmuxinatorCompletions = do
     unlessExists path $ callCommand
         "git clone git@github.com:tmuxinator/tmuxinator.git ~/.tmuxinator"
 
-installDependencies = do
+install = do
     logSection Ruby.install
   -- installBrewDependencies
   -- installStackDependencies
