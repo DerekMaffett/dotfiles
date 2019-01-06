@@ -4,14 +4,12 @@ import qualified CustomScripts
 import qualified Dependencies
 import qualified Symlinks
 import           Options.Applicative
+import           Control.Monad.Reader
 import           Control.Monad
+import           Config
+import           System.Log.Logger
 import           Data.Semigroup                 ( (<>) )
 import           System.Process
-
-data Options = Options
-  { includeDependencies :: Bool
-  , includeCustomScripts :: Bool
-  }
 
 opts :: ParserInfo Options
 opts = info
@@ -34,20 +32,28 @@ includeDependenciesFlag =
 
 main :: IO ()
 main = do
-  Options { includeDependencies, includeCustomScripts } <- execParser opts
-  unless
-    includeDependencies
-    (putStrLn
-      "Skipping dependency installation... use --include-dependencies to install everything"
-    )
-  when includeDependencies Dependencies.installDependencies
-  Symlinks.createSymlinks
-  unless
-    includeCustomScripts
-    (putStrLn
-      "Skipping custom script compilation... use --include-custom-scripts to compile"
-    )
-  when includeCustomScripts CustomScripts.install
-  putStrLn "Symlinks created!"
-  callCommand
+  options <- execParser opts
+  runReaderT install (configFromOptions options)
+
+
+install :: ReaderT Config IO ()
+install = do
+  Config { includeDependencies, includeCustomScripts, logger } <- ask
+  liftIO $ installDependencies includeDependencies
+  liftIO Symlinks.createSymlinks
+  liftIO $ noticeM logger "Symlinks created!"
+  liftIO $ installCustomScripts includeCustomScripts
+  liftIO $ callCommand
     "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
+ where
+  installDependencies includeDependencies = if includeDependencies
+    then Dependencies.installDependencies
+    else
+      putStrLn
+        "Skipping dependency installation... use --include-dependencies to install everything"
+
+  installCustomScripts includeCustomScripts = if includeCustomScripts
+    then CustomScripts.install
+    else
+      putStrLn
+        "Skipping custom script compilation... use --include-custom-scripts to compile"

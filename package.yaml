@@ -20,6 +20,9 @@ dependencies:
 - process
 - optparse-applicative
 - directory
+- parsec
+- hslogger
+- mtl
 
 library:
   source-dirs: src
@@ -27,6 +30,7 @@ library:
 default-extensions:
   - OverloadedStrings
   - NamedFieldPuns
+  - DuplicateRecordFields
 
 executables:
   setup:

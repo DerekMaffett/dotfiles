@@ -44,7 +44,7 @@ root: ~/dotfiles
 
 windows:
   - dotfiles:
-      layout: main-vertical
+      layout: 337b,204x51,0,0{139x51,0,0,11,64x51,140,0[64x35,140,0,12,64x15,140,36,13]}
       panes:
         - vim
         - stack build --file-watch
