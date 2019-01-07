@@ -47,7 +47,6 @@ install :: ReaderT Config IO ()
 install = do
     installDependencies
     Symlinks.createSymlinks
-    logNotice "Symlinks created!"
     installCustomScripts
     liftIO $ runProcess
         "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
@@ -56,16 +55,8 @@ install = do
   where
     installDependencies = do
         Config { includeDependencies } <- ask
-        if includeDependencies
-            then Dependencies.install
-            else
-                logNotice
-                    "Skipping dependency installation... use --include-dependencies to install everything"
+        when includeDependencies Dependencies.install
 
     installCustomScripts = do
         Config { includeCustomScripts } <- ask
-        if includeCustomScripts
-            then liftIO $ CustomScripts.install
-            else
-                logNotice
-                    "Skipping custom script compilation... use --include-custom-scripts to compile"
+        when includeCustomScripts CustomScripts.install

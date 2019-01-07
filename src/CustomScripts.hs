@@ -4,17 +4,20 @@ module CustomScripts
 where
 
 import qualified System.Directory              as Dir
-import           System.Process
-import           Data.Semigroup                 ( (<>) )
+import           Control.Monad.Reader
+import           Process
+import           Config
 
 installScriptGlobally scriptPath =
-    Dir.withCurrentDirectory scriptPath $ callCommand "stack install"
+    Dir.withCurrentDirectory scriptPath $ runProcess "stack install" []
 
+install :: ReaderT Config IO ()
 install = do
-    currentDir  <- Dir.getCurrentDirectory
-    scriptPaths <- getScriptPaths currentDir
-    mapM_ installScriptGlobally scriptPaths
+    scriptsDir <-
+        (\Config { dotfilesDir } -> dotfilesDir <> "/src/scripts") <$> ask
+    scriptPaths <- liftIO $ getScriptPaths scriptsDir
+    liftIO $ mapM_ installScriptGlobally scriptPaths
   where
-    getScriptPaths currentDir =
-        map (\scriptName -> currentDir <> "/src/scripts/" <> scriptName)
-            <$> Dir.listDirectory (currentDir <> "/src/scripts")
+    getScriptPaths scriptsDir =
+        map (\scriptName -> scriptsDir <> "/" <> scriptName)
+            <$> Dir.listDirectory scriptsDir

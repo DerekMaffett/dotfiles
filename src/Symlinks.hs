@@ -30,8 +30,7 @@ friendlyPath homeDir path = case stripPrefix homeDir path of
 logSymlink targetPath linkPath = do
     Config { homeDir } <- ask
     logNotice
-        $  "Symlink: "
-        <> (friendlyPath homeDir targetPath)
+        $  (friendlyPath homeDir targetPath)
         <> " -> "
         <> (friendlyPath homeDir linkPath)
 
@@ -61,6 +60,9 @@ linkToHomeDir configName = do
 createSymlinks :: ReaderT Config IO ()
 createSymlinks = do
     Config { homeDir, configsDir } <- ask
+    logNotice "Creating Symlinks..."
     mapM_ linkToHomeDir homeDirConfigs
     createSymlink (configsDir <> "/init.vim")
                   (homeDir <> "/.config/nvim/init.vim")
+    createSymlink (configsDir <> "/brittany.yaml")
+                  (homeDir <> "/.config/brittany/config.yaml")
