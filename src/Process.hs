@@ -6,23 +6,26 @@ where
 
 import           System.IO
 import           System.Exit
-import           System.Log.Logger
+import           Config
+import           Logger
+import           Control.Monad.Reader
 import           System.Process                 ( readCreateProcessWithExitCode
                                                 , shell
                                                 )
-logger = "BasicLogger"
 
 runProcess shellCommand std_in = do
-    (_, output, _) <- _runProcess shellCommand std_in
-        >>= exitIfFailed shellCommand
+    (_, output, _) <-
+        exitIfFailed shellCommand =<< _runProcess shellCommand std_in
     return output
 
 
+runProcessNonStrict
+    :: String -> String -> ReaderT Config IO (ExitCode, String, String)
 runProcessNonStrict = _runProcess
 
 
 _runProcess shellCommand std_in =
-    readCreateProcessWithExitCode (shell shellCommand) std_in
+    liftIO $ readCreateProcessWithExitCode (shell shellCommand) std_in
 
 
 exitIfFailed shellCommand commandResult = case commandResult of
@@ -31,8 +34,7 @@ exitIfFailed shellCommand commandResult = case commandResult of
 
 
 exitWithError shellCommand (exitCode, output, error) = do
-    criticalM
-        logger
+    logError
         ("\n-----------------------------\n\
       \An error has occurred! Debug info is provided below\n\
       \COMMAND: \""
@@ -42,4 +44,4 @@ exitWithError shellCommand (exitCode, output, error) = do
         <> "\nERROR:\n"
         <> error
         )
-    exitFailure
+    liftIO exitFailure

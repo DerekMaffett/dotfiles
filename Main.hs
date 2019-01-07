@@ -48,7 +48,7 @@ install = do
     installDependencies
     Symlinks.createSymlinks
     installCustomScripts
-    liftIO $ runProcess
+    runProcess
         "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
         []
     return ()

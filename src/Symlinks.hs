@@ -8,7 +8,6 @@ import           Control.Monad.Reader
 import           Config
 import           Logger
 import           Data.List
-import           Data.Semigroup                 ( (<>) )
 import           Control.Monad
 
 homeDirConfigs =

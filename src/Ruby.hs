@@ -9,6 +9,7 @@ import           Control.Monad.Reader
 import           Control.Monad
 import           Config
 import           Process
+import           Logger
 import           Text.Parsec
 
 data RubyVersion
@@ -27,17 +28,17 @@ install = do
 installRuby :: ReaderT Config IO ()
 installRuby = do
     rbenvInit
-    output <- liftIO $ runProcess "rbenv versions" []
+    output <- runProcess "rbenv versions" []
     case parseRubyVersions output of
-        Left  err    -> liftIO $ putStrLn (show err)
+        Left  err    -> logError (show err)
         Right result -> setGlobalVersion globalRubyVersion result
 
 
 rbenvInit = do
     Config { logger } <- ask
-    liftIO $ noticeM logger "Initializing rbenv..."
+    logNotice "Initializing rbenv..."
   -- `rbenv init` has an error exit code for some reason even when it works
-    liftIO $ runProcessNonStrict "rbenv init" []
+    runProcessNonStrict "rbenv init" []
 
 
 setGlobalVersion :: String -> [RubyVersion] -> ReaderT Config IO ()
@@ -54,16 +55,16 @@ setGlobalVersion version installedVersions = do
 useRubyVersion :: String -> ReaderT Config IO ()
 useRubyVersion version = do
     Config { logger } <- ask
-    liftIO $ runProcess ("rbenv global " <> version) []
-    liftIO $ (noticeM logger $ "Global rbenv version set to " <> version)
+    runProcess ("rbenv global " <> version) []
+    logNotice $ "Global rbenv version set to " <> version
 
 
 installRubyVersion :: String -> ReaderT Config IO ()
 installRubyVersion version = do
     Config { logger } <- ask
-    liftIO $ noticeM logger ("Installing Ruby " <> version <> "...")
-    liftIO $ runProcess ("rbenv install " <> version) []
-    liftIO $ noticeM logger "Installation complete!"
+    logNotice ("Installing Ruby " <> version <> "...")
+    runProcess ("rbenv install " <> version) []
+    logNotice "Installation complete!"
 
 
 parseRubyVersions output = parse parser "" (output :: String)
