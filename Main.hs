@@ -9,8 +9,6 @@ import           Control.Monad
 import           Config
 import           Process
 import           Logger
-import           System.Log.Logger
-import           Data.Semigroup                 ( (<>) )
 
 opts :: ParserInfo Options
 opts = info
@@ -36,6 +34,7 @@ main :: IO ()
 main = do
     config <- configFromOptions =<< execParser opts
     runReaderT runProgram config
+    return ()
 
 
 runProgram = do
@@ -43,7 +42,7 @@ runProgram = do
     install
 
 
-install :: ReaderT Config IO ()
+install :: ReaderT Config IO String
 install = do
     installDependencies
     Symlinks.createSymlinks
@@ -51,7 +50,6 @@ install = do
     runProcess
         "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
         []
-    return ()
   where
     installDependencies = do
         Config { includeDependencies } <- ask

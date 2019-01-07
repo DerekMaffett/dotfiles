@@ -7,9 +7,10 @@ import           System.Process
 import qualified System.Directory              as Dir
 import           System.Environment             ( lookupEnv )
 import           Control.Monad
+import qualified Homebrew
 import           Config
-import           Control.Monad.Reader
-import           Data.Semigroup                 ( (<>) )
+import           Logger
+-- import           Control.Monad.Reader
 import qualified Ruby
 
 append = flip (<>)
@@ -22,16 +23,6 @@ unlessExists dir action = do
     unless exists action
 
 --------------------------------------------------
-
-brewPrograms =
-    [ "autojump"
-    , "neovim"
-    , "cloc"
-    , "tmux"
-    , "the_silver_searcher"
-    , "python"
-    , "rbenv"
-    ]
 
 gems = ["tmuxinator"]
 
@@ -87,7 +78,6 @@ zshInstall package = do
 
 --------------------------------------------------
 
-installBrewDependencies = mapM_ brewInstall brewPrograms
 installStackDependencies = mapM_ stackInstall stackPrograms
 installOhMyZshPlugins = mapM_ zshInstall zshPlugins
 installNpmPackages = mapM_ npmInstall globalNpmPackages
@@ -129,7 +119,7 @@ installPowerlineFonts = do
         , "~/.powerline-fonts/install.sh"
         ]
 
-logSection action = liftIO (putStrLn "") >> action >> liftIO (putStrLn "")
+logSection action = logNotice "" >> action >> logNotice ""
 
 installTerminalColors = do
     path <- getRelativePath "iterm-colors"
@@ -143,9 +133,9 @@ installTmuxinatorCompletions = do
         "git clone git@github.com:tmuxinator/tmuxinator.git ~/.tmuxinator"
 
 install = do
+    Homebrew.install
+    -- installStackDependencies
     logSection Ruby.install
-  -- installBrewDependencies
-  -- installStackDependencies
   -- installGems
   -- installNVM
   -- installNpmPackages

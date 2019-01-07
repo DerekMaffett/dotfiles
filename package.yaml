@@ -23,6 +23,7 @@ dependencies:
 - parsec
 - hslogger
 - mtl
+- safe
 
 library:
   source-dirs: src
