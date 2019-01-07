@@ -35,7 +35,6 @@ installRuby = do
 
 
 rbenvInit = do
-    Config { logger } <- ask
     logNotice "Initializing rbenv..."
   -- `rbenv init` has an error exit code for some reason even when it works
     runProcessNonStrict "rbenv init" []
@@ -54,14 +53,12 @@ setGlobalVersion version installedVersions = do
 
 useRubyVersion :: String -> ReaderT Config IO ()
 useRubyVersion version = do
-    Config { logger } <- ask
     runProcess ("rbenv global " <> version) []
     logNotice $ "Global rbenv version set to " <> version
 
 
 installRubyVersion :: String -> ReaderT Config IO ()
 installRubyVersion version = do
-    Config { logger } <- ask
     logNotice ("Installing Ruby " <> version <> "...")
     runProcess ("rbenv install " <> version) []
     logNotice "Installation complete!"
