@@ -8,6 +8,7 @@ import           Control.Monad.Reader
 import           Control.Monad
 import           Config
 import           Process
+import           Logger
 import           System.Log.Logger
 import           Data.Semigroup                 ( (<>) )
 
@@ -33,30 +34,38 @@ includeDependenciesFlag =
 
 main :: IO ()
 main = do
-    options <- execParser opts
-    runReaderT install (configFromOptions options)
+    config <- configFromOptions =<< execParser opts
+    runReaderT runProgram config
+
+
+runProgram = do
+    initializeLogger
+    install
 
 
 install :: ReaderT Config IO ()
 install = do
-    Config { includeDependencies, includeCustomScripts, logger } <- ask
-    liftIO $ installDependencies includeDependencies
-    liftIO Symlinks.createSymlinks
-    liftIO $ noticeM logger "Symlinks created!"
-    liftIO $ installCustomScripts includeCustomScripts
+    installDependencies
+    Symlinks.createSymlinks
+    logNotice "Symlinks created!"
+    installCustomScripts
     liftIO $ runProcess
         "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
         []
     return ()
   where
-    installDependencies includeDependencies = if includeDependencies
-        then Dependencies.install
-        else
-            putStrLn
-                "Skipping dependency installation... use --include-dependencies to install everything"
+    installDependencies = do
+        Config { includeDependencies } <- ask
+        if includeDependencies
+            then Dependencies.install
+            else
+                logNotice
+                    "Skipping dependency installation... use --include-dependencies to install everything"
 
-    installCustomScripts includeCustomScripts = if includeCustomScripts
-        then CustomScripts.install
-        else
-            putStrLn
-                "Skipping custom script compilation... use --include-custom-scripts to compile"
+    installCustomScripts = do
+        Config { includeCustomScripts } <- ask
+        if includeCustomScripts
+            then liftIO $ CustomScripts.install
+            else
+                logNotice
+                    "Skipping custom script compilation... use --include-custom-scripts to compile"

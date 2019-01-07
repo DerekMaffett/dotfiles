@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c8931c49a5f2cb0ba01bf759542bba4de0c6370952838b51ae50d78173de36ab
+-- hash: 8925e880b9f638dfd5ef07414f846c641d7a12fea4370813f5f710bc04158319
 
 name:           setup
 version:        0.1.0.0
@@ -26,6 +26,7 @@ library
       Config
       CustomScripts
       Dependencies
+      Logger
       Process
       Ruby
       Symlinks

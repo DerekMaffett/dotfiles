@@ -4,10 +4,14 @@ module Symlinks
 where
 
 import           System.Directory              as Dir
+import           Control.Monad.Reader
+import           Config
+import           Logger
+import           Data.List
 import           Data.Semigroup                 ( (<>) )
 import           Control.Monad
 
-configs =
+homeDirConfigs =
     [ "gitconfig"
     , "zshrc"
     , "zprofile"
@@ -17,21 +21,46 @@ configs =
     , "agignore"
     ]
 
-append = flip (<>)
 
-createSymlink targetPath linkPath = do
+friendlyPath homeDir path = case stripPrefix homeDir path of
+    Just homeBasedPath -> "~" <> homeBasedPath
+    Nothing            -> path
+
+
+logSymlink targetPath linkPath = do
+    Config { homeDir } <- ask
+    logNotice
+        $  "Symlink: "
+        <> (friendlyPath homeDir targetPath)
+        <> " -> "
+        <> (friendlyPath homeDir linkPath)
+
+
+parentOf = dropWhileEnd (/= '/')
+
+
+createSymlink_ targetPath linkPath = do
     exists <- Dir.doesPathExist linkPath
     when exists $ Dir.removeFile linkPath
+    Dir.createDirectoryIfMissing True (parentOf linkPath)
     Dir.createFileLink targetPath linkPath
 
-linkToHomeDir configsDir homeDir configName = createSymlink
-    (configsDir <> "/" <> configName)
-    (homeDir <> "/." <> configName)
 
+createSymlink targetPath linkPath = do
+    liftIO $ createSymlink_ targetPath linkPath
+    logSymlink targetPath linkPath
+
+
+linkToHomeDir :: String -> ReaderT Config IO ()
+linkToHomeDir configName = do
+    Config { homeDir, configsDir } <- ask
+    createSymlink (configsDir <> "/" <> configName)
+                  (homeDir <> "/." <> configName)
+
+
+createSymlinks :: ReaderT Config IO ()
 createSymlinks = do
-    homeDir    <- Dir.getHomeDirectory
-    configsDir <- append "/src/configs" <$> Dir.getCurrentDirectory
-    mapM_ (linkToHomeDir configsDir homeDir) configs
-    Dir.createDirectoryIfMissing False (homeDir <> "/.config/nvim")
-    createSymlink (configsDir <> "/" <> "init.vim")
+    Config { homeDir, configsDir } <- ask
+    mapM_ linkToHomeDir homeDirConfigs
+    createSymlink (configsDir <> "/init.vim")
                   (homeDir <> "/.config/nvim/init.vim")

@@ -5,7 +5,9 @@ where
 
 import           System.Log.Logger
 import           System.IO
+import           Control.Monad.Reader
 import           Control.Monad
+import           Config
 import           Process
 import           Text.Parsec
 
@@ -15,29 +17,30 @@ data RubyVersion
   deriving (Show)
 
 
-globalRubyVersion = "2.5.1"
+globalRubyVersion = "2.6.0"
 
-logger = "BasicLogger"
-
+install :: ReaderT Config IO ()
 install = do
-    updateGlobalLogger logger $ setLevel NOTICE
     installRuby
 
 
+installRuby :: ReaderT Config IO ()
 installRuby = do
     rbenvInit
-    output <- runProcess "rbenv versions" []
+    output <- liftIO $ runProcess "rbenv versions" []
     case parseRubyVersions output of
-        Left  err    -> putStrLn (show err)
+        Left  err    -> liftIO $ putStrLn (show err)
         Right result -> setGlobalVersion globalRubyVersion result
 
 
 rbenvInit = do
-    noticeM logger "Initializing rbenv..."
+    Config { logger } <- ask
+    liftIO $ noticeM logger "Initializing rbenv..."
   -- `rbenv init` has an error exit code for some reason even when it works
-    runProcessNonStrict "rbenv init" []
+    liftIO $ runProcessNonStrict "rbenv init" []
 
 
+setGlobalVersion :: String -> [RubyVersion] -> ReaderT Config IO ()
 setGlobalVersion version installedVersions = do
     unless requestedVersionExists $ installRubyVersion version
     useRubyVersion version
@@ -48,15 +51,19 @@ setGlobalVersion version installedVersions = do
         NonSelectedVersion v -> v == version
 
 
+useRubyVersion :: String -> ReaderT Config IO ()
 useRubyVersion version = do
-    runProcess ("rbenv global " <> version) []
-    noticeM logger $ "Global rbenv version set to " <> version
+    Config { logger } <- ask
+    liftIO $ runProcess ("rbenv global " <> version) []
+    liftIO $ (noticeM logger $ "Global rbenv version set to " <> version)
 
 
+installRubyVersion :: String -> ReaderT Config IO ()
 installRubyVersion version = do
-    noticeM logger $ "Installing Ruby " <> version <> "..."
-    runProcess ("rbenv install " <> version) []
-    noticeM logger "Installation complete!"
+    Config { logger } <- ask
+    liftIO $ noticeM logger ("Installing Ruby " <> version <> "...")
+    liftIO $ runProcess ("rbenv install " <> version) []
+    liftIO $ noticeM logger "Installation complete!"
 
 
 parseRubyVersions output = parse parser "" (output :: String)

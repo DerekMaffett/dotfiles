@@ -129,7 +129,7 @@ installPowerlineFonts = do
         , "~/.powerline-fonts/install.sh"
         ]
 
-logSection action = putStrLn "" >> action >> putStrLn ""
+logSection action = liftIO (putStrLn "") >> action >> liftIO (putStrLn "")
 
 installTerminalColors = do
     path <- getRelativePath "iterm-colors"
