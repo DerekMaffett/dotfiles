@@ -42,6 +42,8 @@ let g:deoplete#enable_at_startup = 1
 
 Plug 'christoomey/vim-tmux-navigator'
 
+Plug 'parsonsmatt/intero-neovim'
+
 call plug#end()
 
 

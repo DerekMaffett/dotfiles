@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 802559bbd7a855ae116ff776a715592ba520edd82f3a09a4012acfc059fb5e2d
+-- hash: 9346d3a23e907d64c105ca88e664ea95c267321e461c5e5daf8d75690eb2a88e
 
 name:           setup
 version:        0.1.0.0
@@ -33,6 +33,7 @@ library
       Ruby
       Stack
       Symlinks
+      TerminalHappiness
       Zsh
   other-modules:
       Paths_setup

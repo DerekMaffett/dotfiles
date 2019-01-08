@@ -22,6 +22,7 @@ data Config = Config
   , includeDependencies :: Bool
   , includeCustomScripts :: Bool
   , homeDir :: String
+  , installationsDir :: String
   , dotfilesDir :: String
   , configsDir :: String
   }
@@ -39,12 +40,14 @@ configFromOptions Options { includeDependencies, includeCustomScripts } = do
         , includeDependencies  = includeDependencies
         , includeCustomScripts = includeCustomScripts
         , homeDir              = homeDir
+        , installationsDir     = getInstallationsDir homeDir
         , dotfilesDir          = getDotfilesDir homeDir
         , configsDir           = getConfigsDir homeDir
         }
   where
     getDotfilesDir homeDir = homeDir <> "/dotfiles"
     getConfigsDir homeDir = (getDotfilesDir homeDir) <> "/src/configs"
+    getInstallationsDir homeDir = (getDotfilesDir homeDir) <> "/.installations"
 
 initializeLogger :: ReaderT Config IO ()
 initializeLogger = do
@@ -52,6 +55,6 @@ initializeLogger = do
     liftIO $ updateGlobalLogger logger $ setLevel (level logger)
   where
     level logger = case logger of
-        "BasicLogger" -> DEBUG
+        "BasicLogger" -> NOTICE
         "DebugLogger" -> DEBUG
         _             -> NOTICE

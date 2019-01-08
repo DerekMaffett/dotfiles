@@ -13,17 +13,10 @@ import qualified Stack
 import           Process
 import qualified Zsh
 import           Logger
--- import           Control.Monad.Reader
+import qualified TerminalHappiness
+import           Control.Monad.Reader
 import qualified Ruby
 
--- getRelativePath :: String -> IO String
--- getRelativePath dir = (append $ "/" <> dir) <$> Dir.getHomeDirectory
---
--- unlessExists dir action = do
---     exists <- Dir.doesPathExist dir
---     unless exists action
-
---------------------------------------------------
 
 --
 -- installVimPlug =
@@ -36,30 +29,25 @@ import qualified Ruby
 --
 --
 --
--- installPowerlineFonts = do
---     path <- getRelativePath ".powerline-fonts"
---     unlessExists path $ mapM_
---         callCommand
---         [ "git clone https://github.com/powerline/fonts.git --depth=1 ~/.powerline-fonts"
---         , "~/.powerline-fonts/install.sh"
---         ]
---
 logSection action = logNotice "" >> action >> logNotice ""
---
--- installTerminalColors = do
---     path <- getRelativePath "iterm-colors"
---     unlessExists path
---         $ callCommand
---               "git clone git@github.com:mbadolato/iTerm2-Color-Schemes.git ~/iterm-colors"
+
+initInstallationsDir = do
+    Config { installationsDir } <- ask
+    runProcess ("rm -rf " <> installationsDir) []
+    runProcess ("mkdir " <> installationsDir)  []
 
 installTmuxinatorCompletions = do
+    Config { installationsDir } <- ask
     logNotice "Installing tmuxinator completions..."
-    runProcess "rm -rf ~/.tmuxinator" []
     runProcess
-        "git clone git@github.com:tmuxinator/tmuxinator.git ~/.tmuxinator"
+        (  "git clone git@github.com:tmuxinator/tmuxinator.git "
+        <> installationsDir
+        <> "/tmuxinator"
+        )
         []
 
 install = do
+    initInstallationsDir
     logSection Homebrew.install
     logSection Ruby.install
     logSection Node.install
@@ -68,8 +56,7 @@ install = do
     Node.installPackages
     installTmuxinatorCompletions
     Zsh.install
+    TerminalHappiness.install
     return ()
-  -- installPowerlineFonts
-  -- installTerminalColors
   -- installVimPlug
   -- installDeopleteDependency
