@@ -18,17 +18,23 @@ import           Control.Monad.Reader
 import qualified Ruby
 
 
---
--- installVimPlug =
---     callCommand
---         "curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
---
--- installDeopleteDependency = callCommand "pip3 install --user pynvim"
---
---
---
---
---
+
+installVimPlug = do
+    logNotice "Installing vim plug..."
+    runProcess
+        "curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+        []
+
+
+pythonPackages = ["pynvim"]
+
+
+installPythonPackages = mapM_ pip3Install pythonPackages
+
+
+pip3Install package = runProcess ("pip3 install --user " <> package) []
+
+
 logSection action = logNotice "" >> action >> logNotice ""
 
 initInstallationsDir = do
@@ -39,6 +45,7 @@ initInstallationsDir = do
 installTmuxinatorCompletions = do
     Config { installationsDir } <- ask
     logNotice "Installing tmuxinator completions..."
+    logDebug "You'll need to link to tmuxinator completions in your zshrc file!"
     runProcess
         (  "git clone git@github.com:tmuxinator/tmuxinator.git "
         <> installationsDir
@@ -51,12 +58,12 @@ install = do
     logSection Homebrew.install
     logSection Ruby.install
     logSection Node.install
+    installPythonPackages
     Stack.installPackages
     Ruby.installPackages
     Node.installPackages
     installTmuxinatorCompletions
     Zsh.install
     TerminalHappiness.install
+    installVimPlug
     return ()
-  -- installVimPlug
-  -- installDeopleteDependency

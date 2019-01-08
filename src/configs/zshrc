@@ -23,7 +23,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Tmuxinator
 export TMUXINATOR_CONFIG="$HOME/dotfiles/src/configs/tmuxinator"
-source ~/.tmuxinator/completion/tmuxinator.zsh
+source ~/dotfiles/.installations/tmuxinator/completion/tmuxinator.zsh
 
 export EDITOR='nvim'
 export VISUAL='nvim'
