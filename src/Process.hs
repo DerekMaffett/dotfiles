@@ -1,5 +1,6 @@
 module Process
     ( runProcess
+    , runProcess'
     , runProcessNonStrict
     )
 where
@@ -12,6 +13,10 @@ import           Control.Monad.Reader
 import           System.Process                 ( readCreateProcessWithExitCode
                                                 , shell
                                                 )
+
+runProcess' shellCommand std_in = do
+    runProcess shellCommand std_in
+    return ()
 
 runProcess shellCommand std_in = do
     (_, output, _) <-

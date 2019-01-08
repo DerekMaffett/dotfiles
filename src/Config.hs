@@ -52,6 +52,6 @@ initializeLogger = do
     liftIO $ updateGlobalLogger logger $ setLevel (level logger)
   where
     level logger = case logger of
-        "BasicLogger" -> NOTICE
+        "BasicLogger" -> DEBUG
         "DebugLogger" -> DEBUG
         _             -> NOTICE

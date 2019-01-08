@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 567eb7ee6505d3add05fca6013bacf372647460faed5f2007960ecb2a2c3de74
+-- hash: 802559bbd7a855ae116ff776a715592ba520edd82f3a09a4012acfc059fb5e2d
 
 name:           setup
 version:        0.1.0.0
@@ -28,9 +28,12 @@ library
       Dependencies
       Homebrew
       Logger
+      Node
       Process
       Ruby
+      Stack
       Symlinks
+      Zsh
   other-modules:
       Paths_setup
   hs-source-dirs:

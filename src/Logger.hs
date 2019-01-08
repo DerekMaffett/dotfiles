@@ -8,7 +8,7 @@ import           Control.Monad.Reader
 logDebug :: String -> ReaderT Config IO ()
 logDebug msg = do
     Config { logger } <- ask
-    liftIO $ debugM logger msg
+    liftIO $ debugM logger ("DEBUG: " <> msg)
 
 logNotice :: String -> ReaderT Config IO ()
 logNotice msg = do

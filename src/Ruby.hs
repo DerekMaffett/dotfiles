@@ -1,5 +1,6 @@
 module Ruby
     ( install
+    , installPackages
     )
 where
 
@@ -18,7 +19,20 @@ data RubyVersion
   deriving (Show)
 
 
+gems = ["tmuxinator"]
+
+
+installPackages = mapM_ gemInstall gems
+
+
+gemInstall package = do
+    logNotice $ "Installing " <> package <> "..."
+    -- TODO: new session to avoid the eval?
+    runProcess ("eval \"$(rbenv init -)\" && gem install " <> package) []
+
+
 globalRubyVersion = "2.6.0"
+
 
 install :: ReaderT Config IO ()
 install = do
