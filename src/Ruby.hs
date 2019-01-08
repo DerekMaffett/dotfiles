@@ -28,7 +28,7 @@ installPackages = mapM_ gemInstall gems
 gemInstall package = do
     logNotice $ "Installing " <> package <> "..."
     -- TODO: new session to avoid the eval?
-    runProcess ("eval \"$(rbenv init -)\" && gem install " <> package) []
+    runProcess ("eval \"$(rbenv init -)\" && gem install " <> package)
 
 
 globalRubyVersion = "2.6.0"
@@ -42,7 +42,7 @@ install = do
 installRuby :: ReaderT Config IO ()
 installRuby = do
     rbenvInit
-    output <- runProcess "rbenv versions" []
+    output <- runProcess "rbenv versions"
     case parseRubyVersions output of
         Left  err    -> logError (show err)
         Right result -> setGlobalVersion globalRubyVersion result
@@ -51,7 +51,7 @@ installRuby = do
 rbenvInit = do
     logNotice "Initializing rbenv..."
   -- `rbenv init` has an error exit code for some reason even when it works
-    runProcessNonStrict "rbenv init" []
+    runProcessNonStrict "rbenv init"
 
 
 setGlobalVersion :: String -> [RubyVersion] -> ReaderT Config IO ()
@@ -67,14 +67,14 @@ setGlobalVersion version installedVersions = do
 
 useRubyVersion :: String -> ReaderT Config IO ()
 useRubyVersion version = do
-    runProcess ("rbenv global " <> version) []
+    runProcess ("rbenv global " <> version)
     logNotice $ "Global rbenv version set to " <> version
 
 
 installRubyVersion :: String -> ReaderT Config IO ()
 installRubyVersion version = do
     logNotice ("Installing Ruby " <> version <> "...")
-    runProcess ("rbenv install " <> version) []
+    runProcess ("rbenv install " <> version)
     logNotice "Installation complete!"
 
 

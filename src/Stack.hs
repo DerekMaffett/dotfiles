@@ -12,4 +12,4 @@ installPackages = mapM_ stackInstall stackPrograms
 
 stackInstall package = do
     logNotice $ "Installing " <> package <> "..."
-    runProcess ("stack install " <> package) []
+    runProcess ("stack install " <> package)

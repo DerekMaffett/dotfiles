@@ -49,7 +49,6 @@ install = do
     installCustomScripts
     runProcess
         "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
-        []
   where
     installDependencies = do
         Config { includeDependencies } <- ask

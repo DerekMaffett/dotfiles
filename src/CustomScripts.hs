@@ -10,9 +10,9 @@ import           Config
 
 installScriptGlobally scriptPath = do
     Config { dotfilesDir } <- ask
-    runProcess ("cd " <> scriptPath)  []
-    runProcess "stack install"        []
-    runProcess ("cd " <> dotfilesDir) []
+    runProcess ("cd " <> scriptPath)
+    runProcess "stack install"
+    runProcess ("cd " <> dotfilesDir)
 
 install :: ReaderT Config IO ()
 install = do

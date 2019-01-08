@@ -23,7 +23,6 @@ installVimPlug = do
     logNotice "Installing vim plug..."
     runProcess
         "curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-        []
 
 
 pythonPackages = ["pynvim"]
@@ -32,15 +31,15 @@ pythonPackages = ["pynvim"]
 installPythonPackages = mapM_ pip3Install pythonPackages
 
 
-pip3Install package = runProcess ("pip3 install --user " <> package) []
+pip3Install package = runProcess ("pip3 install --user " <> package)
 
 
 logSection action = logNotice "" >> action >> logNotice ""
 
 initInstallationsDir = do
     Config { installationsDir } <- ask
-    runProcess ("rm -rf " <> installationsDir) []
-    runProcess ("mkdir " <> installationsDir)  []
+    runProcess ("rm -rf " <> installationsDir)
+    runProcess ("mkdir " <> installationsDir)
 
 installTmuxinatorCompletions = do
     Config { installationsDir } <- ask
@@ -51,7 +50,6 @@ installTmuxinatorCompletions = do
         <> installationsDir
         <> "/tmuxinator"
         )
-        []
 
 install = do
     initInstallationsDir

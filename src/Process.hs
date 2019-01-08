@@ -14,19 +14,17 @@ import           System.Process                 ( readCreateProcessWithExitCode
                                                 , shell
                                                 )
 
-runProcess' shellCommand std_in = do
-    runProcess shellCommand std_in
+runProcess' shellCommand = do
+    runProcess shellCommand
     return ()
 
-runProcess shellCommand std_in = do
-    (_, output, _) <-
-        exitIfFailed shellCommand =<< _runProcess shellCommand std_in
+runProcess shellCommand = do
+    (_, output, _) <- exitIfFailed shellCommand =<< _runProcess shellCommand []
     return output
 
 
-runProcessNonStrict
-    :: String -> String -> ReaderT Config IO (ExitCode, String, String)
-runProcessNonStrict = _runProcess
+runProcessNonStrict :: String -> ReaderT Config IO (ExitCode, String, String)
+runProcessNonStrict shellCommand = _runProcess shellCommand []
 
 
 _runProcess shellCommand std_in =

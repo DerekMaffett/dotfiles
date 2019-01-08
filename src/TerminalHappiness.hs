@@ -21,8 +21,7 @@ installPowerlineFonts = do
         <> installationsDir
         <> "/powerline-fonts"
         )
-        []
-    runProcess (installationsDir <> "/powerline-fonts/install.sh") []
+    runProcess (installationsDir <> "/powerline-fonts/install.sh")
 
 
 installTerminalColors = do
@@ -33,5 +32,4 @@ installTerminalColors = do
         <> installationsDir
         <> "/iterm-colors"
         )
-        []
     logNotice "Done! You need to enable them manually for now"

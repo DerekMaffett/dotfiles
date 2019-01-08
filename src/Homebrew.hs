@@ -22,18 +22,18 @@ brewPrograms =
 
 brewUpgrade package = do
     logNotice $ "Upgrading " <> package <> "..."
-    runProcess ("brew upgrade " <> package) []
+    runProcess ("brew upgrade " <> package)
 
 
 brewInstall package = do
     logNotice $ "Installing " <> package <> "..."
-    runProcess ("brew install " <> package) []
+    runProcess ("brew install " <> package)
 
 install = do
     logNotice "Updating Homebrew..."
-    runProcess "brew update" []
-    uninstalledPackages <- getUninstalled <$> runProcess "brew list" []
-    outdatedPackages    <- getOutdated <$> runProcess "brew outdated" []
+    runProcess "brew update"
+    uninstalledPackages <- getUninstalled <$> runProcess "brew list"
+    outdatedPackages    <- getOutdated <$> runProcess "brew outdated"
     logDebug $ "Uninstalled packages: " <> show uninstalledPackages
     logDebug $ "Outdated packages: " <> show outdatedPackages
     mapM_ brewInstall uninstalledPackages
