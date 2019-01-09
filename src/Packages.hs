@@ -61,6 +61,7 @@ packages =
     , Package {name = "zsh", source = Custom Zsh.setShell}
     , Package {name = "powerlevel9k", source = Zsh Theme "bhilburn"}
     , Package {name = "zsh-completions", source = Zsh Plugin "zsh-users"}
+    , Package {name = "prettier", source = Npm}
     ]
 
 installVimPlug =

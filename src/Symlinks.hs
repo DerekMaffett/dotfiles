@@ -19,6 +19,7 @@ homeDirConfigs =
     , "vimrc"
     , "tmux.conf"
     , "agignore"
+    , "prettierrc.js"
     ]
 
 

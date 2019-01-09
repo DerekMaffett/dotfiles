@@ -42,7 +42,7 @@ let g:deoplete#enable_at_startup = 1
 
 Plug 'christoomey/vim-tmux-navigator'
 
-Plug 'parsonsmatt/intero-neovim'
+" Plug 'parsonsmatt/intero-neovim'
 
 Plug 'elmcast/elm-vim'
 let g:elm_setup_keybindings = 0
