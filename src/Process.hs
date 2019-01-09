@@ -27,8 +27,11 @@ runProcessNonStrict :: String -> ReaderT Config IO (ExitCode, String, String)
 runProcessNonStrict shellCommand = _runProcess shellCommand []
 
 
-_runProcess shellCommand std_in =
-    liftIO $ readCreateProcessWithExitCode (shell shellCommand) std_in
+_runProcess shellCommand std_in = do
+    (exitCode, output, error) <- liftIO
+        $ readCreateProcessWithExitCode (shell shellCommand) std_in
+    logDebug $ shellCommand <> "\n" <> output
+    return (exitCode, output, error)
 
 
 exitIfFailed shellCommand commandResult = case commandResult of

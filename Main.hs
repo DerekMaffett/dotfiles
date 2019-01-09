@@ -12,7 +12,11 @@ import           Logger
 
 opts :: ParserInfo Options
 opts = info
-    (liftA2 Options includeDependenciesFlag includeCustomScriptsFlag <**> helper
+    (    liftA3 Options
+                includeDependenciesFlag
+                includeCustomScriptsFlag
+                debugModeFlag
+    <**> helper
     )
     (  fullDesc
     <> progDesc
@@ -27,8 +31,11 @@ includeCustomScriptsFlag =
 
 includeDependenciesFlag :: Parser Bool
 includeDependenciesFlag =
-    switch $ long "include-dependencies" <> short 'd' <> help
+    switch $ long "include-dependencies" <> short 'f' <> help
         "Install full dependencies"
+
+debugModeFlag :: Parser Bool
+debugModeFlag = switch $ long "debug" <> short 'd' <> help "debug mode"
 
 main :: IO ()
 main = do

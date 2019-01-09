@@ -1,6 +1,6 @@
 source ~/.shell/aliases
 
-export ZSH=$HOME/dotfiles/.installations/oh-my-zsh
+export ZSH=$HOME/dotfiles/.installations/robbyrussell/oh-my-zsh
 
 plugins=(
    autojump
@@ -23,7 +23,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Tmuxinator
 export TMUXINATOR_CONFIG="$HOME/dotfiles/src/configs/tmuxinator"
-source ~/dotfiles/.installations/tmuxinator/completion/tmuxinator.zsh
+source ~/dotfiles/.installations/tmuxinator/tmuxinator/completion/tmuxinator.zsh
 
 export EDITOR='nvim'
 export VISUAL='nvim'

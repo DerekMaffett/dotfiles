@@ -18,14 +18,22 @@ import qualified Zsh
 
 data ZshPluginType = Theme | Plugin
 
+data GitAddress =
+  GitAddress
+  { author :: String
+  , name :: String
+  }
+
+toString GitAddress { author, name } = author <> "/" <> name
+
 data Source
-  = Ruby
-  | Brew
-  | Stack
-  | Python
-  | Npm
-  | Github String
-  | Zsh ZshPluginType String
+  = Ruby String
+  | Brew String
+  | Stack String
+  | Python String
+  | Npm String
+  | Github GitAddress
+  | Zsh ZshPluginType GitAddress
   | Custom (ReaderT Config IO ())
 
 
@@ -35,60 +43,89 @@ data Package
   , source :: Source
   }
 
+github author name = Github $ GitAddress {author = author, name = name}
+zshTheme author name = Zsh Theme $ GitAddress {author = author, name = name}
+zshPlugin author name = Zsh Plugin $ GitAddress {author = author, name = name}
 
-preSources = [Package {name = "rbenv", source = Brew}]
+preSources = [Package {name = "rbenv", source = Brew "rbenv"}]
 
 sources =
     [ Package {name = "ruby", source = Custom (Ruby.install "2.6.0")}
     , Package {name = "node", source = Custom Node.install}
-    , Package {name = "python", source = Brew}
-    , Package {name = "oh-my-zsh", source = Github "robbyrussell/oh-my-zsh"}
+    , Package {name = "python", source = Brew "python"}
+    , Package {name = "oh-my-zsh", source = github "robbyrussell" "oh-my-zsh"}
     ]
 
-packages =
-    [ Package {name = "pynvim", source = Python}
-    , Package {name = "tmuxinator", source = Ruby}
-    , Package {name = "brittany", source = Stack}
-    , Package {name = "elm", source = Npm}
-    , Package {name = "elm-format", source = Npm}
-    , Package {name = "autojump", source = Brew}
-    , Package {name = "neovim", source = Brew}
-    , Package {name = "cloc", source = Brew}
-    , Package {name = "tmux", source = Brew}
-    , Package {name = "the_silver_searcher", source = Brew}
-    , Package {name = "vim-plug", source = Custom installVimPlug}
-    , Package {name = "tmuxinator", source = Github "tmuxinator/tmuxinator"}
-    , Package {name = "zsh", source = Custom Zsh.setShell}
-    , Package {name = "powerlevel9k", source = Zsh Theme "bhilburn"}
-    , Package {name = "zsh-completions", source = Zsh Plugin "zsh-users"}
-    , Package {name = "prettier", source = Npm}
-    ]
+packages
+    = [ Package {name = "pynvim", source = Python "pynvim"}
+      , Package {name = "tmuxinator", source = Ruby "tmuxinator"}
+      , Package {name = "brittany", source = Stack "brittany"}
+      , Package {name = "elm", source = Npm "elm"}
+      , Package {name = "elm-format", source = Npm "elm-format"}
+      , Package {name = "autojump", source = Brew "autojump"}
+      , Package {name = "neovim", source = Brew "neovim"}
+      , Package {name = "cloc", source = Brew "cloc"}
+      , Package {name = "tmux", source = Brew "tmux"}
+      , Package
+          { name   = "the_silver_searcher"
+          , source = Brew "the_silver_searcher"
+          }
+      , Package {name = "vim-plug", source = Custom installVimPlug}
+      , Package {name = "tmuxinator", source = github "tmuxinator" "tmuxinator"}
+      , Package {name = "zsh", source = Custom Zsh.setShell}
+      , Package
+          { name   = "powerlevel9k"
+          , source = zshTheme "bhilburn" "powerlevel9k"
+          }
+      , Package
+          { name   = "zsh-completions"
+          , source = zshPlugin "zsh-users" "zsh-completions"
+          }
+      , Package {name = "prettier", source = Npm "prettier"}
+      , Package
+          { name   = "powerline-fonts"
+          , source = batch
+              [github "powerline" "fonts", Custom installPowerlineFonts]
+          }
+      , Package
+          { name   = "iTerm2-color-schemes"
+          , source = github "mbadolato" "iTerm2-Color-Schemes"
+          }
+      ]
+
+batch installationSteps = Custom $ mapM_ installFromSource installationSteps
+
+installPowerlineFonts = do
+    Config { installationsDir } <- ask
+    runProcess' (installationsDir <> "/powerline/fonts/install.sh")
+
 
 installVimPlug =
     runProcess'
         "curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
 
-zshInstall pluginType author name = do
+zshInstall pluginType gitAddress = do
     Config { installationsDir } <- ask
-    _githubInstall (packagePath installationsDir) (author <> "/" <> name) name
+    _githubInstall (packagePath installationsDir) gitAddress
   where
     packagePath installationsDir =
         installationsDir
-            <> "/oh-my-zsh/custom/"
+            <> "/robbyrussell/oh-my-zsh/custom/"
             <> pluginLocation
             <> "/"
-            <> name
+            <> (name :: GitAddress -> String) gitAddress
     pluginLocation = case pluginType of
         Theme  -> "themes"
         Plugin -> "plugins"
 
-githubInstall gitAddress name = do
+githubInstall gitAddress = do
     Config { installationsDir } <- ask
-    _githubInstall (installationsDir <> "/" <> name) gitAddress name
+    _githubInstall (installationsDir <> "/" <> toString gitAddress) gitAddress
 
-_githubInstall targetPath gitAddress name = runProcess'
-    ("git clone git@github.com:" <> gitAddress <> ".git " <> targetPath)
+_githubInstall targetPath gitAddress = runProcess'
+    ("git clone git@github.com:" <> toString gitAddress <> ".git " <> targetPath
+    )
 
 brewUpgrade name = do
     logNotice $ "Upgrading " <> name
@@ -109,17 +146,19 @@ brewInstall name = do
     runProcess' ("brew install " <> name)
     where checkIfInstalled name = (\installed -> name `elem` installed) . words
 
+installFromSource source = case source of
+    Python name               -> pip3Install name
+    Ruby   name               -> gemInstall name
+    Stack  name               -> stackInstall name
+    Npm    name               -> npmInstall name
+    Brew   name               -> brewInstall name
+    Github gitAddress         -> githubInstall gitAddress
+    Zsh pluginType gitAddress -> zshInstall pluginType gitAddress
+    Custom installationMethod -> installationMethod
+
 installPackage Package { name, source } = do
     logNotice $ "Installing " <> name <> "..."
-    case source of
-        Python                    -> pip3Install name
-        Ruby                      -> gemInstall name
-        Stack                     -> stackInstall name
-        Npm                       -> npmInstall name
-        Brew                      -> brewInstall name
-        Github gitAddress         -> githubInstall gitAddress name
-        Zsh pluginType author     -> zshInstall pluginType author name
-        Custom installationMethod -> installationMethod
+    installFromSource source
 
 updateBrewPackages = do
     outdatedPackages <- getOutdated <$> runProcess "brew outdated"

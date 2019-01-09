@@ -30,20 +30,22 @@ data Config = Config
 data Options = Options
   { includeDependencies :: Bool
   , includeCustomScripts :: Bool
+  , useDebugLogger :: Bool
   }
 
 configFromOptions :: Options -> IO Config
-configFromOptions Options { includeDependencies, includeCustomScripts } = do
-    homeDir <- Dir.getHomeDirectory
-    return Config
-        { logger               = "BasicLogger"
-        , includeDependencies  = includeDependencies
-        , includeCustomScripts = includeCustomScripts
-        , homeDir              = homeDir
-        , installationsDir     = getInstallationsDir homeDir
-        , dotfilesDir          = getDotfilesDir homeDir
-        , configsDir           = getConfigsDir homeDir
-        }
+configFromOptions Options { includeDependencies, includeCustomScripts, useDebugLogger }
+    = do
+        homeDir <- Dir.getHomeDirectory
+        return Config
+            { logger = if useDebugLogger then "DebugLogger" else "BasicLogger"
+            , includeDependencies  = includeDependencies
+            , includeCustomScripts = includeCustomScripts
+            , homeDir              = homeDir
+            , installationsDir     = getInstallationsDir homeDir
+            , dotfilesDir          = getDotfilesDir homeDir
+            , configsDir           = getConfigsDir homeDir
+            }
   where
     getDotfilesDir homeDir = homeDir <> "/dotfiles"
     getConfigsDir homeDir = (getDotfilesDir homeDir) <> "/src/configs"

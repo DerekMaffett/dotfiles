@@ -10,7 +10,6 @@ import           Config
 import           Process
 import qualified Zsh
 import           Logger
-import qualified TerminalHappiness
 import           Control.Monad.Reader
 import qualified Packages
 
@@ -26,5 +25,4 @@ initInstallationsDir = do
 install = do
     initInstallationsDir
     Packages.install
-    TerminalHappiness.install
     return ()
