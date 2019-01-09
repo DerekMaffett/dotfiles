@@ -1,6 +1,6 @@
 source ~/.shell/aliases
 
-export ZSH=$HOME/.oh-my-zsh
+export ZSH=$HOME/dotfiles/.installations/oh-my-zsh
 
 plugins=(
    autojump

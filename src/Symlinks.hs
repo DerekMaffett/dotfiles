@@ -1,5 +1,6 @@
 module Symlinks
     ( createSymlinks
+    , createSymlink
     )
 where
 

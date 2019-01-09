@@ -1,6 +1,5 @@
 module Ruby
     ( install
-    , installPackages
     )
 where
 
@@ -19,33 +18,18 @@ data RubyVersion
   deriving (Show)
 
 
-gems = ["tmuxinator"]
+
+install :: String -> ReaderT Config IO ()
+install = installRuby
 
 
-installPackages = mapM_ gemInstall gems
-
-
-gemInstall package = do
-    logNotice $ "Installing " <> package <> "..."
-    -- TODO: new session to avoid the eval?
-    runProcess ("eval \"$(rbenv init -)\" && gem install " <> package)
-
-
-globalRubyVersion = "2.6.0"
-
-
-install :: ReaderT Config IO ()
-install = do
-    installRuby
-
-
-installRuby :: ReaderT Config IO ()
-installRuby = do
+installRuby :: String -> ReaderT Config IO ()
+installRuby version = do
     rbenvInit
     output <- runProcess "rbenv versions"
     case parseRubyVersions output of
         Left  err    -> logError (show err)
-        Right result -> setGlobalVersion globalRubyVersion result
+        Right result -> setGlobalVersion version result
 
 
 rbenvInit = do
