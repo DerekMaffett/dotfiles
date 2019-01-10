@@ -94,6 +94,7 @@ sources =
 packages
     = [ Package {name = "pynvim", source = Python "pynvim"}
       , Package {name = "tmuxinator", source = Ruby "tmuxinator"}
+      , Package {name = "elm-test", source = Npm "elm-test"}
       , Package {name = "brittany", source = Stack "brittany"}
       , Package {name = "elm", source = Npm "elm"}
       , Package {name = "elm-format", source = Npm "elm-format"}
