@@ -15,6 +15,7 @@ import qualified Symlinks
 import qualified Ruby
 import qualified Node
 import qualified Zsh
+import qualified Vim
 
 data ZshPluginType = Theme | Plugin
 
@@ -22,6 +23,7 @@ data GitAddress =
   GitAddress
   { author :: String
   , name :: String
+  , branch :: String
   }
 
 toString GitAddress { author, name } = author <> "/" <> name
@@ -43,17 +45,33 @@ data Package
   , source :: Source
   }
 
-github author name = Github $ GitAddress {author = author, name = name}
-zshTheme author name = Zsh Theme $ GitAddress {author = author, name = name}
-zshPlugin author name = Zsh Plugin $ GitAddress {author = author, name = name}
+github author name =
+    Github $ GitAddress {author = author, name = name, branch = "master"}
+
+withBranch overrideBranch (Github GitAddress { author, name, branch }) =
+    Github $ GitAddress {author = author, name = name, branch = overrideBranch}
+
+zshTheme author name =
+    Zsh Theme $ GitAddress {author = author, name = name, branch = "master"}
+
+zshPlugin author name =
+    Zsh Plugin $ GitAddress {author = author, name = name, branch = "master"}
+
+brew name = Package {name = name, source = Brew name}
 
 preSources = [Package {name = "rbenv", source = Brew "rbenv"}]
 
 sources =
     [ Package {name = "ruby", source = Custom (Ruby.install "2.6.0")}
     , Package {name = "node", source = Custom Node.install}
-    , Package {name = "python", source = Brew "python"}
+    , brew "python"
     , Package {name = "oh-my-zsh", source = github "robbyrussell" "oh-my-zsh"}
+    , brew "ninja"
+    , brew "libtool"
+    , brew "automake"
+    , brew "cmake"
+    , brew "pkg-config"
+    , brew "gettext"
     ]
 
 packages
@@ -62,14 +80,17 @@ packages
       , Package {name = "brittany", source = Stack "brittany"}
       , Package {name = "elm", source = Npm "elm"}
       , Package {name = "elm-format", source = Npm "elm-format"}
-      , Package {name = "autojump", source = Brew "autojump"}
-      , Package {name = "neovim", source = Brew "neovim"}
-      , Package {name = "cloc", source = Brew "cloc"}
-      , Package {name = "tmux", source = Brew "tmux"}
+      , brew "autojump"
       , Package
-          { name   = "the_silver_searcher"
-          , source = Brew "the_silver_searcher"
+          { name   = "neovim"
+          , source = batch
+              [ withBranch "release-0.3" $ github "neovim" "neovim"
+              , Custom Vim.make
+              ]
           }
+      , Package {name = "cloc", source = Npm "cloc"}
+      , brew "tmux"
+      , brew "the_silver_searcher"
       , Package {name = "vim-plug", source = Custom installVimPlug}
       , Package {name = "tmuxinator", source = github "tmuxinator" "tmuxinator"}
       , Package {name = "zsh", source = Custom Zsh.setShell}
@@ -124,7 +145,12 @@ githubInstall gitAddress = do
     _githubInstall (installationsDir <> "/" <> toString gitAddress) gitAddress
 
 _githubInstall targetPath gitAddress = runProcess'
-    ("git clone git@github.com:" <> toString gitAddress <> ".git " <> targetPath
+    (  "git clone --single-branch --branch "
+    <> (branch :: GitAddress -> String) gitAddress
+    <> " git@github.com:"
+    <> toString gitAddress
+    <> ".git "
+    <> targetPath
     )
 
 brewUpgrade name = do

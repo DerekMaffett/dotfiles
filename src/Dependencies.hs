@@ -3,26 +3,20 @@ module Dependencies
     )
 where
 
-import qualified System.Directory              as Dir
-import           System.Environment             ( lookupEnv )
-import           Control.Monad
 import           Config
 import           Process
-import qualified Zsh
-import           Logger
 import           Control.Monad.Reader
 import qualified Packages
 
 
-logSection action = logNotice "" >> action >> logNotice ""
-
-initInstallationsDir = do
-    Config { installationsDir } <- ask
-    runProcess ("rm -rf " <> installationsDir)
-    runProcess ("mkdir " <> installationsDir)
+resetDirectory dir = do
+    runProcess ("rm -rf " <> dir)
+    runProcess ("mkdir " <> dir)
 
 
 install = do
-    initInstallationsDir
+    runProcess "cd ./src && pwd"
+    Config { installationsDir, buildDir, binDir } <- ask
+    mapM_ resetDirectory [installationsDir, buildDir, binDir]
     Packages.install
     return ()

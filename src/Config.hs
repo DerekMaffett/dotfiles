@@ -25,6 +25,8 @@ data Config = Config
   , installationsDir :: String
   , dotfilesDir :: String
   , configsDir :: String
+  , buildDir :: String
+  , binDir :: String
   }
 
 data Options = Options
@@ -45,11 +47,15 @@ configFromOptions Options { includeDependencies, includeCustomScripts, useDebugL
             , installationsDir     = getInstallationsDir homeDir
             , dotfilesDir          = getDotfilesDir homeDir
             , configsDir           = getConfigsDir homeDir
+            , buildDir             = getBuildDir homeDir
+            , binDir               = getBinDir homeDir
             }
   where
     getDotfilesDir homeDir = homeDir <> "/dotfiles"
     getConfigsDir homeDir = (getDotfilesDir homeDir) <> "/src/configs"
     getInstallationsDir homeDir = (getDotfilesDir homeDir) <> "/.installations"
+    getBuildDir homeDir = (getDotfilesDir homeDir) <> "/.build"
+    getBinDir homeDir = (getDotfilesDir homeDir) <> "/.bin"
 
 initializeLogger :: ReaderT Config IO ()
 initializeLogger = do

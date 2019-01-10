@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1093907f8b325c84c7d399b70f259c741a3b8873f40a2425797c3d470b6bb50b
+-- hash: 1d34b97e9212e7e0624923b8fd31e638d3a05775c4d172f294423cc94aca271a
 
 name:           setup
 version:        0.1.0.0
@@ -32,6 +32,7 @@ library
       Process
       Ruby
       Symlinks
+      Vim
       Zsh
   other-modules:
       Paths_setup

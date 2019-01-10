@@ -6,3 +6,5 @@ tmux-server*
 tmux-client*
 stack-work/
 .installations/
+.build/
+.bin/

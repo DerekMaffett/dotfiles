@@ -2,6 +2,7 @@ module Process
     ( runProcess
     , runProcess'
     , runProcessNonStrict
+    , runProcessWithDir
     )
 where
 
@@ -13,6 +14,10 @@ import           Control.Monad.Reader
 import           System.Process                 ( readCreateProcessWithExitCode
                                                 , shell
                                                 )
+
+
+runProcessWithDir dir shellCommand =
+    runProcess ("cd " <> dir <> " && " <> shellCommand)
 
 runProcess' shellCommand = do
     runProcess shellCommand
