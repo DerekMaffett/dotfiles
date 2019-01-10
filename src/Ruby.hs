@@ -39,22 +39,11 @@ installRbenvPlugin name = do
 
 
 install :: String -> ReaderT Config IO ()
-install = installRuby
-
-
-installRuby :: String -> ReaderT Config IO ()
-installRuby version = do
-    rbenvInit
+install version = do
     output <- runProcess "rbenv versions"
     case parseRubyVersions output of
         Left  err    -> logError (show err)
         Right result -> setGlobalVersion version result
-
-
-rbenvInit = do
-    logNotice "Initializing rbenv..."
-  -- `rbenv init` has an error exit code for some reason even when it works
-    runProcessNonStrict "rbenv init"
 
 
 setGlobalVersion :: String -> [RubyVersion] -> ReaderT Config IO ()
