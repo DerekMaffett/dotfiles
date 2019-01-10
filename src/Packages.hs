@@ -59,7 +59,24 @@ zshPlugin author name =
 
 brew name = Package {name = name, source = Brew name}
 
-preSources = [Package {name = "rbenv", source = Brew "rbenv"}]
+preSources
+    = [ Package
+          { name   = "neovim"
+          , source = batch
+              [ withBranch "release-0.3" $ github "neovim" "neovim"
+              , Custom Vim.make
+              ]
+          }
+      , Package
+          { name   = "rbenv"
+          , source = batch
+              [ github "rbenv" "rbenv"
+              , github "rbenv" "ruby-build"
+              , Custom $ Ruby.compileRbenv
+              , Custom $ Ruby.installRbenvPlugin "rbenv/ruby-build"
+              ]
+          }
+      ]
 
 sources =
     [ Package {name = "ruby", source = Custom (Ruby.install "2.6.0")}
@@ -81,13 +98,6 @@ packages
       , Package {name = "elm", source = Npm "elm"}
       , Package {name = "elm-format", source = Npm "elm-format"}
       , brew "autojump"
-      , Package
-          { name   = "neovim"
-          , source = batch
-              [ withBranch "release-0.3" $ github "neovim" "neovim"
-              , Custom Vim.make
-              ]
-          }
       , Package {name = "cloc", source = Npm "cloc"}
       , brew "tmux"
       , brew "the_silver_searcher"

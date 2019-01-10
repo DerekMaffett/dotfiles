@@ -37,6 +37,7 @@ export PATH=$DOTFILES/.bin:$PATH
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 
 # Rbenv shims and stuff
+export RBENV_ROOT=$DOTFILES/.installations/rbenv/rbenv
 eval "$(rbenv init -)"
 
 export NVM_DIR="$HOME/.nvm"

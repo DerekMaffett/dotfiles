@@ -1,5 +1,7 @@
 module Ruby
     ( install
+    , installRbenvPlugin
+    , compileRbenv
     )
 where
 
@@ -11,12 +13,29 @@ import           Config
 import           Process
 import           Logger
 import           Text.Parsec
+import qualified Symlinks
 
 data RubyVersion
     = SelectedVersion String
     | NonSelectedVersion String
   deriving (Show)
 
+
+compileRbenv = do
+    Config { installationsDir, binDir } <- ask
+    runProcess'
+        $  "cd "
+        <> installationsDir
+        <> "/rbenv/rbenv && src/configure && make -C src"
+    Symlinks.createSymlink (installationsDir <> "/rbenv/rbenv/bin/rbenv")
+                           (binDir <> "/rbenv")
+
+
+installRbenvPlugin name = do
+    Config { installationsDir } <- ask
+    Symlinks.createSymlink
+        (installationsDir <> "/" <> name)
+        (installationsDir <> "/rbenv/rbenv/plugins/ruby-build")
 
 
 install :: String -> ReaderT Config IO ()
