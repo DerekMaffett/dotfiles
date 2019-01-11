@@ -8,12 +8,13 @@ import           Config
 import           Logger
 import           Safe                           ( headMay )
 import           Data.List
+import qualified Data.HashMap.Strict           as HashMap
 import           Control.Monad
 import           Control.Monad.Reader
 import           Data.Maybe
 import qualified Symlinks
-import qualified Ruby
 import qualified Node
+import qualified Ruby
 import qualified Zsh
 import qualified Vim
 
@@ -59,71 +60,110 @@ zshPlugin author name =
 
 brew name = Package {name = name, source = Brew name}
 
-preSources
-    = [ Package
-          { name   = "neovim"
-          , source = batch
-              [ withBranch "release-0.3" $ github "neovim" "neovim"
-              , Custom Vim.make
-              ]
-          }
-      , Package
-          { name   = "rbenv"
-          , source = batch
-              [ github "rbenv" "rbenv"
-              , github "rbenv" "ruby-build"
-              , Custom $ Ruby.compileRbenv
-              , Custom $ Ruby.installRbenvPlugin "rbenv/ruby-build"
-              ]
-          }
-      ]
+registry :: HashMap.HashMap String Package
+registry =
+    (HashMap.fromList)
+        . fmap (\package -> ((name :: Package -> String) package, package))
+        $ [ Package
+              { name   = "neovim"
+              , source = batch
+                  [ withBranch "release-0.3" $ github "neovim" "neovim"
+                  , Custom Vim.make
+                  ]
+              }
+          , Package
+              { name   = "rbenv"
+              , source = batch
+                  [ github "rbenv" "rbenv"
+                  , github "rbenv" "ruby-build"
+                  , Custom $ Ruby.compileRbenv
+                  , Custom $ Ruby.installRbenvPlugin "rbenv/ruby-build"
+                  ]
+              }
+          , Package {name = "ruby", source = Custom (Ruby.install "2.6.0")}
+          , Package {name = "node", source = Custom Node.install}
+          , brew "python"
+          , brew "ninja"
+          , brew "libtool"
+          , brew "automake"
+          , brew "cmake"
+          , brew "pkg-config"
+          , brew "gettext"
+          , Package
+              { name   = "oh-my-zsh"
+              , source = github "robbyrussell" "oh-my-zsh"
+              }
+          , Package {name = "pynvim", source = Python "pynvim"}
+          , Package {name = "tmuxinator", source = Ruby "tmuxinator"}
+          , Package {name = "elm-test", source = Npm "elm-test"}
+          , Package {name = "brittany", source = Stack "brittany"}
+          , Package {name = "elm", source = Npm "elm"}
+          , Package {name = "elm-format", source = Npm "elm-format"}
+          , brew "autojump"
+          , Package {name = "cloc", source = Npm "cloc"}
+          , brew "tmux"
+          , brew "the_silver_searcher"
+          , Package {name = "vim-plug", source = Custom installVimPlug}
+          , Package
+              { name   = "tmuxinator"
+              , source = github "tmuxinator" "tmuxinator"
+              }
+          , Package {name = "zsh", source = Custom Zsh.setShell}
+          , Package
+              { name   = "powerlevel9k"
+              , source = zshTheme "bhilburn" "powerlevel9k"
+              }
+          , Package
+              { name   = "zsh-completions"
+              , source = zshPlugin "zsh-users" "zsh-completions"
+              }
+          , Package {name = "prettier", source = Npm "prettier"}
+          , Package
+              { name   = "powerline-fonts"
+              , source = batch
+                  [github "powerline" "fonts", Custom installPowerlineFonts]
+              }
+          , Package
+              { name   = "iTerm2-color-schemes"
+              , source = github "mbadolato" "iTerm2-Color-Schemes"
+              }
+          ]
 
-sources =
-    [ Package {name = "ruby", source = Custom (Ruby.install "2.6.0")}
-    , Package {name = "node", source = Custom Node.install}
-    , brew "python"
-    , Package {name = "oh-my-zsh", source = github "robbyrussell" "oh-my-zsh"}
-    , brew "ninja"
-    , brew "libtool"
-    , brew "automake"
-    , brew "cmake"
-    , brew "pkg-config"
-    , brew "gettext"
+lookupInRegistry packageName = HashMap.lookup packageName registry
+memberOfRegistry packageName = HashMap.member packageName registry
+
+stringSources =
+    [ "ninja"
+    , "libtool"
+    , "automake"
+    , "cmake"
+    , "pkg-config"
+    , "gettext"
+    , "neovim"
+    , "rbenv"
+    , "ruby"
+    , "node"
+    , "python"
+    , "oh-my-zsh"
+    , "pynvim"
+    , "tmuxinator"
+    , "elm-test"
+    , "brittany"
+    , "elm"
+    , "elm-format"
+    , "autojump"
+    , "cloc"
+    , "tmux"
+    , "the_silver_searcher"
+    , "vim-plug"
+    , "tmuxinator"
+    , "zsh"
+    , "powerlevel9k"
+    , "zsh-completions"
+    , "prettier"
+    , "powerline-fonts"
+    , "iTerm2-color-schemes"
     ]
-
-packages
-    = [ Package {name = "pynvim", source = Python "pynvim"}
-      , Package {name = "tmuxinator", source = Ruby "tmuxinator"}
-      , Package {name = "elm-test", source = Npm "elm-test"}
-      , Package {name = "brittany", source = Stack "brittany"}
-      , Package {name = "elm", source = Npm "elm"}
-      , Package {name = "elm-format", source = Npm "elm-format"}
-      , brew "autojump"
-      , Package {name = "cloc", source = Npm "cloc"}
-      , brew "tmux"
-      , brew "the_silver_searcher"
-      , Package {name = "vim-plug", source = Custom installVimPlug}
-      , Package {name = "tmuxinator", source = github "tmuxinator" "tmuxinator"}
-      , Package {name = "zsh", source = Custom Zsh.setShell}
-      , Package
-          { name   = "powerlevel9k"
-          , source = zshTheme "bhilburn" "powerlevel9k"
-          }
-      , Package
-          { name   = "zsh-completions"
-          , source = zshPlugin "zsh-users" "zsh-completions"
-          }
-      , Package {name = "prettier", source = Npm "prettier"}
-      , Package
-          { name   = "powerline-fonts"
-          , source = batch
-              [github "powerline" "fonts", Custom installPowerlineFonts]
-          }
-      , Package
-          { name   = "iTerm2-color-schemes"
-          , source = github "mbadolato" "iTerm2-Color-Schemes"
-          }
-      ]
 
 batch installationSteps = Custom $ mapM_ installFromSource installationSteps
 
@@ -203,10 +243,17 @@ updateBrewPackages = do
     mapM_ brewUpgrade outdatedPackages
     where getOutdated = catMaybes . (map headMay) . (map words) . lines
 
+unpackSources sourceList = lookupInRegistry <$> sourceList
+
+isMissing = not . memberOfRegistry
+
 install = do
+    when (not . null $ missingPackages)
+        $ logError ("MISSING REGISTRY PACKAGES: " <> show missingPackages)
     logNotice "Updating Homebrew..."
     runProcess "brew update"
     updateBrewPackages
-    mapM_ installPackage preSources
-    mapM_ installPackage sources
-    mapM_ installPackage packages
+    (mapM_ installPackage) existingPackages
+  where
+    missingPackages  = filter isMissing stringSources
+    existingPackages = catMaybes . unpackSources $ stringSources

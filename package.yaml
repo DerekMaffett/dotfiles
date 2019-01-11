@@ -1,10 +1,10 @@
-name:                setup
-version:             0.1.0.0
-github:              "githubuser/setup"
-license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2018 Author name here"
+name: setup
+version: 0.1.0.0
+github: "githubuser/setup"
+license: BSD3
+author: "Author name here"
+maintainer: "example@example.com"
+copyright: "2018 Author name here"
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
@@ -13,33 +13,34 @@ copyright:           "2018 Author name here"
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/setup#readme>
+description: Please see the README on GitHub at <https://github.com/githubuser/setup#readme>
 
 dependencies:
-- base >= 4.7 && < 5
-- process
-- optparse-applicative
-- directory
-- parsec
-- hslogger
-- mtl
-- safe
+    - base >= 4.7 && < 5
+    - process
+    - optparse-applicative
+    - directory
+    - parsec
+    - hslogger
+    - mtl
+    - safe
+    - unordered-containers
 
 library:
-  source-dirs: src
+    source-dirs: src
 
 default-extensions:
-  - OverloadedStrings
-  - NamedFieldPuns
-  - DuplicateRecordFields
+    - OverloadedStrings
+    - NamedFieldPuns
+    - DuplicateRecordFields
 
 executables:
-  setup:
-    main:                Main.hs
-    source-dirs:         .
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - setup
+    setup:
+        main: Main.hs
+        source-dirs: .
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - setup

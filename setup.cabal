@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1d34b97e9212e7e0624923b8fd31e638d3a05775c4d172f294423cc94aca271a
+-- hash: 049ba83588394487326459770baa0af0f2cff85a290b1f769e4320003727c1b4
 
 name:           setup
 version:        0.1.0.0
@@ -48,6 +48,7 @@ library
     , parsec
     , process
     , safe
+    , unordered-containers
   default-language: Haskell2010
 
 executable setup
@@ -68,4 +69,5 @@ executable setup
     , process
     , safe
     , setup
+    , unordered-containers
   default-language: Haskell2010
