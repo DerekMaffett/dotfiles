@@ -20,6 +20,7 @@ homeDirConfigs =
     , "tmux.conf"
     , "agignore"
     , "prettierrc.js"
+    , "prettierignore"
     ]
 
 
