@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 049ba83588394487326459770baa0af0f2cff85a290b1f769e4320003727c1b4
+-- hash: 1151e15c1a37601734975335517b24594c2fbbfdf5c662087d710f7332ccc534
 
 name:           setup
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       Node
       Packages
       Process
+      Registry
       Ruby
       Symlinks
       Vim
