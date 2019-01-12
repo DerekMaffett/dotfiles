@@ -1,11 +1,14 @@
 module Registry
     ( registryLookup
     , registryMember
+    , Registry
     , Package(..)
     , Source(..)
     , GitAddress(..)
     , ZshPluginType(..)
     , toString
+    , centralRegistry
+    , createRegistry
     )
 where
 
@@ -16,10 +19,10 @@ import           Safe                           ( headMay )
 import           Process
 import           Logger
 import           Data.Maybe
-import qualified Node
-import qualified Ruby
-import qualified Zsh
-import qualified Vim
+import qualified Registry.Node                 as Node
+import qualified Registry.Ruby                 as Ruby
+import qualified Registry.Zsh                  as Zsh
+import qualified Registry.Vim                  as Vim
 
 
 data ZshPluginType = Theme | Plugin
@@ -49,101 +52,153 @@ data Package
   = Package
   { name :: String
   , source :: Source
+  , dependencies :: [Package]
   }
 
-github author name =
-    Github $ GitAddress {author = author, name = name, branch = "master"}
+-- Package creators
+githubAddress author name =
+    GitAddress {author = author, name = name, branch = "master"}
 
-withBranch overrideBranch (Github GitAddress { author, name, branch }) =
-    Github $ GitAddress {author = author, name = name, branch = overrideBranch}
+withBranch overrideBranch (GitAddress { author, name, branch }) =
+    GitAddress {author = author, name = name, branch = overrideBranch}
 
-zshTheme author name =
-    Zsh Theme $ GitAddress {author = author, name = name, branch = "master"}
+zshTheme name address =
+    Package {name = name, source = Zsh Theme address, dependencies = []}
 
-zshPlugin author name =
-    Zsh Plugin $ GitAddress {author = author, name = name, branch = "master"}
+zshPlugin name address =
+    Package {name = name, source = Zsh Plugin address, dependencies = []}
 
-brew name = Package {name = name, source = Brew name}
+rubyPackage name =
+    Package {name = name, source = Ruby name, dependencies = [ruby]}
+
+brewPackage name =
+    Package {name = name, source = Brew name, dependencies = [homebrew]}
+
+pythonPackage name =
+    Package {name = name, source = Python name, dependencies = [python]}
+
+npmPackage name =
+    Package {name = name, source = Npm name, dependencies = [node]}
+
+githubPackage name address =
+    Package {name = name, source = Github address, dependencies = []}
+
+-- TODO: add stack as dependency
+stackPackage name =
+    Package {name = name, source = Stack name, dependencies = []}
+
+withDependencies additionalDependencies Package { name, source, dependencies }
+    = Package
+        { name         = name
+        , source       = source
+        , dependencies = dependencies <> additionalDependencies
+        }
 
 
-registry :: HashMap.HashMap String Package
-registry =
-    (HashMap.fromList)
-        . fmap (\package -> ((name :: Package -> String) package, package))
-        $ [ Package
-              { name   = "brew"
-              , source = Batch
-                  [ Custom $ runProcess' "brew update"
-                  , Custom updateBrewPackages
-                  ]
-              }
-          , Package
-              { name   = "neovim"
-              , source = Batch
-                  [ withBranch "release-0.3" $ github "neovim" "neovim"
-                  , Custom Vim.make
-                  ]
-              }
-          , Package
-              { name   = "rbenv"
-              , source = Batch
-                  [ github "rbenv" "rbenv"
-                  , github "rbenv" "ruby-build"
-                  , Custom $ Ruby.compileRbenv
-                  , Custom $ Ruby.installRbenvPlugin "rbenv/ruby-build"
-                  ]
-              }
-          , Package {name = "ruby", source = Custom (Ruby.install "2.6.0")}
-          , Package {name = "node", source = Custom Node.install}
-          , brew "python"
-          , brew "ninja"
-          , brew "libtool"
-          , brew "automake"
-          , brew "cmake"
-          , brew "pkg-config"
-          , brew "gettext"
-          , Package
-              { name   = "oh-my-zsh"
-              , source = github "robbyrussell" "oh-my-zsh"
-              }
-          , Package {name = "pynvim", source = Python "pynvim"}
-          , Package {name = "tmuxinator", source = Ruby "tmuxinator"}
-          , Package {name = "elm-test", source = Npm "elm-test"}
-          , Package {name = "brittany", source = Stack "brittany"}
-          , Package {name = "elm", source = Npm "elm"}
-          , Package {name = "elm-format", source = Npm "elm-format"}
-          , brew "autojump"
-          , Package {name = "cloc", source = Npm "cloc"}
-          , brew "tmux"
-          , brew "the_silver_searcher"
-          , Package {name = "vim-plug", source = Custom installVimPlug}
-          , Package
-              { name   = "tmuxinator"
-              , source = github "tmuxinator" "tmuxinator"
-              }
-          , Package {name = "zsh", source = Custom Zsh.setShell}
-          , Package
-              { name   = "powerlevel9k"
-              , source = zshTheme "bhilburn" "powerlevel9k"
-              }
-          , Package
-              { name   = "zsh-completions"
-              , source = zshPlugin "zsh-users" "zsh-completions"
-              }
-          , Package {name = "prettier", source = Npm "prettier"}
-          , Package
-              { name   = "powerline-fonts"
-              , source = Batch
-                  [github "powerline" "fonts", Custom installPowerlineFonts]
-              }
-          , Package
-              { name   = "iTerm2-color-schemes"
-              , source = github "mbadolato" "iTerm2-Color-Schemes"
-              }
-          ]
+-- Common packages
+homebrew = Package
+    { name         = "brew"
+    , source       = Batch
+        [Custom $ runProcess' "brew update", Custom updateBrewPackages]
+    , dependencies = []
+    }
 
-registryLookup packageName = HashMap.lookup packageName registry
-registryMember packageName = HashMap.member packageName registry
+rbenv = Package
+    { name         = "rbenv"
+    , source       = Batch
+        [ Github $ githubAddress "rbenv" "rbenv"
+        , Github $ githubAddress "rbenv" "ruby-build"
+        , Custom $ Ruby.compileRbenv
+        , Custom $ Ruby.installRbenvPlugin "rbenv/ruby-build"
+        ]
+    , dependencies = []
+    }
+
+ruby = Package
+    { name         = "ruby"
+    , source       = Custom (Ruby.install "2.6.0")
+    , dependencies = [rbenv]
+    }
+
+python = brewPackage "python"
+
+neovim = Package
+    { name         = "neovim"
+    , source       = Batch
+        [ Github $ withBranch "release-0.3" $ githubAddress "neovim" "neovim"
+        , Custom Vim.make
+        ]
+    , dependencies = [ brewPackage "ninja"
+                     , brewPackage "libtool"
+                     , brewPackage "automake"
+                     , brewPackage "cmake"
+                     , brewPackage "pkg-config"
+                     , brewPackage "gettext"
+                     -- TODO: pynvim is really for deoplete, but we can't
+                     -- currently express that dependency relationship
+                     , pythonPackage "pynvim"
+                     ]
+    }
+
+
+tmuxinator =
+    withDependencies
+            [ githubPackage "tmuxinator-completions"
+                  $ githubAddress "tmuxinator" "tmuxinator"
+            ]
+        $ rubyPackage "tmuxinator"
+
+node = Package {name = "node", source = Custom Node.install, dependencies = []}
+
+-- Registry
+
+type Registry = HashMap.HashMap String Package
+
+createRegistry :: [Package] -> Registry
+createRegistry = (HashMap.fromList)
+    . fmap (\package -> ((name :: Package -> String) package, package))
+
+centralRegistry :: Registry
+centralRegistry = createRegistry
+    [ neovim
+    , tmuxinator
+    , brewPackage "autojump"
+    , brewPackage "tmux"
+    , brewPackage "the_silver_searcher"
+    , stackPackage "brittany"
+    , npmPackage "elm-test"
+    , npmPackage "elm"
+    , npmPackage "elm-format"
+    , npmPackage "cloc"
+    , npmPackage "prettier"
+    , githubPackage "oh-my-zsh" $ githubAddress "robbyrussell" "oh-my-zsh"
+    , githubPackage "iTerm2-color-schemes"
+        $ githubAddress "mbadolato" "iTerm2-Color-Schemes"
+    , Package
+        { name         = "vim-plug"
+        , source       = Custom installVimPlug
+        , dependencies = [neovim]
+        }
+    , Package
+        { name         = "zsh"
+        , source       = Custom Zsh.setShell
+        , dependencies = [ zshPlugin "zsh-completions"
+                               $ githubAddress "zsh-users" "zsh-completions"
+                         ]
+        }
+    , zshTheme "powerlevel9k" $ githubAddress "bhilburn" "powerlevel9k"
+    , Package
+        { name         = "powerline-fonts"
+        , source       = Batch
+            [ Github $ githubAddress "powerline" "fonts"
+            , Custom installPowerlineFonts
+            ]
+        , dependencies = []
+        }
+    ]
+
+registryLookup registry packageName = HashMap.lookup packageName registry
+registryMember registry packageName = HashMap.member packageName registry
 
 installPowerlineFonts = do
     Config { installationsDir } <- ask
@@ -154,9 +209,7 @@ installVimPlug =
     runProcess'
         "curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
-brewUpgrade name = do
-    logNotice $ "Upgrading " <> name
-    runProcess ("brew upgrade " <> name)
+brewUpgrade name = runProcess ("brew upgrade " <> name)
 
 updateBrewPackages = do
     outdatedPackages <- getOutdated <$> runProcess "brew outdated"

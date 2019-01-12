@@ -1,4 +1,4 @@
-module Vim
+module Registry.Vim
     ( make
     )
 where

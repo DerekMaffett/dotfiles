@@ -1,44 +1,30 @@
 module Packages
     ( install
+    , processPackageList
     )
 where
 
-import           Process
-import           Config
 import           Logger
-import           Data.List
 import           Data.Maybe
+import           Debug.Trace
+import           Data.List
 import           Control.Monad
-import           Control.Monad.Reader
-import qualified Symlinks
-import           Registry                       ( Package(..)
-                                                , Source(..)
-                                                , GitAddress(..)
-                                                , ZshPluginType(..)
-                                                , registryLookup
+import qualified Installer
+import           Registry                       ( registryLookup
                                                 , registryMember
-                                                , toString
+                                                , Package(name, dependencies)
+                                                , centralRegistry
+                                                , Registry
                                                 )
 
 stringSources =
-    [ "ninja"
-    , "libtool"
-    , "automake"
-    , "cmake"
-    , "pkg-config"
-    , "gettext"
-    , "neovim"
-    , "rbenv"
-    , "ruby"
-    , "node"
-    , "python"
+    [ "brittany"
+    , "prettier"
     , "oh-my-zsh"
-    , "pynvim"
-    , "tmuxinator"
-    , "elm-test"
-    , "brittany"
+    , "neovim"
     , "elm"
     , "elm-format"
+    , "elm-test"
     , "autojump"
     , "cloc"
     , "tmux"
@@ -47,79 +33,38 @@ stringSources =
     , "tmuxinator"
     , "zsh"
     , "powerlevel9k"
-    , "zsh-completions"
-    , "prettier"
     , "powerline-fonts"
     , "iTerm2-color-schemes"
     ]
 
 
+unpackSources registry sourceList = registryLookup registry <$> sourceList
 
-zshInstall pluginType gitAddress = do
-    Config { installationsDir } <- ask
-    _githubInstall (packagePath installationsDir) gitAddress
+expandDependenciesList packages =
+    (nubBy (\x y -> name x == name y))
+        . (concatMap expandDependencies)
+        $ packages
   where
-    packagePath installationsDir =
-        installationsDir
-            <> "/robbyrussell/oh-my-zsh/custom/"
-            <> pluginLocation
-            <> "/"
-            <> (name :: GitAddress -> String) gitAddress
-    pluginLocation = case pluginType of
-        Theme  -> "themes"
-        Plugin -> "plugins"
+    expandDependencies package = case (dependencies package) of
+        [] -> [package]
+        xs -> expandDependenciesList xs <> [package]
 
-githubInstall gitAddress = do
-    Config { installationsDir } <- ask
-    _githubInstall (installationsDir <> "/" <> toString gitAddress) gitAddress
+isMissing registry = not . registryMember registry
 
-_githubInstall targetPath gitAddress = runProcess'
-    (  "git clone --single-branch --branch "
-    <> (branch :: GitAddress -> String) gitAddress
-    <> " git@github.com:"
-    <> toString gitAddress
-    <> ".git "
-    <> targetPath
-    )
-
-stackInstall name = runProcess' ("stack install " <> name)
-
-pip3Install name = runProcess' ("pip3 install --user " <> name)
-
-gemInstall name =
-    runProcess' ("eval \"$(rbenv init -)\" && gem install " <> name)
-
-npmInstall name =
-    runProcess' ("source ~/.nvm/nvm.sh && npm install -g " <> name)
-
-brewInstall name = do
-    isUninstalled <- checkIfInstalled <$> runProcess "brew list"
-    runProcess' ("brew install " <> name)
-    where checkIfInstalled name = (\installed -> name `elem` installed) . words
-
-installFromSource source = case source of
-    Python name               -> pip3Install name
-    Ruby   name               -> gemInstall name
-    Stack  name               -> stackInstall name
-    Npm    name               -> npmInstall name
-    Brew   name               -> brewInstall name
-    Github gitAddress         -> githubInstall gitAddress
-    Zsh pluginType gitAddress -> zshInstall pluginType gitAddress
-    Custom installationMethod -> installationMethod
-
-installPackage Package { name, source } = do
-    logNotice $ "Installing " <> name <> "..."
-    installFromSource source
-
-
-unpackSources sourceList = registryLookup <$> sourceList
-
-isMissing = not . registryMember
+processPackageList :: Registry -> [String] -> [Package]
+processPackageList registry packageList =
+    expandDependenciesList
+        . catMaybes
+        . (unpackSources registry)
+        . nub
+        $ packageList
 
 install = do
     when (not . null $ missingPackages)
         $ logError ("MISSING REGISTRY PACKAGES: " <> show missingPackages)
-    (mapM_ installPackage) existingPackages
+    (mapM_ Installer.installPackage)
+        $ traceShow (name <$> packagesToInstall) packagesToInstall
   where
-    missingPackages  = filter isMissing stringSources
-    existingPackages = catMaybes . unpackSources $ stringSources
+    packagesToInstall = processPackageList centralRegistry stringSources
+    missingPackages =
+        (filter $ isMissing centralRegistry) . nub $ stringSources

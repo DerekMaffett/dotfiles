@@ -4,37 +4,38 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1151e15c1a37601734975335517b24594c2fbbfdf5c662087d710f7332ccc534
+-- hash: 579d59d73d0c9dd1d09c089e51e3a38f790c22722ba3d8f9a553bd8b84352a02
 
 name:           setup
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/setup#readme>
-homepage:       https://github.com/githubuser/setup#readme
-bug-reports:    https://github.com/githubuser/setup/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2018 Author name here
+homepage:       https://github.com/DerekMaffett/setup#readme
+bug-reports:    https://github.com/DerekMaffett/setup/issues
+author:         Derek Maffett
+maintainer:     deregmaffett@gmail.com
+copyright:      Derek Maffett
 license:        BSD3
 build-type:     Simple
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/setup
+  location: https://github.com/DerekMaffett/setup
 
 library
   exposed-modules:
       Config
       CustomScripts
       Dependencies
+      Installer
       Logger
-      Node
       Packages
       Process
       Registry
-      Ruby
+      Registry.Node
+      Registry.Ruby
+      Registry.Vim
+      Registry.Zsh
       Symlinks
-      Vim
-      Zsh
   other-modules:
       Paths_setup
   hs-source-dirs:
@@ -44,6 +45,7 @@ library
       base >=4.7 && <5
     , directory
     , hslogger
+    , hspec
     , mtl
     , optparse-applicative
     , parsec
@@ -59,11 +61,35 @@ executable setup
   hs-source-dirs:
       ./.
   default-extensions: OverloadedStrings NamedFieldPuns DuplicateRecordFields
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall
+  build-depends:
+      base >=4.7 && <5
+    , directory
+    , hslogger
+    , hspec
+    , mtl
+    , optparse-applicative
+    , parsec
+    , process
+    , safe
+    , setup
+    , unordered-containers
+  default-language: Haskell2010
+
+test-suite setup-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_setup
+  hs-source-dirs:
+      spec
+  default-extensions: OverloadedStrings NamedFieldPuns DuplicateRecordFields
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , directory
     , hslogger
+    , hspec
     , mtl
     , optparse-applicative
     , parsec

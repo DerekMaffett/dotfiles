@@ -1,4 +1,4 @@
-module Ruby
+module Registry.Ruby
     ( install
     , installRbenvPlugin
     , compileRbenv

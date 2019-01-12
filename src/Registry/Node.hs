@@ -1,4 +1,4 @@
-module Node
+module Registry.Node
     ( install
     )
 where

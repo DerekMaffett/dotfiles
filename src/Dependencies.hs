@@ -15,7 +15,6 @@ resetDirectory dir = do
 
 
 install = do
-    runProcess "cd ./src && pwd"
     Config { installationsDir, buildDir, binDir } <- ask
     mapM_ resetDirectory [installationsDir, buildDir, binDir]
     Packages.install

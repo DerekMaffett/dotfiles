@@ -1,4 +1,4 @@
-module Zsh
+module Registry.Zsh
     ( setShell
     )
 where

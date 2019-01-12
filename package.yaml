@@ -1,10 +1,10 @@
 name: setup
 version: 0.1.0.0
-github: "githubuser/setup"
+github: "DerekMaffett/setup"
 license: BSD3
-author: "Author name here"
-maintainer: "example@example.com"
-copyright: "2018 Author name here"
+author: "Derek Maffett"
+maintainer: "deregmaffett@gmail.com"
+copyright: "Derek Maffett"
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
@@ -25,6 +25,7 @@ dependencies:
     - mtl
     - safe
     - unordered-containers
+    - hspec
 
 library:
     source-dirs: src
@@ -38,6 +39,17 @@ executables:
     setup:
         main: Main.hs
         source-dirs: .
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+            - -Wall
+        dependencies:
+            - setup
+tests:
+    setup-test:
+        main: Spec.hs
+        source-dirs: spec
         ghc-options:
             - -threaded
             - -rtsopts
