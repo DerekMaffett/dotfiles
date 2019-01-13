@@ -4,6 +4,8 @@ module Registry
     , Registry
     , Package(..)
     , Source(..)
+    , PackageConfig(..)
+    , SymlinkTarget(..)
     , GitAddress(..)
     , ZshPluginType(..)
     , toString
@@ -226,11 +228,18 @@ createRegistry = (HashMap.fromList)
 
 centralRegistry :: Registry
 centralRegistry = createRegistry
-    [ neovim
-    , tmuxinator
+    [ Package
+        { name         = "git"
+        , source       = Custom $ return ()
+        , dependencies = []
+        , config       = Just $ PackageConfig ".gitconfig" Home
+        , snippets     = []
+        }
     , brewPackage "autojump"
     , brewPackage "tmux"
     , brewPackage "the_silver_searcher"
+    , neovim
+    , tmuxinator
     , stackPackage "brittany"
     , npmPackage "elm-test"
     , npmPackage "elm"

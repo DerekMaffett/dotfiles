@@ -1,5 +1,6 @@
 module Installer
     ( installPackage
+    , installConfig
     )
 where
 
@@ -7,8 +8,12 @@ import           Logger
 import           Process
 import           Config
 import           Control.Monad.Reader
+import           System.Directory
+import           Symlinks
 import           Registry                       ( Package(..)
                                                 , Source(..)
+                                                , PackageConfig(..)
+                                                , SymlinkTarget(..)
                                                 , GitAddress(..)
                                                 , ZshPluginType(..)
                                                 , toString
@@ -71,3 +76,16 @@ installFromSource source = case source of
 installPackage Package { name, source } = do
     logNotice $ "Installing " <> name <> "..."
     installFromSource source
+
+installConfig :: PackageConfig -> ReaderT Config IO ()
+installConfig (PackageConfig name symlinkTarget) = do
+    Config { homeDir, configsDir, builtConfigsDir } <- ask
+    configExists <- liftIO $ doesPathExist (configsDir <> "/" <> name)
+    unless configExists $ logError (name <> " does not exist!")
+    liftIO $ copyFile (configsDir <> "/" <> name)
+                      (builtConfigsDir <> "/" <> name)
+    createSymlink (builtConfigsDir <> "/" <> name)
+                  (getTarget homeDir name symlinkTarget)
+  where
+    getTarget homeDir name symlinkTarget = case symlinkTarget of
+        Home -> homeDir <> "/" <> name

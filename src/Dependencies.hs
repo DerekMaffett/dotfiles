@@ -15,7 +15,7 @@ resetDirectory dir = do
 
 
 install = do
-    Config { installationsDir, buildDir, binDir } <- ask
-    mapM_ resetDirectory [installationsDir, buildDir, binDir]
+    Config { installationsDir, buildDir, binDir, builtConfigsDir } <- ask
+    mapM_ resetDirectory [installationsDir, buildDir, binDir, builtConfigsDir]
     Packages.install
     return ()

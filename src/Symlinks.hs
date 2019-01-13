@@ -12,8 +12,7 @@ import           Data.List
 import           Control.Monad
 
 homeDirConfigs =
-    [ "gitconfig"
-    , "zshrc"
+    [ "zshrc"
     , "zprofile"
     , "shell"
     , "vimrc"

@@ -5,10 +5,8 @@ import qualified Dependencies
 import qualified Symlinks
 import           Options.Applicative
 import           Control.Monad.Reader
-import           Control.Monad
 import           Config
 import           Process
-import           Logger
 
 opts :: ParserInfo Options
 opts = info
@@ -44,17 +42,18 @@ main = do
     return ()
 
 
+runProgram :: ReaderT Config IO ()
 runProgram = do
     initializeLogger
     install
 
 
-install :: ReaderT Config IO String
+install :: ReaderT Config IO ()
 install = do
     installDependencies
     Symlinks.createSymlinks
     installCustomScripts
-    runProcess
+    runProcess'
         "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
   where
     installDependencies = do

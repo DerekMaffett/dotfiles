@@ -12,13 +12,14 @@ import           Control.Monad
 import qualified Installer
 import           Registry                       ( registryLookup
                                                 , registryMember
-                                                , Package(name, dependencies)
+                                                , Package(..)
                                                 , centralRegistry
                                                 , Registry
                                                 )
 
 stringSources =
-    [ "brittany"
+    [ "git"
+    , "brittany"
     , "prettier"
     , "oh-my-zsh"
     , "neovim"
@@ -59,11 +60,13 @@ processPackageList registry packageList =
         . nub
         $ packageList
 
+getConfigsAndSnippets packages = catMaybes . (fmap config) $ packages
+
 install = do
     when (not . null $ missingPackages)
         $ logError ("MISSING REGISTRY PACKAGES: " <> show missingPackages)
-    (mapM_ Installer.installPackage)
-        $ traceShow (name <$> packagesToInstall) packagesToInstall
+    (mapM_ Installer.installConfig) . getConfigsAndSnippets $ packagesToInstall
+    mapM_ Installer.installPackage packagesToInstall
   where
     packagesToInstall = processPackageList centralRegistry stringSources
     missingPackages =

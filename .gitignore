@@ -8,3 +8,4 @@ stack-work/
 .installations/
 .build/
 .bin/
+.configs/

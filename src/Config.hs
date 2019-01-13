@@ -25,6 +25,7 @@ data Config = Config
   , installationsDir :: String
   , dotfilesDir :: String
   , configsDir :: String
+  , builtConfigsDir :: String
   , buildDir :: String
   , binDir :: String
   }
@@ -47,12 +48,14 @@ configFromOptions Options { includeDependencies, includeCustomScripts, useDebugL
             , installationsDir     = getInstallationsDir homeDir
             , dotfilesDir          = getDotfilesDir homeDir
             , configsDir           = getConfigsDir homeDir
+            , builtConfigsDir      = getBuiltConfigsDir homeDir
             , buildDir             = getBuildDir homeDir
             , binDir               = getBinDir homeDir
             }
   where
     getDotfilesDir homeDir = homeDir <> "/dotfiles"
     getConfigsDir homeDir = (getDotfilesDir homeDir) <> "/src/configs"
+    getBuiltConfigsDir homeDir = (getDotfilesDir homeDir) <> "/.configs"
     getInstallationsDir homeDir = (getDotfilesDir homeDir) <> "/.installations"
     getBuildDir homeDir = (getDotfilesDir homeDir) <> "/.build"
     getBinDir homeDir = (getDotfilesDir homeDir) <> "/.bin"
