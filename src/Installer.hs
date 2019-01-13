@@ -51,8 +51,9 @@ stackInstall name = runProcess' ("stack install " <> name)
 
 pip3Install name = runProcess' ("pip3 install --user " <> name)
 
-gemInstall name =
-    runProcess' ("eval \"$(rbenv init -)\" && gem install " <> name)
+rbenvExecutable = "~/dotfiles/.devfiles/.bin/rbenv"
+gemInstall name = runProcess'
+    ("eval \"$(" <> rbenvExecutable <> " init -)\" && gem install " <> name)
 
 npmInstall name =
     runProcess' ("source ~/.nvm/nvm.sh && npm install -g " <> name)

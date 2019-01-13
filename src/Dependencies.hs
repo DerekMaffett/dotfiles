@@ -11,7 +11,7 @@ import qualified Packages
 
 resetDirectory dir = do
     runProcess ("rm -rf " <> dir)
-    runProcess ("mkdir " <> dir)
+    runProcess ("mkdir -p " <> dir)
 
 
 install = do

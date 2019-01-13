@@ -22,8 +22,9 @@ data Config = Config
   , includeDependencies :: Bool
   , includeCustomScripts :: Bool
   , homeDir :: String
-  , installationsDir :: String
   , dotfilesDir :: String
+  , devfilesDir :: String
+  , installationsDir :: String
   , configsDir :: String
   , builtConfigsDir :: String
   , buildDir :: String
@@ -47,6 +48,7 @@ configFromOptions Options { includeDependencies, includeCustomScripts, useDebugL
             , homeDir              = homeDir
             , installationsDir     = getInstallationsDir homeDir
             , dotfilesDir          = getDotfilesDir homeDir
+            , devfilesDir          = getDevfilesDir homeDir
             , configsDir           = getConfigsDir homeDir
             , builtConfigsDir      = getBuiltConfigsDir homeDir
             , buildDir             = getBuildDir homeDir
@@ -54,11 +56,12 @@ configFromOptions Options { includeDependencies, includeCustomScripts, useDebugL
             }
   where
     getDotfilesDir homeDir = homeDir <> "/dotfiles"
+    getDevfilesDir homeDir = (getDotfilesDir homeDir) <> "/.devfiles"
     getConfigsDir homeDir = (getDotfilesDir homeDir) <> "/src/configs"
-    getBuiltConfigsDir homeDir = (getDotfilesDir homeDir) <> "/.configs"
-    getInstallationsDir homeDir = (getDotfilesDir homeDir) <> "/.installations"
-    getBuildDir homeDir = (getDotfilesDir homeDir) <> "/.build"
-    getBinDir homeDir = (getDotfilesDir homeDir) <> "/.bin"
+    getBuiltConfigsDir homeDir = (getDevfilesDir homeDir) <> "/.configs"
+    getInstallationsDir homeDir = (getDevfilesDir homeDir) <> "/.installations"
+    getBuildDir homeDir = (getDevfilesDir homeDir) <> "/.build"
+    getBinDir homeDir = (getDevfilesDir homeDir) <> "/.bin"
 
 initializeLogger :: ReaderT Config IO ()
 initializeLogger = do

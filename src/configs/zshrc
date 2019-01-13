@@ -2,7 +2,7 @@ export DOTFILES=$HOME/dotfiles
 
 source ~/.shell/aliases
 
-export ZSH=$DOTFILES/.installations/robbyrussell/oh-my-zsh
+export ZSH=$DOTFILES/.devfiles/.installations/robbyrussell/oh-my-zsh
 
 plugins=(
    autojump
@@ -26,19 +26,19 @@ source $ZSH/oh-my-zsh.sh
 
 # Tmuxinator
 export TMUXINATOR_CONFIG="$HOME/dotfiles/src/configs/tmuxinator"
-source $DOTFILES/.installations/tmuxinator/tmuxinator/completion/tmuxinator.zsh
+source $DOTFILES/.devfiles/.installations/tmuxinator/tmuxinator/completion/tmuxinator.zsh
 
 export EDITOR='nvim'
 export VISUAL='nvim'
 
 # Path
 export PATH=$HOME/.local/bin:$PATH # Haskell Stack executables
-export PATH=$DOTFILES/.bin:$PATH
+export PATH=$DOTFILES/.devfiles/.bin:$PATH
 
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 
 # Rbenv shims and stuff
-export RBENV_ROOT=$DOTFILES/.installations/rbenv/rbenv
+export RBENV_ROOT=$DOTFILES/.devfiles/.installations/rbenv/rbenv
 eval "$(rbenv init -)"
 
 export NVM_DIR="$HOME/.nvm"
