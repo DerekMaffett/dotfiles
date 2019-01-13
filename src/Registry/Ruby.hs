@@ -2,6 +2,7 @@ module Registry.Ruby
     ( install
     , installRbenvPlugin
     , compileRbenv
+    , rbenvCommand
     )
 where
 
@@ -20,6 +21,10 @@ data RubyVersion
     | NonSelectedVersion String
   deriving (Show)
 
+rbenvCommand shellCommand =
+    "RBENV_ROOT=~/dotfiles/.devfiles/.installations/rbenv/rbenv "
+        <> "PATH=~/dotfiles/.devfiles/.installations/rbenv/rbenv/shims:$PATH && "
+        <> shellCommand
 
 compileRbenv = do
     Config { installationsDir, binDir } <- ask
@@ -40,7 +45,7 @@ installRbenvPlugin name = do
 
 install :: String -> ReaderT Config IO ()
 install version = do
-    output <- runProcess "rbenv versions"
+    output <- runProcess $ rbenvCommand "rbenv versions"
     case parseRubyVersions output of
         Left  err    -> logError (show err)
         Right result -> setGlobalVersion version result
@@ -59,14 +64,14 @@ setGlobalVersion version installedVersions = do
 
 useRubyVersion :: String -> ReaderT Config IO ()
 useRubyVersion version = do
-    runProcess ("rbenv global " <> version)
+    runProcess $ rbenvCommand ("rbenv global " <> version)
     logNotice $ "Global rbenv version set to " <> version
 
 
 installRubyVersion :: String -> ReaderT Config IO ()
 installRubyVersion version = do
     logNotice ("Installing Ruby " <> version <> "...")
-    runProcess ("rbenv install " <> version)
+    runProcess $ rbenvCommand ("rbenv install " <> version)
     logNotice "Installation complete!"
 
 

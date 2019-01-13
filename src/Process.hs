@@ -11,10 +11,24 @@ import           System.Exit
 import           Config
 import           Logger
 import           Control.Monad.Reader
+import qualified System.Directory              as Dir
 import           System.Process                 ( readCreateProcessWithExitCode
                                                 , shell
                                                 )
 
+-- getExecutable executableName = do
+--     Config { binDir }   <- ask
+--     maybeExecutablePath <- liftIO $ Dir.findFile [binDir] executableName
+--     return $ errorOrExecutablePath maybeExecutablePath binDir
+--   where
+--     errorOrExecutablePath binDir = case maybeExecutablePath of
+--         Nothing -> logError
+--             (  "Failed to locate executable \""
+--             <> executableName
+--             <> "\" in "
+--             <> binDir
+--             )
+--         Just executablePath -> return executablePath
 
 runProcessWithDir dir shellCommand =
     runProcess ("cd " <> dir <> " && " <> shellCommand)
@@ -33,15 +47,25 @@ runProcessNonStrict shellCommand = _runProcess shellCommand []
 
 
 _runProcess shellCommand std_in = do
+    fullCommand               <- makeCommand shellCommand
     (exitCode, output, error) <- liftIO
-        $ readCreateProcessWithExitCode (shell shellCommand) std_in
-    logDebug $ shellCommand <> "\n" <> output
+        $ readCreateProcessWithExitCode (shell fullCommand) std_in
+    logDebug $ fullCommand <> "\n" <> output
     return (exitCode, output, error)
 
 
-exitIfFailed shellCommand commandResult = case commandResult of
-    (ExitFailure _, _, _) -> exitWithError shellCommand commandResult
-    _                     -> return commandResult
+makeCommand :: String -> ReaderT Config IO String
+makeCommand shellCommand = do
+    pathAddition <-
+        (\binDir -> "PATH=" <> binDir <> ":$PATH && ") <$> binDir <$> ask
+    return $ pathAddition <> shellCommand
+
+
+exitIfFailed shellCommand commandResult = do
+    fullCommand <- makeCommand shellCommand
+    case commandResult of
+        (ExitFailure _, _, _) -> exitWithError fullCommand commandResult
+        _                     -> return commandResult
 
 
 exitWithError shellCommand (exitCode, output, error) = do

@@ -10,6 +10,7 @@ import           Config
 import           Control.Monad.Reader
 import           System.Directory
 import           Symlinks
+import qualified Registry.Ruby                 as Ruby
 import           Registry                       ( Package(..)
                                                 , Source(..)
                                                 , PackageConfig(..)
@@ -51,9 +52,7 @@ stackInstall name = runProcess' ("stack install " <> name)
 
 pip3Install name = runProcess' ("pip3 install --user " <> name)
 
-rbenvExecutable = "~/dotfiles/.devfiles/.bin/rbenv"
-gemInstall name = runProcess'
-    ("eval \"$(" <> rbenvExecutable <> " init -)\" && gem install " <> name)
+gemInstall name = runProcess' $ Ruby.rbenvCommand ("gem install " <> name)
 
 npmInstall name =
     runProcess' ("source ~/.nvm/nvm.sh && npm install -g " <> name)
@@ -81,6 +80,7 @@ installPackage Package { name, source } = do
 installConfig :: PackageConfig -> ReaderT Config IO ()
 installConfig (PackageConfig name symlinkTarget) = do
     Config { homeDir, configsDir, builtConfigsDir } <- ask
+
     configExists <- liftIO $ doesPathExist (configsDir <> "/" <> name)
     unless configExists $ logError (name <> " does not exist!")
     liftIO $ copyFile (configsDir <> "/" <> name)
