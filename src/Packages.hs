@@ -21,6 +21,7 @@ stringSources =
     [ "git"
     , "brittany"
     , "prettier"
+    , "hidden-dock"
     , "tmuxinator"
     , "oh-my-zsh"
     , "neovim"

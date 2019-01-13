@@ -52,6 +52,7 @@ data Source
 
 data SymlinkTarget
   = Home
+  | XDGConfig String String
 
 data PackageConfig
   =  PackageConfig String SymlinkTarget
@@ -197,8 +198,17 @@ neovim = Package
                      -- TODO: pynvim is really for deoplete, but we can't
                      -- currently express that dependency relationship
                      , pythonPackage "pynvim"
+                     , Package
+                         { name         = "neovim-init-config"
+                         , source       = noopSource
+                         , dependencies = []
+                         , config       = Just $ PackageConfig
+                             "init.vim"
+                             (XDGConfig "nvim" "init.vim")
+                         , snippets     = []
+                         }
                      ]
-    , config       = Nothing
+    , config       = Just $ PackageConfig ".vimrc" Home
     , snippets     = []
     }
 
@@ -218,6 +228,8 @@ node = Package
     , snippets     = []
     }
 
+noopSource = Custom $ return ()
+
 -- Registry
 
 type Registry = HashMap.HashMap String Package
@@ -230,22 +242,39 @@ centralRegistry :: Registry
 centralRegistry = createRegistry
     [ Package
         { name         = "git"
-        , source       = Custom $ return ()
+        , source       = noopSource
         , dependencies = []
         , config       = Just $ PackageConfig ".gitconfig" Home
         , snippets     = []
         }
+    , Package
+        { name         = "hidden-dock"
+        , source       = Custom
+            $ runProcess'
+                  "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
+        , dependencies = []
+        , config       = Nothing
+        , snippets     = []
+        }
     , brewPackage "autojump"
-    , brewPackage "tmux"
-    , brewPackage "the_silver_searcher"
+    , (brewPackage "tmux") { config = Just $ PackageConfig ".tmux.conf" Home }
+    , (brewPackage "the_silver_searcher")
+        { config = Just $ PackageConfig ".agignore" Home
+        }
     , neovim
     , tmuxinator
-    , stackPackage "brittany"
+    , (stackPackage "brittany")
+        { config = Just $ PackageConfig "brittany.yaml"
+                                        (XDGConfig "brittany" "config.yaml")
+        }
     , npmPackage "elm-test"
     , npmPackage "elm"
     , npmPackage "elm-format"
     , npmPackage "cloc"
-    , npmPackage "prettier"
+    , (npmPackage "prettier") { config = Just $ PackageConfig
+                                  ".prettierrc.js"
+                                  Home
+                              }
     , githubPackage "oh-my-zsh" $ githubAddress "robbyrussell" "oh-my-zsh"
     , githubPackage "iTerm2-color-schemes"
         $ githubAddress "mbadolato" "iTerm2-Color-Schemes"
@@ -259,10 +288,17 @@ centralRegistry = createRegistry
     , Package
         { name         = "zsh"
         , source       = Custom Zsh.setShell
-        , dependencies = [ zshPlugin "zsh-completions"
-                               $ githubAddress "zsh-users" "zsh-completions"
+        , dependencies = [ Package
+                             { name         = "zprofile"
+                             , source       = noopSource
+                             , dependencies = []
+                             , config = Just $ PackageConfig ".zprofile" Home
+                             , snippets     = []
+                             }
+                         , zshPlugin "zsh-completions"
+                             $ githubAddress "zsh-users" "zsh-completions"
                          ]
-        , config       = Nothing
+        , config       = Just $ PackageConfig ".zshrc" Home
         , snippets     = []
         }
     , zshTheme "powerlevel9k" $ githubAddress "bhilburn" "powerlevel9k"

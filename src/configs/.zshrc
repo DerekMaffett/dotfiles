@@ -1,6 +1,22 @@
 export DOTFILES=$HOME/dotfiles
 
-source ~/.shell/aliases
+alias ls='ls -G'
+alias ll='ls -Al'
+alias l='ls -lrthG'
+alias mkdir='mkdir -p'
+alias ..='cd ..'
+
+alias g='git status -s'
+alias vim='nvim'
+alias vi='nvim'
+
+alias cloc='cloc --not-match-f package-lock --not-match-d dist'
+
+alias filecount='find . | cut -d/ -f2 | sort | uniq -c | sort -bn'
+
+alias dot='txs dotfiles'
+alias omnia='txs omnia'
+alias tk='tmux kill-session && refresh'
 
 export ZSH=$DOTFILES/.devfiles/.installations/robbyrussell/oh-my-zsh
 

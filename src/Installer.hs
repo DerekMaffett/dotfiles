@@ -8,7 +8,7 @@ import           Logger
 import           Process
 import           Config
 import           Control.Monad.Reader
-import           System.Directory
+import qualified System.Directory              as Dir
 import           Symlinks
 import qualified Registry.Ruby                 as Ruby
 import           Registry                       ( Package(..)
@@ -79,14 +79,21 @@ installPackage Package { name, source } = do
 
 installConfig :: PackageConfig -> ReaderT Config IO ()
 installConfig (PackageConfig name symlinkTarget) = do
-    Config { homeDir, configsDir, builtConfigsDir } <- ask
+    Config { configsDir, builtConfigsDir } <- ask
 
-    configExists <- liftIO $ doesPathExist (configsDir <> "/" <> name)
+    configExists <- liftIO $ Dir.doesPathExist (configsDir <> "/" <> name)
     unless configExists $ logError (name <> " does not exist!")
-    liftIO $ copyFile (configsDir <> "/" <> name)
-                      (builtConfigsDir <> "/" <> name)
-    createSymlink (builtConfigsDir <> "/" <> name)
-                  (getTarget homeDir name symlinkTarget)
+
+    liftIO $ Dir.copyFile (configsDir <> "/" <> name)
+                          (builtConfigsDir <> "/" <> name)
+    linkPath <- getLinkPath name symlinkTarget
+    createSymlink (builtConfigsDir <> "/" <> name) linkPath
   where
-    getTarget homeDir name symlinkTarget = case symlinkTarget of
-        Home -> homeDir <> "/" <> name
+    getLinkPath :: String -> SymlinkTarget -> ReaderT Config IO String
+    getLinkPath name symlinkTarget = do
+        Config { homeDir } <- ask
+        xdgConfigDir       <- liftIO $ Dir.getXdgDirectory Dir.XdgConfig []
+        return $ case symlinkTarget of
+            Home -> homeDir <> "/" <> name
+            XDGConfig folderName xdgName ->
+                xdgConfigDir <> "/" <> folderName <> "/" <> xdgName

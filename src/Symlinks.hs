@@ -1,6 +1,5 @@
 module Symlinks
-    ( createSymlinks
-    , createSymlink
+    ( createSymlink
     )
 where
 
@@ -10,17 +9,6 @@ import           Config
 import           Logger
 import           Data.List
 import           Control.Monad
-
-homeDirConfigs =
-    [ "zshrc"
-    , "zprofile"
-    , "shell"
-    , "vimrc"
-    , "tmux.conf"
-    , "agignore"
-    , "prettierrc.js"
-    , "prettierignore"
-    ]
 
 
 friendlyPath homeDir path = case stripPrefix homeDir path of
@@ -49,21 +37,3 @@ createSymlink_ targetPath linkPath = do
 createSymlink targetPath linkPath = do
     liftIO $ createSymlink_ targetPath linkPath
     logSymlink targetPath linkPath
-
-
-linkToHomeDir :: String -> ReaderT Config IO ()
-linkToHomeDir configName = do
-    Config { homeDir, configsDir } <- ask
-    createSymlink (configsDir <> "/" <> configName)
-                  (homeDir <> "/." <> configName)
-
-
-createSymlinks :: ReaderT Config IO ()
-createSymlinks = do
-    Config { homeDir, configsDir } <- ask
-    logNotice "Creating Symlinks..."
-    mapM_ linkToHomeDir homeDirConfigs
-    createSymlink (configsDir <> "/init.vim")
-                  (homeDir <> "/.config/nvim/init.vim")
-    createSymlink (configsDir <> "/brittany.yaml")
-                  (homeDir <> "/.config/brittany/config.yaml")

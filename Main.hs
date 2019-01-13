@@ -2,20 +2,13 @@ module Main where
 
 import qualified CustomScripts
 import qualified Dependencies
-import qualified Symlinks
 import           Options.Applicative
 import           Control.Monad.Reader
 import           Config
-import           Process
 
 opts :: ParserInfo Options
 opts = info
-    (    liftA3 Options
-                includeDependenciesFlag
-                includeCustomScriptsFlag
-                debugModeFlag
-    <**> helper
-    )
+    (liftA2 Options includeCustomScriptsFlag debugModeFlag <**> helper)
     (  fullDesc
     <> progDesc
            "Sets up all dependencies and symlinks necessary for vim/tmux workflow"
@@ -26,11 +19,6 @@ includeCustomScriptsFlag :: Parser Bool
 includeCustomScriptsFlag =
     switch $ long "include-custom-scripts" <> short 's' <> help
         "Compile and install custom scripts"
-
-includeDependenciesFlag :: Parser Bool
-includeDependenciesFlag =
-    switch $ long "include-dependencies" <> short 'f' <> help
-        "Install full dependencies"
 
 debugModeFlag :: Parser Bool
 debugModeFlag = switch $ long "debug" <> short 'd' <> help "debug mode"
@@ -50,16 +38,9 @@ runProgram = do
 
 install :: ReaderT Config IO ()
 install = do
-    installDependencies
-    Symlinks.createSymlinks
+    Dependencies.install
     installCustomScripts
-    runProcess'
-        "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
   where
-    installDependencies = do
-        Config { includeDependencies } <- ask
-        when includeDependencies Dependencies.install
-
     installCustomScripts = do
         Config { includeCustomScripts } <- ask
         when includeCustomScripts CustomScripts.install

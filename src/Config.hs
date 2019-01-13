@@ -19,7 +19,6 @@ import           Control.Monad.Reader
 
 data Config = Config
   { logger :: String
-  , includeDependencies :: Bool
   , includeCustomScripts :: Bool
   , homeDir :: String
   , dotfilesDir :: String
@@ -32,28 +31,25 @@ data Config = Config
   }
 
 data Options = Options
-  { includeDependencies :: Bool
-  , includeCustomScripts :: Bool
+  { includeCustomScripts :: Bool
   , useDebugLogger :: Bool
   }
 
 configFromOptions :: Options -> IO Config
-configFromOptions Options { includeDependencies, includeCustomScripts, useDebugLogger }
-    = do
-        homeDir <- Dir.getHomeDirectory
-        return Config
-            { logger = if useDebugLogger then "DebugLogger" else "BasicLogger"
-            , includeDependencies  = includeDependencies
-            , includeCustomScripts = includeCustomScripts
-            , homeDir              = homeDir
-            , installationsDir     = getInstallationsDir homeDir
-            , dotfilesDir          = getDotfilesDir homeDir
-            , devfilesDir          = getDevfilesDir homeDir
-            , configsDir           = getConfigsDir homeDir
-            , builtConfigsDir      = getBuiltConfigsDir homeDir
-            , buildDir             = getBuildDir homeDir
-            , binDir               = getBinDir homeDir
-            }
+configFromOptions Options { includeCustomScripts, useDebugLogger } = do
+    homeDir <- Dir.getHomeDirectory
+    return Config
+        { logger = if useDebugLogger then "DebugLogger" else "BasicLogger"
+        , includeCustomScripts = includeCustomScripts
+        , homeDir              = homeDir
+        , installationsDir     = getInstallationsDir homeDir
+        , dotfilesDir          = getDotfilesDir homeDir
+        , devfilesDir          = getDevfilesDir homeDir
+        , configsDir           = getConfigsDir homeDir
+        , builtConfigsDir      = getBuiltConfigsDir homeDir
+        , buildDir             = getBuildDir homeDir
+        , binDir               = getBinDir homeDir
+        }
   where
     getDotfilesDir homeDir = homeDir <> "/dotfiles"
     getDevfilesDir homeDir = (getDotfilesDir homeDir) <> "/.devfiles"
