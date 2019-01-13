@@ -53,6 +53,7 @@ data Package
   { name :: String
   , source :: Source
   , dependencies :: [Package]
+  , configs :: [Config]
   }
 
 -- Package creators
@@ -62,36 +63,65 @@ githubAddress author name =
 withBranch overrideBranch (GitAddress { author, name, branch }) =
     GitAddress {author = author, name = name, branch = overrideBranch}
 
-zshTheme name address =
-    Package {name = name, source = Zsh Theme address, dependencies = []}
+zshTheme name address = Package
+    { name         = name
+    , source       = Zsh Theme address
+    , dependencies = []
+    , configs      = []
+    }
 
-zshPlugin name address =
-    Package {name = name, source = Zsh Plugin address, dependencies = []}
+zshPlugin name address = Package
+    { name         = name
+    , source       = Zsh Plugin address
+    , dependencies = []
+    , configs      = []
+    }
 
-rubyPackage name =
-    Package {name = name, source = Ruby name, dependencies = [ruby]}
+rubyPackage name = Package
+    { name         = name
+    , source       = Ruby name
+    , dependencies = [ruby]
+    , configs      = []
+    }
 
-brewPackage name =
-    Package {name = name, source = Brew name, dependencies = [homebrew]}
+brewPackage name = Package
+    { name         = name
+    , source       = Brew name
+    , dependencies = [homebrew]
+    , configs      = []
+    }
 
-pythonPackage name =
-    Package {name = name, source = Python name, dependencies = [python]}
+pythonPackage name = Package
+    { name         = name
+    , source       = Python name
+    , dependencies = [python]
+    , configs      = []
+    }
 
-npmPackage name =
-    Package {name = name, source = Npm name, dependencies = [node]}
+npmPackage name = Package
+    { name         = name
+    , source       = Npm name
+    , dependencies = [node]
+    , configs      = []
+    }
 
-githubPackage name address =
-    Package {name = name, source = Github address, dependencies = []}
+githubPackage name address = Package
+    { name         = name
+    , source       = Github address
+    , dependencies = []
+    , configs      = []
+    }
 
 -- TODO: add stack as dependency
 stackPackage name =
-    Package {name = name, source = Stack name, dependencies = []}
+    Package {name = name, source = Stack name, dependencies = [], configs = []}
 
 withDependencies additionalDependencies Package { name, source, dependencies }
     = Package
         { name         = name
         , source       = source
         , dependencies = dependencies <> additionalDependencies
+        , configs      = []
         }
 
 
@@ -101,6 +131,7 @@ homebrew = Package
     , source       = Batch
         [Custom $ runProcess' "brew update", Custom updateBrewPackages]
     , dependencies = []
+    , configs      = []
     }
 
 rbenv = Package
@@ -112,12 +143,14 @@ rbenv = Package
         , Custom $ Ruby.installRbenvPlugin "rbenv/ruby-build"
         ]
     , dependencies = []
+    , configs      = []
     }
 
 ruby = Package
     { name         = "ruby"
     , source       = Custom (Ruby.install "2.6.0")
     , dependencies = [rbenv]
+    , configs      = []
     }
 
 python = brewPackage "python"
@@ -138,6 +171,7 @@ neovim = Package
                      -- currently express that dependency relationship
                      , pythonPackage "pynvim"
                      ]
+    , configs      = []
     }
 
 
@@ -148,7 +182,12 @@ tmuxinator =
             ]
         $ rubyPackage "tmuxinator"
 
-node = Package {name = "node", source = Custom Node.install, dependencies = []}
+node = Package
+    { name         = "node"
+    , source       = Custom Node.install
+    , dependencies = []
+    , configs      = []
+    }
 
 -- Registry
 
@@ -178,6 +217,7 @@ centralRegistry = createRegistry
         { name         = "vim-plug"
         , source       = Custom installVimPlug
         , dependencies = [neovim]
+        , configs      = []
         }
     , Package
         { name         = "zsh"
@@ -185,6 +225,7 @@ centralRegistry = createRegistry
         , dependencies = [ zshPlugin "zsh-completions"
                                $ githubAddress "zsh-users" "zsh-completions"
                          ]
+        , configs      = []
         }
     , zshTheme "powerlevel9k" $ githubAddress "bhilburn" "powerlevel9k"
     , Package
@@ -194,6 +235,7 @@ centralRegistry = createRegistry
             , Custom installPowerlineFonts
             ]
         , dependencies = []
+        , configs      = []
         }
     ]
 
