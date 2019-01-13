@@ -20,6 +20,8 @@ Plug 'tpope/vim-sleuth'
 
 Plug 'sbdchd/neoformat'
 
+Plug 'neovimhaskell/haskell-vim'
+
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 

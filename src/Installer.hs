@@ -79,7 +79,7 @@ installPackage Package { name, source } = do
     installFromSource source
 
 installConfig :: (PackageConfig, [Snippet]) -> ReaderT Config IO ()
-installConfig ((PackageConfig name symlinkTarget), snippets) = do
+installConfig (PackageConfig name symlinkTarget, snippets) = do
     Config { configsDir, builtConfigsDir } <- ask
 
     configExists <- liftIO $ Dir.doesPathExist (configsDir <> "/" <> name)
@@ -87,6 +87,8 @@ installConfig ((PackageConfig name symlinkTarget), snippets) = do
 
     liftIO $ Dir.copyFile (configsDir <> "/" <> name)
                           (builtConfigsDir <> "/" <> name)
+    applySnippets (builtConfigsDir <> "/" <> name) snippets
+
     linkPath <- getLinkPath name symlinkTarget
     createSymlink (builtConfigsDir <> "/" <> name) linkPath
   where
@@ -98,3 +100,6 @@ installConfig ((PackageConfig name symlinkTarget), snippets) = do
             Home -> homeDir <> "/" <> name
             XDGConfig folderName xdgName ->
                 xdgConfigDir <> "/" <> folderName <> "/" <> xdgName
+    applySnippets filePath snippets = mapM_ (applySnippet filePath) snippets
+    applySnippet filePath (Snippet _ snippetString) =
+        liftIO $ appendFile filePath ("\n" <> snippetString)
