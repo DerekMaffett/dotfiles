@@ -48,12 +48,21 @@ data Source
   | Custom (ReaderT Config IO ())
 
 
+data SymlinkTarget
+  = Home
+
+data PackageConfig
+  =  PackageConfig String SymlinkTarget
+
+data Snippet = Snippet String Config
+
 data Package
   = Package
   { name :: String
   , source :: Source
   , dependencies :: [Package]
-  , configs :: [Config]
+  , config :: Maybe PackageConfig
+  , snippets :: [Snippet]
   }
 
 -- Package creators
@@ -67,61 +76,74 @@ zshTheme name address = Package
     { name         = name
     , source       = Zsh Theme address
     , dependencies = []
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 zshPlugin name address = Package
     { name         = name
     , source       = Zsh Plugin address
     , dependencies = []
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 rubyPackage name = Package
     { name         = name
     , source       = Ruby name
     , dependencies = [ruby]
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 brewPackage name = Package
     { name         = name
     , source       = Brew name
     , dependencies = [homebrew]
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 pythonPackage name = Package
     { name         = name
     , source       = Python name
     , dependencies = [python]
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 npmPackage name = Package
     { name         = name
     , source       = Npm name
     , dependencies = [node]
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 githubPackage name address = Package
     { name         = name
     , source       = Github address
     , dependencies = []
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 -- TODO: add stack as dependency
-stackPackage name =
-    Package {name = name, source = Stack name, dependencies = [], configs = []}
+stackPackage name = Package
+    { name         = name
+    , source       = Stack name
+    , dependencies = []
+    , config       = Nothing
+    , snippets     = []
+    }
 
 withDependencies additionalDependencies Package { name, source, dependencies }
     = Package
         { name         = name
         , source       = source
         , dependencies = dependencies <> additionalDependencies
-        , configs      = []
+        , config       = Nothing
+        , snippets     = []
         }
 
 
@@ -131,7 +153,8 @@ homebrew = Package
     , source       = Batch
         [Custom $ runProcess' "brew update", Custom updateBrewPackages]
     , dependencies = []
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 rbenv = Package
@@ -143,14 +166,16 @@ rbenv = Package
         , Custom $ Ruby.installRbenvPlugin "rbenv/ruby-build"
         ]
     , dependencies = []
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 ruby = Package
     { name         = "ruby"
     , source       = Custom (Ruby.install "2.6.0")
     , dependencies = [rbenv]
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 python = brewPackage "python"
@@ -171,7 +196,8 @@ neovim = Package
                      -- currently express that dependency relationship
                      , pythonPackage "pynvim"
                      ]
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 
@@ -186,7 +212,8 @@ node = Package
     { name         = "node"
     , source       = Custom Node.install
     , dependencies = []
-    , configs      = []
+    , config       = Nothing
+    , snippets     = []
     }
 
 -- Registry
@@ -217,7 +244,8 @@ centralRegistry = createRegistry
         { name         = "vim-plug"
         , source       = Custom installVimPlug
         , dependencies = [neovim]
-        , configs      = []
+        , config       = Nothing
+        , snippets     = []
         }
     , Package
         { name         = "zsh"
@@ -225,7 +253,8 @@ centralRegistry = createRegistry
         , dependencies = [ zshPlugin "zsh-completions"
                                $ githubAddress "zsh-users" "zsh-completions"
                          ]
-        , configs      = []
+        , config       = Nothing
+        , snippets     = []
         }
     , zshTheme "powerlevel9k" $ githubAddress "bhilburn" "powerlevel9k"
     , Package
@@ -235,7 +264,8 @@ centralRegistry = createRegistry
             , Custom installPowerlineFonts
             ]
         , dependencies = []
-        , configs      = []
+        , config       = Nothing
+        , snippets     = []
         }
     ]
 

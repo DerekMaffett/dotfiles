@@ -17,23 +17,63 @@ noop = Custom $ return ()
 b = Package
     { name         = "b"
     , source       = noop
-    , dependencies = [ Package {name = "b1", source = noop, dependencies = []}
-                     , Package {name = "b2", source = noop, dependencies = []}
+    , dependencies = [ Package
+                         { name         = "b1"
+                         , source       = noop
+                         , dependencies = []
+                         , config       = Nothing
+                         , snippets     = []
+                         }
+                     , Package
+                         { name         = "b2"
+                         , source       = noop
+                         , dependencies = []
+                         , config       = Nothing
+                         , snippets     = []
+                         }
                      ]
+    , config       = Nothing
+    , snippets     = []
     }
 
 c = Package
     { name         = "c"
     , source       = noop
-    , dependencies = [ Package {name = "c1", source = noop, dependencies = []}
-                     , Package {name = "c2", source = noop, dependencies = []}
+    , dependencies = [ Package
+                         { name         = "c1"
+                         , source       = noop
+                         , dependencies = []
+                         , config       = Nothing
+                         , snippets     = []
+                         }
+                     , Package
+                         { name         = "c2"
+                         , source       = noop
+                         , dependencies = []
+                         , config       = Nothing
+                         , snippets     = []
+                         }
                      , b
                      ]
+    , config       = Nothing
+    , snippets     = []
     }
 
 testRegistry = createRegistry
-    [ Package {name = "no-dependencies", source = noop, dependencies = []}
-    , Package {name = "a", source = noop, dependencies = [b, c]}
+    [ Package
+        { name         = "no-dependencies"
+        , source       = noop
+        , dependencies = []
+        , config       = Nothing
+        , snippets     = []
+        }
+    , Package
+        { name         = "a"
+        , source       = noop
+        , dependencies = [b, c]
+        , config       = Nothing
+        , snippets     = []
+        }
     , b
     , c
     ]
