@@ -53,14 +53,10 @@ data Source
 
 data SymlinkTarget
   = Home
-  | XDGConfig String String deriving (Show)
+  | XDGConfig String String deriving (Show, Eq)
 
 data PackageConfig
-  =  PackageConfig String SymlinkTarget deriving (Show)
-
-instance Eq PackageConfig where
-  (PackageConfig nameA _) == (PackageConfig nameB _) = nameA == nameB
-  (PackageConfig nameA _) /= (PackageConfig nameB _) = nameA /= nameB
+  =  PackageConfig String SymlinkTarget deriving (Show, Eq)
 
 data Snippet = Snippet PackageConfig String deriving (Show, Eq)
 
