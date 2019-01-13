@@ -14,6 +14,7 @@ import qualified Registry.Ruby                 as Ruby
 import           Registry                       ( Package(..)
                                                 , Source(..)
                                                 , PackageConfig(..)
+                                                , Snippet(..)
                                                 , SymlinkTarget(..)
                                                 , GitAddress(..)
                                                 , ZshPluginType(..)
@@ -77,8 +78,8 @@ installPackage Package { name, source } = do
     logNotice $ "Installing " <> name <> "..."
     installFromSource source
 
-installConfig :: PackageConfig -> ReaderT Config IO ()
-installConfig (PackageConfig name symlinkTarget) = do
+installConfig :: (PackageConfig, [Snippet]) -> ReaderT Config IO ()
+installConfig ((PackageConfig name symlinkTarget), snippets) = do
     Config { configsDir, builtConfigsDir } <- ask
 
     configExists <- liftIO $ Dir.doesPathExist (configsDir <> "/" <> name)

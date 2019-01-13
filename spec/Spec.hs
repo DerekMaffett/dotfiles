@@ -1,7 +1,12 @@
 import           Test.Hspec
-import           Packages                       ( processPackageList )
+import           Packages                       ( processPackageList
+                                                , getConfigsAndSnippets
+                                                )
 import           Registry                       ( Source(..)
                                                 , Package(..)
+                                                , Snippet(..)
+                                                , SymlinkTarget(..)
+                                                , PackageConfig(..)
                                                 , createRegistry
                                                 )
 
@@ -14,68 +19,50 @@ getNames = fmap name
 
 noop = Custom $ return ()
 
-b = Package
-    { name         = "b"
+basePackage = Package
+    { name         = ""
     , source       = noop
-    , dependencies = [ Package
-                         { name         = "b1"
-                         , source       = noop
-                         , dependencies = []
-                         , config       = Nothing
-                         , snippets     = []
-                         }
-                     , Package
-                         { name         = "b2"
-                         , source       = noop
-                         , dependencies = []
-                         , config       = Nothing
-                         , snippets     = []
-                         }
-                     ]
+    , dependencies = []
     , config       = Nothing
     , snippets     = []
     }
 
-c = Package
+b = basePackage
+    { name         = "b"
+    , dependencies = [basePackage { name = "b1" }, basePackage { name = "b2" }]
+    }
+
+c = basePackage
     { name         = "c"
-    , source       = noop
-    , dependencies = [ Package
-                         { name         = "c1"
-                         , source       = noop
-                         , dependencies = []
-                         , config       = Nothing
-                         , snippets     = []
-                         }
-                     , Package
-                         { name         = "c2"
-                         , source       = noop
-                         , dependencies = []
-                         , config       = Nothing
-                         , snippets     = []
-                         }
+    , dependencies = [ basePackage { name = "c1" }
+                     , basePackage { name = "c2" }
                      , b
                      ]
-    , config       = Nothing
-    , snippets     = []
     }
 
+config1 = PackageConfig "config1" Home
+config2 = PackageConfig "config2" Home
+
 testRegistry = createRegistry
-    [ Package
-        { name         = "no-dependencies"
-        , source       = noop
-        , dependencies = []
-        , config       = Nothing
-        , snippets     = []
-        }
-    , Package
-        { name         = "a"
-        , source       = noop
-        , dependencies = [b, c]
-        , config       = Nothing
-        , snippets     = []
-        }
+    [ basePackage { name = "no-dependencies" }
+    , basePackage { name = "a", dependencies = [b, c] }
     , b
     , c
+    , basePackage { name = "has-config-1", config = Just config1 }
+    , basePackage { name     = "has-snippet-1a"
+                  , snippets = [Snippet config1 "well"]
+                  }
+    , basePackage { name     = "has-snippet-1b"
+                  , snippets = [Snippet config1 "hello"]
+                  }
+    , basePackage { name = "has-config-2", config = Just config2 }
+    , basePackage
+        { name     = "has-snippet-2a-1c"
+        , snippets = [Snippet config1 "there", Snippet config2 "General"]
+        }
+    , basePackage { name     = "has-snippet-2b"
+                  , snippets = [Snippet config2 "Kenobi"]
+                  }
     ]
 
 testSuite = do
@@ -101,3 +88,28 @@ testSuite = do
         it "unpacks dependencies in correct order without duplicates"
             $          getNames (processPackageList testRegistry ["a", "b"])
             `shouldBe` ["b1", "b2", "b", "c1", "c2", "c", "a"]
+
+    describe "getConfigsAndSnippets" $ do
+        let list =
+                [ "has-config-1"
+                , "has-snippet-1a"
+                , "has-snippet-1b"
+                , "has-config-2"
+                , "has-snippet-2a-1c"
+                , "has-snippet-2b"
+                ]
+        it "assertion on package list"
+            $          getNames (processPackageList testRegistry list)
+            `shouldBe` list
+        it "should collect configs and snippets together"
+            $ getConfigsAndSnippets (processPackageList testRegistry list)
+            `shouldBe` [ ( config1
+                         , [ Snippet config1 "well"
+                           , Snippet config1 "hello"
+                           , Snippet config1 "there"
+                           ]
+                         )
+                       , ( config2
+                         , [Snippet config2 "General", Snippet config2 "Kenobi"]
+                         )
+                       ]

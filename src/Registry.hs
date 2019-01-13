@@ -3,6 +3,7 @@ module Registry
     , registryMember
     , Registry
     , Package(..)
+    , Snippet(..)
     , Source(..)
     , PackageConfig(..)
     , SymlinkTarget(..)
@@ -52,12 +53,16 @@ data Source
 
 data SymlinkTarget
   = Home
-  | XDGConfig String String
+  | XDGConfig String String deriving (Show)
 
 data PackageConfig
-  =  PackageConfig String SymlinkTarget
+  =  PackageConfig String SymlinkTarget deriving (Show)
 
-data Snippet = Snippet String Config
+instance Eq PackageConfig where
+  (PackageConfig nameA _) == (PackageConfig nameB _) = nameA == nameB
+  (PackageConfig nameA _) /= (PackageConfig nameB _) = nameA /= nameB
+
+data Snippet = Snippet PackageConfig String deriving (Show, Eq)
 
 data Package
   = Package
@@ -150,6 +155,15 @@ withDependencies additionalDependencies Package { name, source, dependencies }
         }
 
 
+basicPackage name = Package
+    { name         = name
+    , source       = noopSource
+    , dependencies = []
+    , config       = Nothing
+    , snippets     = []
+    }
+
+
 -- Common packages
 homebrew = Package
     { name         = "brew"
@@ -228,7 +242,29 @@ node = Package
     , snippets     = []
     }
 
+
+zsh = Package
+    { name         = "zsh"
+    , source       = Custom Zsh.setShell
+    , dependencies = [ Package
+                         { name         = "zprofile"
+                         , source       = noopSource
+                         , dependencies = []
+                         , config       = Just $ PackageConfig ".zprofile" Home
+                         , snippets     = []
+                         }
+                     , zshPlugin "zsh-completions"
+                         $ githubAddress "zsh-users" "zsh-completions"
+                     ]
+    , config       = Just zshrc
+    , snippets     = []
+    }
+
 noopSource = Custom $ return ()
+
+-- Configs
+
+zshrc = PackageConfig ".zshrc" Home
 
 -- Registry
 
@@ -240,21 +276,15 @@ createRegistry = (HashMap.fromList)
 
 centralRegistry :: Registry
 centralRegistry = createRegistry
-    [ Package
-        { name         = "git"
-        , source       = noopSource
-        , dependencies = []
-        , config       = Just $ PackageConfig ".gitconfig" Home
-        , snippets     = []
+    [ (basicPackage "stack")
+        { snippets = [Snippet zshrc "export PATH=$HOME/.local/bin:$PATH"]
         }
-    , Package
-        { name         = "hidden-dock"
-        , source       = Custom
-            $ runProcess'
-                  "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
-        , dependencies = []
-        , config       = Nothing
-        , snippets     = []
+    , (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
+    , (basicPackage "hidden-dock")
+        { source =
+            Custom
+                $ runProcess'
+                      "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
         }
     , brewPackage "autojump"
     , (brewPackage "tmux") { config = Just $ PackageConfig ".tmux.conf" Home }
@@ -275,42 +305,22 @@ centralRegistry = createRegistry
                                   ".prettierrc.js"
                                   Home
                               }
-    , githubPackage "oh-my-zsh" $ githubAddress "robbyrussell" "oh-my-zsh"
+    , zsh
+    , (githubPackage "oh-my-zsh" $ githubAddress "robbyrussell" "oh-my-zsh") { dependencies = [ zsh
+                                                                                              ]
+                                                                             }
     , githubPackage "iTerm2-color-schemes"
         $ githubAddress "mbadolato" "iTerm2-Color-Schemes"
-    , Package
-        { name         = "vim-plug"
-        , source       = Custom installVimPlug
-        , dependencies = [neovim]
-        , config       = Nothing
-        , snippets     = []
-        }
-    , Package
-        { name         = "zsh"
-        , source       = Custom Zsh.setShell
-        , dependencies = [ Package
-                             { name         = "zprofile"
-                             , source       = noopSource
-                             , dependencies = []
-                             , config = Just $ PackageConfig ".zprofile" Home
-                             , snippets     = []
-                             }
-                         , zshPlugin "zsh-completions"
-                             $ githubAddress "zsh-users" "zsh-completions"
-                         ]
-        , config       = Just $ PackageConfig ".zshrc" Home
-        , snippets     = []
-        }
+    , (basicPackage "vim-plug") { source       = Custom installVimPlug
+                                , dependencies = [neovim]
+                                }
     , zshTheme "powerlevel9k" $ githubAddress "bhilburn" "powerlevel9k"
-    , Package
-        { name         = "powerline-fonts"
-        , source       = Batch
-            [ Github $ githubAddress "powerline" "fonts"
-            , Custom installPowerlineFonts
-            ]
-        , dependencies = []
-        , config       = Nothing
-        , snippets     = []
+    , (basicPackage "powerline-fonts")
+        { source =
+            Batch
+                [ Github $ githubAddress "powerline" "fonts"
+                , Custom installPowerlineFonts
+                ]
         }
     ]
 

@@ -1,6 +1,7 @@
 module Packages
     ( install
     , processPackageList
+    , getConfigsAndSnippets
     )
 where
 
@@ -13,6 +14,8 @@ import qualified Installer
 import           Registry                       ( registryLookup
                                                 , registryMember
                                                 , Package(..)
+                                                , PackageConfig(..)
+                                                , Snippet(..)
                                                 , centralRegistry
                                                 , Registry
                                                 )
@@ -61,7 +64,21 @@ processPackageList registry packageList =
         . nub
         $ packageList
 
-getConfigsAndSnippets packages = catMaybes . (fmap config) $ packages
+
+getConfigsAndSnippets :: [Package] -> [(PackageConfig, [Snippet])]
+getConfigsAndSnippets packages = fmap associateWithSnippets packageConfigs
+  where
+    associateWithSnippets packageConfig =
+        (packageConfig, snippetsFor packageConfig)
+    snippetsFor packageConfig =
+        filter (snippetIsForConfig packageConfig) allSnippets
+    snippetIsForConfig packageConfig (Snippet snippetConfig _) =
+        packageConfig == snippetConfig
+    allSnippets :: [Snippet]
+    allSnippets = concatMap snippets packages
+    packageConfigs :: [PackageConfig]
+    packageConfigs = catMaybes . (fmap config) $ packages
+
 
 install = do
     when (not . null $ missingPackages)

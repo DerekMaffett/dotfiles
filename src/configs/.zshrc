@@ -22,7 +22,6 @@ export ZSH=$DOTFILES/.devfiles/.installations/robbyrussell/oh-my-zsh
 
 plugins=(
    autojump
-   fzf
    tmuxinator
    zsh-completions
 )
@@ -36,7 +35,6 @@ POWERLEVEL9K_SHORTEN_STRATEGY="Default"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 
 autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
 
 source $ZSH/oh-my-zsh.sh
 
@@ -48,7 +46,6 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 
 # Path
-export PATH=$HOME/.local/bin:$PATH # Haskell Stack executables
 export PATH=$DOTFILES/.devfiles/.bin:$PATH
 
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
