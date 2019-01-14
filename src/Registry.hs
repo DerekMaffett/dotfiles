@@ -301,10 +301,10 @@ createRegistry = (HashMap.fromList)
 centralRegistry :: Registry
 centralRegistry = createRegistry
     [ (basicPackage "stack")
-        { snippets = [ Snippet zshrc $ unlines
-                           [ "export PATH=$HOME/.local/bin:$PATH"
-                           , "eval \"$(stack --bash-completion-script stack)\""
-                           ]
+        { snippets = [ Snippet zshrc
+                           $ unlines ["export PATH=$HOME/.local/bin:$PATH"
+                           -- , "eval \"$(stack --bash-completion-script stack)\""
+                                                                          ]
                      ]
         }
     , (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
