@@ -22,11 +22,12 @@ import           Registry                       ( registryLookup
 
 stringSources =
     [ "git"
+    , "stack"
+    , "oh-my-zsh"
     , "brittany"
     , "prettier"
     , "hidden-dock"
     , "tmuxinator"
-    , "oh-my-zsh"
     , "neovim"
     , "elm"
     , "elm-format"

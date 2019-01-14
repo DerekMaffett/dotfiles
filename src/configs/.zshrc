@@ -1,4 +1,5 @@
 export DOTFILES=$HOME/dotfiles
+export PATH=$DOTFILES/.devfiles/.bin:$PATH
 
 alias ls='ls -G'
 alias ll='ls -Al'
@@ -38,26 +39,5 @@ autoload -U +X compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
 
-# Tmuxinator
-export TMUXINATOR_CONFIG="$HOME/dotfiles/src/configs/tmuxinator"
-source $DOTFILES/.devfiles/.installations/tmuxinator/tmuxinator/completion/tmuxinator.zsh
-
-export EDITOR='nvim'
-export VISUAL='nvim'
-
-# Path
-export PATH=$DOTFILES/.devfiles/.bin:$PATH
-
+# Associated with vim plugin, so weird to autogenerate this currently...
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
-
-# Rbenv shims and stuff
-export RBENV_ROOT=$DOTFILES/.devfiles/.installations/rbenv/rbenv
-eval "$(rbenv init -)"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Stack autocompletion
-eval "$(stack --bash-completion-script stack)"
-# eval "$(setup --bash-completion-script setup)"

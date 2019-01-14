@@ -180,7 +180,11 @@ rbenv = Package
         ]
     , dependencies = []
     , config       = Nothing
-    , snippets     = []
+    , snippets     = [ Snippet zshrc $ unlines
+                           [ "export RBENV_ROOT=$HOME/dotfiles/.devfiles/.installations/rbenv/rbenv"
+                           , "eval \"$(rbenv init -)\""
+                           ]
+                     ]
     }
 
 ruby = Package
@@ -218,24 +222,39 @@ neovim = Package
                          , snippets     = []
                          }
                      ]
-    , config       = Just $ PackageConfig ".vimrc" Home
-    , snippets     = []
+    , config       = Just vimrc
+    , snippets     = [ Snippet zshrc $ unlines
+                           ["export EDITOR='nvim'", "export VISUAL='nvim'"]
+                     ]
     }
 
 
-tmuxinator =
-    withDependencies
-            [ githubPackage "tmuxinator-completions"
-                  $ githubAddress "tmuxinator" "tmuxinator"
-            ]
-        $ rubyPackage "tmuxinator"
+tmuxinator = ( withDependencies
+                     [ githubPackage "tmuxinator-completions"
+                           $ githubAddress "tmuxinator" "tmuxinator"
+                     ]
+             $ rubyPackage "tmuxinator"
+             )
+    { snippets =
+        [ Snippet zshrc $ unlines
+              [ "export TMUXINATOR_CONFIG=\"$HOME/dotfiles/src/configs/tmuxinator\""
+              , "source $HOME/dotfiles/.devfiles/.installations/tmuxinator/tmuxinator/completion/tmuxinator.zsh"
+              ]
+        ]
+    }
+
 
 node = Package
     { name         = "node"
     , source       = Custom Node.install
     , dependencies = []
     , config       = Nothing
-    , snippets     = []
+    , snippets     = [ Snippet zshrc $ unlines
+                           [ "export NVM_DIR=\"$HOME/.nvm\""
+                           , "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\""
+                           , "[ -s \"$NVM_DIR/bash_completion\" ] && . \"$NVM_DIR/bash_completion\""
+                           ]
+                     ]
     }
 
 
@@ -249,8 +268,16 @@ zsh = Package
                          , config       = Just $ PackageConfig ".zprofile" Home
                          , snippets     = []
                          }
-                     , zshPlugin "zsh-completions"
-                         $ githubAddress "zsh-users" "zsh-completions"
+                     , ( githubPackage "zsh-completions"
+                       $ githubAddress "zsh-users" "zsh-completions"
+                       )
+                         { snippets =
+                             [ Snippet zshrc $ unlines
+                                   [ "export fpath=(path/to/zsh-completions/src $fpath)"
+                                   , "rm -f ~/.zcompdump; compinit"
+                                   ]
+                             ]
+                         }
                      ]
     , config       = Just zshrc
     , snippets     = []
@@ -261,6 +288,7 @@ noopSource = Custom $ return ()
 -- Configs
 
 zshrc = PackageConfig ".zshrc" Home
+vimrc = PackageConfig ".vimrc" Home
 
 -- Registry
 
@@ -273,7 +301,11 @@ createRegistry = (HashMap.fromList)
 centralRegistry :: Registry
 centralRegistry = createRegistry
     [ (basicPackage "stack")
-        { snippets = [Snippet zshrc "export PATH=$HOME/.local/bin:$PATH"]
+        { snippets = [ Snippet zshrc $ unlines
+                           [ "export PATH=$HOME/.local/bin:$PATH"
+                           , "eval \"$(stack --bash-completion-script stack)\""
+                           ]
+                     ]
         }
     , (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
     , (basicPackage "hidden-dock")
