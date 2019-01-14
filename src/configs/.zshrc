@@ -24,7 +24,6 @@ export ZSH=$DOTFILES/.devfiles/.installations/robbyrussell/oh-my-zsh
 plugins=(
    autojump
    tmuxinator
-   zsh-completions
 )
 
 export TERM="xterm-256color"
