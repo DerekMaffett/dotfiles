@@ -23,6 +23,7 @@ import           Registry                       ( registryLookup
 stringSources =
     [ "git"
     , "stack"
+    , "jq"
     , "oh-my-zsh"
     , "brittany"
     , "prettier"

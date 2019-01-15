@@ -316,6 +316,7 @@ centralRegistry = createRegistry
         }
     , brewPackage "autojump"
     , (brewPackage "tmux") { config = Just $ PackageConfig ".tmux.conf" Home }
+    , brewPackage "jq"
     , (brewPackage "the_silver_searcher")
         { config = Just $ PackageConfig ".agignore" Home
         }
