@@ -16,20 +16,6 @@ import           System.Process                 ( readCreateProcessWithExitCode
                                                 , shell
                                                 )
 
--- getExecutable executableName = do
---     Config { binDir }   <- ask
---     maybeExecutablePath <- liftIO $ Dir.findFile [binDir] executableName
---     return $ errorOrExecutablePath maybeExecutablePath binDir
---   where
---     errorOrExecutablePath binDir = case maybeExecutablePath of
---         Nothing -> logError
---             (  "Failed to locate executable \""
---             <> executableName
---             <> "\" in "
---             <> binDir
---             )
---         Just executablePath -> return executablePath
-
 runProcessWithDir dir shellCommand =
     runProcess ("cd " <> dir <> " && " <> shellCommand)
 

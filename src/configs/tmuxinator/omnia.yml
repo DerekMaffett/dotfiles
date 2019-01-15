@@ -11,7 +11,7 @@ root: ~/projects/doctrin
 
 # Project hooks
 # Runs on project start, always
-# on_project_start: 
+# on_project_start:
 # Run on project start, the first time
 on_project_first_start: doctrin clone
 # Run on project start, after the first time
@@ -43,42 +43,49 @@ on_project_first_start: doctrin clone
 # post: tmux -CC attach -t omnia
 
 windows:
-  - omnia:
-      layout: main-vertical
-      root: ~/projects/doctrin/start-client
-      panes:
-        - vim
-        - run-server:
-          - git co master
-          - git pull
-          - npm run start-dev
-        - #SHELL
-  - anamnesis-reports:
-      layout: main-vertical
-      root: ~/projects/doctrin/anamnesis-report-renderer
-      panes:
-        - vim
-        - SHELL:
-          - git co elm-master
-          - git pull
-          - elm make
-  - react-elm:
-      layout: main-vertical
-      root: ~/projects/doctrin/react-elm
-      panes:
-        - vim
-        - js-compiler:
-          - git co master
-          - git pull
-          - npm run start
-        - #SHELL
-  - questionnaire-components:
-      layout: main-vertical
-      root: ~/projects/doctrin/start-questionnaire-components
-      panes:
-        - vim
-        - js-compiler:
-          - git co master
-          - git pull
-          - npm run start
-        - #SHELL
+    - omnia:
+          layout: main-vertical
+          root: ~/projects/doctrin/start-client
+          panes:
+              - vim
+              - run-server:
+                    - git co master
+                    - git pull
+                    - npm run start-dev
+              -  #SHELL
+    - anamnesis-reports:
+          layout: main-vertical
+          root: ~/projects/doctrin/anamnesis-report-renderer
+          panes:
+              - vim
+              - SHELL:
+                    - git co elm-master
+                    - git pull
+                    - elm make
+    - react-elm:
+          layout: main-vertical
+          root: ~/projects/doctrin/react-elm
+          panes:
+              - vim
+              - js-compiler:
+                    - git co master
+                    - git pull
+                    - npm run start
+              -  #SHELL
+    - questionnaire-components:
+          layout: main-vertical
+          root: ~/projects/doctrin/start-questionnaire-components
+          panes:
+              - vim
+              - js-compiler:
+                    - git co master
+                    - git pull
+                    - npm run start
+              -  #SHELL
+    - river:
+          layout: main-vertical
+          root: ~/projects/doctrin/river
+          panes:
+              - vim
+              - stack build --copy-bins --file-watch --fast
+              -  #Shell

@@ -15,6 +15,8 @@ alias cloc='cloc --not-match-f package-lock --not-match-d dist'
 
 alias filecount='find . | cut -d/ -f2 | sort | uniq -c | sort -bn'
 
+alias clean='git branch | grep -v "master" | xargs git branch -D'
+
 alias dot='txs dotfiles'
 alias omnia='txs omnia'
 alias tk='tmux kill-session && refresh'

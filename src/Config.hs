@@ -11,12 +11,6 @@ import           System.Log.Logger
 import           System.Exit                    ( ExitCode )
 import           Control.Monad.Reader
 
--- data Path = Path String
---
--- instance Functor Path where
---   fmap f (Path path) = Path (f path)
-
-
 data Config = Config
   { logger :: String
   , includeCustomScripts :: Bool
