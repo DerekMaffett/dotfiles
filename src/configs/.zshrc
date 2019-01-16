@@ -1,6 +1,9 @@
 export DOTFILES=$HOME/dotfiles
 export PATH=$DOTFILES/.devfiles/.bin:$PATH
 
+# For easier development of river
+export PATH=$HOME/projects/river/bin:$PATH
+
 alias ls='ls -G'
 alias ll='ls -Al'
 alias l='ls -lrthG'

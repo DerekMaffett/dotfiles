@@ -87,5 +87,5 @@ windows:
           root: ~/projects/doctrin/river
           panes:
               - vim
-              - stack build --copy-bins --file-watch --fast
+              - stack install --file-watch --fast --local-bin-path ./bin
               -  #Shell
