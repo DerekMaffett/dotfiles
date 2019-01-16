@@ -1,7 +1,7 @@
 module Main where
 
 import qualified CustomScripts
-import qualified Dependencies
+import qualified Packages
 import           Options.Applicative
 import           Control.Monad.Reader
 import           Config
@@ -47,7 +47,7 @@ runProgram = do
 
 install :: ReaderT Config IO ()
 install = do
-    Dependencies.install
+    Packages.install
     installCustomScripts
   where
     installCustomScripts = do

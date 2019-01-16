@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 579d59d73d0c9dd1d09c089e51e3a38f790c22722ba3d8f9a553bd8b84352a02
+-- hash: afb09e12661cb7506d331521e12e2c60b642a64d05ca2b66504ac7d9dc702378
 
 name:           setup
 version:        0.1.0.0
@@ -25,7 +25,6 @@ library
   exposed-modules:
       Config
       CustomScripts
-      Dependencies
       Installer
       Logger
       Packages
