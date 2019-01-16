@@ -8,12 +8,21 @@ import           Config
 
 opts :: ParserInfo Options
 opts = info
-    (liftA2 Options includeCustomScriptsFlag debugModeFlag <**> helper)
+    (    liftA3 Options
+                includeCustomScriptsFlag
+                rebuildConfigsOnlyFlag
+                debugModeFlag
+    <**> helper
+    )
     (  fullDesc
     <> progDesc
            "Sets up all dependencies and symlinks necessary for vim/tmux workflow"
     <> header "Vim/Tmux dependency installation"
     )
+
+rebuildConfigsOnlyFlag :: Parser Bool
+rebuildConfigsOnlyFlag = switch $ long "rebuild" <> short 'r' <> help
+    "Rebuild configs without reinstalling dependencies"
 
 includeCustomScriptsFlag :: Parser Bool
 includeCustomScriptsFlag =

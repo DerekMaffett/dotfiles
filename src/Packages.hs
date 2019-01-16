@@ -5,11 +5,14 @@ module Packages
     )
 where
 
+import           Config
+import           Process
 import           Logger
 import           Data.Maybe
 import           Debug.Trace
 import           Data.List
 import           Control.Monad
+import           Control.Monad.Reader
 import qualified Installer
 import           Registry                       ( registryLookup
                                                 , registryMember
@@ -82,11 +85,22 @@ getConfigsAndSnippets packages = fmap associateWithSnippets packageConfigs
     packageConfigs = catMaybes . (fmap config) $ packages
 
 
+resetDirectory dir = do
+    runProcess ("rm -rf " <> dir)
+    runProcess ("mkdir -p " <> dir)
+
 install = do
+    Config { rebuildConfigsOnly, installationsDir, buildDir, binDir, builtConfigsDir } <-
+        ask
     when (not . null $ missingPackages)
         $ logError ("MISSING REGISTRY PACKAGES: " <> show missingPackages)
+
+    resetDirectory builtConfigsDir
     (mapM_ Installer.installConfig) . getConfigsAndSnippets $ packagesToInstall
-    mapM_ Installer.installPackage packagesToInstall
+
+    unless rebuildConfigsOnly $ do
+        mapM_ resetDirectory           [installationsDir, buildDir, binDir]
+        mapM_ Installer.installPackage packagesToInstall
   where
     packagesToInstall = processPackageList centralRegistry stringSources
     missingPackages =
