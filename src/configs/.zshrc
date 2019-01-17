@@ -20,6 +20,8 @@ alias filecount='find . | cut -d/ -f2 | sort | uniq -c | sort -bn'
 
 alias clean='git branch | grep -v "master" | xargs git branch -D'
 
+alias br='copy-branch | pbcopy'
+
 alias dot='txs dotfiles'
 alias omnia='txs omnia'
 alias tk='tmux kill-session && refresh'
