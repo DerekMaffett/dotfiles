@@ -1,7 +1,6 @@
 module Registry.Ruby
     ( install
-    , installRbenvPlugin
-    , compileRbenv
+    , installRbenv
     , rbenvCommand
     )
 where
@@ -21,10 +20,24 @@ data RubyVersion
     | NonSelectedVersion String
   deriving (Show)
 
+
 rbenvCommand shellCommand =
     "RBENV_ROOT=~/dotfiles/.devfiles/.installations/rbenv/rbenv "
         <> "PATH=~/dotfiles/.devfiles/.installations/rbenv/rbenv/shims:$PATH && "
         <> shellCommand
+
+
+installRbenv = do
+    redirectRbenv
+    compileRbenv
+    installRbenvPlugin "rbenv/ruby-build"
+
+
+redirectRbenv = do
+    Config { homeDir, installationsDir } <- ask
+    Symlinks.createSymlink (installationsDir <> "/rbenv/rbenv")
+                           (homeDir <> "/.rbenv")
+
 
 compileRbenv = do
     Config { installationsDir, binDir } <- ask

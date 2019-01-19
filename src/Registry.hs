@@ -175,16 +175,11 @@ rbenv = Package
     , source       = Batch
         [ Github $ githubAddress "rbenv" "rbenv"
         , Github $ githubAddress "rbenv" "ruby-build"
-        , Custom $ Ruby.compileRbenv
-        , Custom $ Ruby.installRbenvPlugin "rbenv/ruby-build"
+        , Custom $ Ruby.installRbenv
         ]
     , dependencies = []
     , config       = Nothing
-    , snippets     = [ Snippet zshrc $ unlines
-                           [ "export RBENV_ROOT=$HOME/dotfiles/.devfiles/.installations/rbenv/rbenv"
-                           , "eval \"$(rbenv init -)\""
-                           ]
-                     ]
+    , snippets     = [Snippet zshrc $ unlines ["eval \"$(rbenv init -)\""]]
     }
 
 ruby = Package
