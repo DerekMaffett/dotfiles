@@ -63,13 +63,16 @@ brewInstall name = do
     runProcess' ("brew install " <> name)
     where checkIfInstalled name = (\installed -> name `elem` installed) . words
 
+brewCaskInstall name = runProcess' ("brew cask install " <> name)
+
 installFromSource source = case source of
-    Python name               -> pip3Install name
-    Ruby   name               -> gemInstall name
-    Stack  name               -> stackInstall name
-    Npm    name               -> npmInstall name
-    Brew   name               -> brewInstall name
-    Github gitAddress         -> githubInstall gitAddress
+    Python   name             -> pip3Install name
+    Ruby     name             -> gemInstall name
+    Stack    name             -> stackInstall name
+    Npm      name             -> npmInstall name
+    Brew     name             -> brewInstall name
+    BrewCask name             -> brewCaskInstall name
+    Github   gitAddress       -> githubInstall gitAddress
     Zsh pluginType gitAddress -> zshInstall pluginType gitAddress
     Custom installationMethod -> installationMethod
     Batch  sources            -> mapM_ installFromSource sources

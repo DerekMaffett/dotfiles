@@ -26,11 +26,12 @@ import           Registry                       ( registryLookup
 stringSources =
     [ "git"
     , "stack"
+    , "alfred"
     , "jq"
     , "oh-my-zsh"
     , "brittany"
     , "prettier"
-    , "hidden-dock"
+    , "dereks-mac-prefs"
     , "tmuxinator"
     , "neovim"
     , "elm"

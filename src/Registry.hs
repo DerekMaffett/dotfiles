@@ -42,6 +42,7 @@ toString GitAddress { author, name } = author <> "/" <> name
 data Source
   = Ruby String
   | Brew String
+  | BrewCask String
   | Stack String
   | Python String
   | Npm String
@@ -103,6 +104,14 @@ rubyPackage name = Package
 brewPackage name = Package
     { name         = name
     , source       = Brew name
+    , dependencies = [homebrew]
+    , config       = Nothing
+    , snippets     = []
+    }
+
+brewCaskPackage name = Package
+    { name         = name
+    , source       = BrewCask name
     , dependencies = [homebrew]
     , config       = Nothing
     , snippets     = []
@@ -297,19 +306,20 @@ centralRegistry :: Registry
 centralRegistry = createRegistry
     [ (basicPackage "stack")
         { snippets = [ Snippet zshrc
-                           $ unlines ["export PATH=$HOME/.local/bin:$PATH"
-                           -- , "eval \"$(stack --bash-completion-script stack)\""
-                                                                          ]
+                           $ unlines ["export PATH=$HOME/.local/bin:$PATH"]
                      ]
         }
     , (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
-    , (basicPackage "hidden-dock")
+    , (basicPackage "dereks-mac-prefs")
         { source =
-            Custom
-                $ runProcess'
-                      "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
+            Custom $ mapM_
+                runProcess'
+                [ "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
+                , "defaults write -g ApplePressAndHoldEnabled -bool false"
+                ]
         }
     , brewPackage "autojump"
+    , brewCaskPackage "alfred"
     , (brewPackage "tmux") { config = Just $ PackageConfig ".tmux.conf" Home }
     , brewPackage "jq"
     , (brewPackage "the_silver_searcher")
