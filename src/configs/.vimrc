@@ -23,7 +23,7 @@ Plug 'sbdchd/neoformat'
 Plug 'neovimhaskell/haskell-vim'
 
 Plug 'ervandew/supertab'
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = '<c-n>'
 
 " 'vitality'
 
@@ -54,7 +54,7 @@ call plug#end()
 
 """"""""""""""""""""""""""""""
 
-let mapleader = ","
+let mapleader = ','
 
 nnoremap <c-p> :Files<cr>
 nnoremap <Leader>a :Ag<cr>
@@ -100,13 +100,13 @@ set number
 
 " Misc
 nnoremap <Leader>qq :qa!<cr>
-inoremap <C-c> <Esc>
+" inoremap <Esc> <C-c>
 
 " No arrows allowed
-map <Left> :echo "no!"<cr>
-map <Right> :echo "no!"<cr>
-map <Up> :echo "no!"<cr>
-map <Down> :echo "no!"<cr>
+map <Left> :echo 'no!'<cr>
+map <Right> :echo 'no!'<cr>
+map <Up> :echo 'no!'<cr>
+map <Down> :echo 'no!'<cr>
 
 " Copy paste system clipboard
 map <leader>y "*y
