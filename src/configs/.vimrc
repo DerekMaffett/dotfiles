@@ -95,12 +95,13 @@ set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
 
+set timeoutlen=1000 ttimeoutlen=0
+
 " Line numbers
 set number
 
 " Misc
 nnoremap <Leader>qq :qa!<cr>
-" inoremap <Esc> <C-c>
 
 " No arrows allowed
 map <Left> :echo 'no!'<cr>
