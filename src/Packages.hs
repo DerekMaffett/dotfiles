@@ -24,8 +24,9 @@ import           Registry                       ( registryLookup
                                                 )
 
 stringSources =
-    [ "git"
-    , "stack"
+    [ "stack"
+    , "node"
+    , "git"
     , "alfred"
     , "jq"
     , "oh-my-zsh"
