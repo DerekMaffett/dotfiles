@@ -103,6 +103,11 @@ install = do
     unless rebuildConfigsOnly $ do
         mapM_ resetDirectory           [installationsDir, buildDir, binDir]
         mapM_ Installer.installPackage packagesToInstall
+
+    logNotice
+        $  "Please run: "
+        <> "\"nvim +PlugInstall +PlugClean! +qall\""
+        <> " in order to finish installing vim"
   where
     packagesToInstall = processPackageList centralRegistry stringSources
     missingPackages =
