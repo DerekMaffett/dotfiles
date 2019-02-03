@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Haskell Stack tool and GHC
-command -v stack &>/dev/null || curl -sSL https://get.haskellstack.org/ | sh
 
 # These steps can be done in whatever flow you want later. They exist here
 # to ensure that a single setup step can comprehensively set everything up.

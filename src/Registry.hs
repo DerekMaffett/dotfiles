@@ -145,7 +145,7 @@ githubPackage name address = Package
 stackPackage name = Package
     { name         = name
     , source       = Stack name
-    , dependencies = []
+    , dependencies = [stack]
     , config       = Nothing
     , snippets     = []
     }
@@ -198,6 +198,13 @@ ruby = Package
     , config       = Nothing
     , snippets     = []
     }
+
+stack = (brewPackage "stack")
+    { snippets = [ Snippet zshrc
+                       $ unlines ["export PATH=$HOME/.local/bin:$PATH"]
+                 ]
+    }
+
 
 python = brewPackage "python"
 
@@ -304,12 +311,7 @@ createRegistry = (HashMap.fromList)
 
 centralRegistry :: Registry
 centralRegistry = createRegistry
-    [ (basicPackage "stack")
-        { snippets = [ Snippet zshrc
-                           $ unlines ["export PATH=$HOME/.local/bin:$PATH"]
-                     ]
-        }
-    , (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
+    [ (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
     , (basicPackage "dereks-mac-prefs")
         { source =
             Custom $ mapM_
