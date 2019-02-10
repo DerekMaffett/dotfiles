@@ -173,7 +173,12 @@ basicPackage name = Package
 homebrew = Package
     { name         = "brew"
     , source       = Batch
-        [Custom $ runProcess' "brew update", Custom updateBrewPackages]
+        [ Custom
+            $ runProcess'
+                  "/usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
+        , Custom $ runProcess' "brew update"
+        , Custom updateBrewPackages
+        ]
     , dependencies = []
     , config       = Nothing
     , snippets     = []
