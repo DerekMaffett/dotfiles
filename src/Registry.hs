@@ -317,6 +317,7 @@ createRegistry = (HashMap.fromList)
 centralRegistry :: Registry
 centralRegistry = createRegistry
     [ (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
+    , (brewPackage "google-chrome")
     , (basicPackage "dereks-mac-prefs")
         { source =
             Custom $ mapM_

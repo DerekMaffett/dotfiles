@@ -27,6 +27,7 @@ stringSources =
     [ "stack"
     , "node"
     , "git"
+    , "google-chrome"
     , "alfred"
     , "jq"
     , "oh-my-zsh"
