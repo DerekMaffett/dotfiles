@@ -23,7 +23,7 @@ alias clean='git branch | grep -v "master" | xargs git branch -D'
 alias br='copy-branch | pbcopy'
 
 alias dot='txs dotfiles'
-alias omnia='txs omnia'
+alias os='txs open-source'
 alias tk='tmux kill-session && refresh'
 
 export ZSH=$DOTFILES/.devfiles/.installations/robbyrussell/oh-my-zsh
