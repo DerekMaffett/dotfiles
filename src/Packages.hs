@@ -29,6 +29,7 @@ stringSources =
     , "git"
     , "google-chrome"
     , "alfred"
+    , "postman"
     , "jq"
     , "oh-my-zsh"
     , "brittany"

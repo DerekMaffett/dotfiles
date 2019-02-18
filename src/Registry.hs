@@ -316,6 +316,7 @@ centralRegistry = createRegistry
     , node
     , brewPackage "wine"
     , brewCaskPackage "google-chrome"
+    , brewCaskPackage "postman"
     , (basicPackage "dereks-mac-prefs")
         { source =
             Custom $ mapM_
