@@ -14,11 +14,13 @@ windows:
           layout: main-vertical
           root: ~/projects/river-bitbucket-test
           panes:
+              - vim
               -  #SHELL
     - river-github:
           layout: main-vertical
           root: ~/projects/river-github-test
           panes:
+              - vim
               -  #SHELL
     - react-elm:
           layout: main-vertical
