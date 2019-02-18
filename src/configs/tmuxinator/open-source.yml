@@ -10,6 +10,16 @@ windows:
               - vim
               - stack install --file-watch --fast --local-bin-path ./bin
               -  #Shell
+    - river-bitbucket:
+          layout: main-vertical
+          root: ~/projects/river-bitbucket-test
+          panes:
+              -  #SHELL
+    - river-github:
+          layout: main-vertical
+          root: ~/projects/river-github-test
+          panes:
+              -  #SHELL
     - react-elm:
           layout: main-vertical
           root: ~/projects/react-elm

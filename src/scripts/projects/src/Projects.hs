@@ -9,6 +9,8 @@ import           Control.Monad
 repos =
     [ "git@github.com:DerekMaffett/react-elm"
     , "git@github.com:DerekMaffett/river"
+    , "git@bitbucket.org:DerekMaffett/river-bitbucket-test"
+    , "git@github.com:DerekMaffett/river-github-test"
     ]
 
 cloneProject projectsDir repo = do
