@@ -12,7 +12,8 @@ repos =
     ]
 
 cloneProject projectsDir repo = do
-    repoExists <- Dir.doesPathExist $ projectsDir <> "/" <> repo
+    repoExists <-
+        Dir.doesPathExist $ projectsDir <> "/" <> (dropWhile (/= '/') repo)
     unless repoExists (callCommand $ "git clone " <> repo <> ".git")
 
 clone forceRemove = do
