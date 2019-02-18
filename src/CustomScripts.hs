@@ -5,14 +5,13 @@ where
 
 import qualified System.Directory              as Dir
 import           Control.Monad.Reader
+import           Logger
 import           Process
 import           Config
 
 installScriptGlobally scriptPath = do
     Config { dotfilesDir } <- ask
-    runProcess ("cd " <> scriptPath)
-    runProcess "stack install"
-    runProcess ("cd " <> dotfilesDir)
+    runProcess $ "cd " <> scriptPath <> " && stack install"
 
 install :: ReaderT Config IO ()
 install = do

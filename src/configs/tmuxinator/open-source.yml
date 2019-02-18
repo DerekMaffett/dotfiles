@@ -5,14 +5,14 @@ root: ~/projects
 windows:
     - river:
           layout: main-vertical
-          root: ~/projects/open-source/river
+          root: ~/projects/river
           panes:
               - vim
               - stack install --file-watch --fast --local-bin-path ./bin
               -  #Shell
     - react-elm:
           layout: main-vertical
-          root: ~/projects/open-source/react-elm
+          root: ~/projects/react-elm
           panes:
               - vim
               - js-compiler:
