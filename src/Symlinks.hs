@@ -19,9 +19,9 @@ friendlyPath homeDir path = case stripPrefix homeDir path of
 logSymlink targetPath linkPath = do
     Config { homeDir } <- ask
     logNotice
-        $  (friendlyPath homeDir targetPath)
+        $  friendlyPath homeDir targetPath
         <> " -> "
-        <> (friendlyPath homeDir linkPath)
+        <> friendlyPath homeDir linkPath
 
 
 parentOf = dropWhileEnd (/= '/')

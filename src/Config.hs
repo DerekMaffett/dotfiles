@@ -50,12 +50,12 @@ configFromOptions Options { includeCustomScripts, rebuildConfigsOnly, useDebugLo
             }
   where
     getDotfilesDir homeDir = homeDir <> "/dotfiles"
-    getDevfilesDir homeDir = (getDotfilesDir homeDir) <> "/.devfiles"
-    getConfigsDir homeDir = (getDotfilesDir homeDir) <> "/src/configs"
-    getBuiltConfigsDir homeDir = (getDevfilesDir homeDir) <> "/.configs"
-    getInstallationsDir homeDir = (getDevfilesDir homeDir) <> "/.installations"
-    getBuildDir homeDir = (getDevfilesDir homeDir) <> "/.build"
-    getBinDir homeDir = (getDevfilesDir homeDir) <> "/.bin"
+    getDevfilesDir homeDir = getDotfilesDir homeDir <> "/.devfiles"
+    getConfigsDir homeDir = getDotfilesDir homeDir <> "/src/configs"
+    getBuiltConfigsDir homeDir = getDevfilesDir homeDir <> "/.configs"
+    getInstallationsDir homeDir = getDevfilesDir homeDir <> "/.installations"
+    getBuildDir homeDir = getDevfilesDir homeDir <> "/.build"
+    getBinDir homeDir = getDevfilesDir homeDir <> "/.bin"
 
 initializeLogger :: ReaderT Config IO ()
 initializeLogger = do

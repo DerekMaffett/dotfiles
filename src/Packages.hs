@@ -55,11 +55,9 @@ stringSources =
 unpackSources registry sourceList = registryLookup registry <$> sourceList
 
 expandDependenciesList packages =
-    (nubBy (\x y -> name x == name y))
-        . (concatMap expandDependencies)
-        $ packages
+    nubBy (\x y -> name x == name y) . concatMap expandDependencies $ packages
   where
-    expandDependencies package = case (dependencies package) of
+    expandDependencies package = case dependencies package of
         [] -> [package]
         xs -> expandDependenciesList xs <> [package]
 
@@ -69,7 +67,7 @@ processPackageList :: Registry -> [String] -> [Package]
 processPackageList registry packageList =
     expandDependenciesList
         . catMaybes
-        . (unpackSources registry)
+        . unpackSources registry
         . nub
         $ packageList
 
@@ -86,7 +84,7 @@ getConfigsAndSnippets packages = fmap associateWithSnippets packageConfigs
     allSnippets :: [Snippet]
     allSnippets = concatMap snippets packages
     packageConfigs :: [PackageConfig]
-    packageConfigs = catMaybes . (fmap config) $ packages
+    packageConfigs = mapMaybe config packages
 
 
 resetDirectory dir = do
@@ -96,11 +94,11 @@ resetDirectory dir = do
 install = do
     Config { rebuildConfigsOnly, installationsDir, buildDir, binDir, builtConfigsDir } <-
         ask
-    when (not . null $ missingPackages)
+    unless (null missingPackages)
         $ logError ("MISSING REGISTRY PACKAGES: " <> show missingPackages)
 
     resetDirectory builtConfigsDir
-    (mapM_ Installer.installConfig) . getConfigsAndSnippets $ packagesToInstall
+    mapM_ Installer.installConfig . getConfigsAndSnippets $ packagesToInstall
 
     unless rebuildConfigsOnly $ do
         mapM_ resetDirectory           [installationsDir, buildDir, binDir]
@@ -112,5 +110,4 @@ install = do
         <> " in order to finish installing vim"
   where
     packagesToInstall = processPackageList centralRegistry stringSources
-    missingPackages =
-        (filter $ isMissing centralRegistry) . nub $ stringSources
+    missingPackages   = filter (isMissing centralRegistry) . nub $ stringSources

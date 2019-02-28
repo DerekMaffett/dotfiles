@@ -20,4 +20,4 @@ logError :: String -> ReaderT Config IO ()
 logError msg = do
     Config { logger } <- ask
     liftIO $ criticalM logger msg
-    liftIO $ exitFailure
+    liftIO exitFailure

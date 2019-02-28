@@ -306,7 +306,7 @@ vimrc = PackageConfig ".vimrc" Home
 type Registry = HashMap.HashMap String Package
 
 createRegistry :: [Package] -> Registry
-createRegistry = (HashMap.fromList)
+createRegistry = HashMap.fromList
     . fmap (\package -> ((name :: Package -> String) package, package))
 
 centralRegistry :: Registry
@@ -383,4 +383,4 @@ updateBrewPackages = do
     outdatedPackages <- getOutdated <$> runProcess "brew outdated"
     logDebug $ "Outdated packages: " <> show outdatedPackages
     mapM_ brewUpgrade outdatedPackages
-    where getOutdated = catMaybes . (map headMay) . (map words) . lines
+    where getOutdated = mapMaybe (headMay . words) . lines
