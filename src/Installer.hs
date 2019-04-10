@@ -65,7 +65,7 @@ brewInstall name = do
 
 brewCaskInstall name = runProcess' ("brew cask install " <> name)
 
-aptInstall name = runProcess' ("sudo apt install " <> name)
+aptInstall name = runProcess' ("sudo apt-get install " <> name)
 
 installFromSource source = case source of
     Python   name             -> pip3Install name
