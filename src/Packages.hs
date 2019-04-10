@@ -24,14 +24,15 @@ import           Registry                       ( registryLookup
                                                 )
 
 stringSources =
-    [ "stack"
+    [ "git"
+    , "zsh"
+    , "oh-my-zsh"
+    , "stack"
     , "node"
-    , "git"
     , "google-chrome"
     , "alfred"
     , "postman"
     , "jq"
-    , "oh-my-zsh"
     , "brittany"
     , "prettier"
     , "dereks-mac-prefs"
@@ -45,7 +46,6 @@ stringSources =
     , "tmux"
     , "the_silver_searcher"
     , "vim-plug"
-    , "zsh"
     , "powerlevel9k"
     , "powerline-fonts"
     , "iTerm2-color-schemes"
