@@ -43,6 +43,7 @@ data Source
   = Ruby String
   | Brew String
   | BrewCask String
+  | Apt String
   | Stack String
   | Python String
   | Npm String
@@ -105,6 +106,14 @@ brewPackage name = Package
     { name         = name
     , source       = Brew name
     , dependencies = [homebrew]
+    , config       = Nothing
+    , snippets     = []
+    }
+
+aptPackage name = Package
+    { name         = name
+    , source       = Apt name
+    , dependencies = []
     , config       = Nothing
     , snippets     = []
     }
@@ -272,7 +281,8 @@ node = Package
 zsh = Package
     { name         = "zsh"
     , source       = Custom Zsh.setShell
-    , dependencies = [ Package
+    , dependencies = [ aptPackage "zsh"
+                     , Package
                          { name         = "zprofile"
                          , source       = noopSource
                          , dependencies = []

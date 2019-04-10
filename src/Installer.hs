@@ -65,6 +65,8 @@ brewInstall name = do
 
 brewCaskInstall name = runProcess' ("brew cask install " <> name)
 
+aptInstall name = runProcess' ("sudo apt install " <> name)
+
 installFromSource source = case source of
     Python   name             -> pip3Install name
     Ruby     name             -> gemInstall name
@@ -72,6 +74,7 @@ installFromSource source = case source of
     Npm      name             -> npmInstall name
     Brew     name             -> brewInstall name
     BrewCask name             -> brewCaskInstall name
+    Apt      name             -> aptInstall name
     Github   gitAddress       -> githubInstall gitAddress
     Zsh pluginType gitAddress -> zshInstall pluginType gitAddress
     Custom installationMethod -> installationMethod
