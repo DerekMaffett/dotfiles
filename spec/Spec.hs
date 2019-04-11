@@ -1,6 +1,7 @@
 import           Test.Hspec
 import           Packages                       ( processPackageList
                                                 , getConfigsAndSnippets
+                                                , stringSources
                                                 )
 import           Registry                       ( Source(..)
                                                 , Package(..)
@@ -8,6 +9,7 @@ import           Registry                       ( Source(..)
                                                 , SymlinkTarget(..)
                                                 , PackageConfig(..)
                                                 , createRegistry
+                                                , centralRegistry
                                                 )
 
 
@@ -101,6 +103,7 @@ testSuite = do
         it "assertion on package list"
             $          getNames (processPackageList testRegistry list)
             `shouldBe` list
+        it "checking" $ getConfigsAndSnippets (processPackageList centralRegistry stringSources) `shouldBe` []
         it "should collect configs and snippets together"
             $ getConfigsAndSnippets (processPackageList testRegistry list)
             `shouldBe` [ ( config1
