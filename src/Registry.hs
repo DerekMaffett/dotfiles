@@ -334,6 +334,7 @@ centralRegistry :: Registry
 centralRegistry = createRegistry
     [ (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
     , aptPackage "gnome-tweak-tool"
+    , aptPackage "xclip"
     , stack
     , node
     , brewPackage "wine"

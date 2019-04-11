@@ -20,7 +20,7 @@ alias filecount='find . | cut -d/ -f2 | sort | uniq -c | sort -bn'
 
 alias clean='git branch | grep -v "master" | xargs git branch -D'
 
-alias br='copy-branch | pbcopy'
+alias br='copy-branch | xclip -selection clipboard'
 
 alias dot='txs dotfiles'
 alias os='txs open-source'

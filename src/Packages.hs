@@ -28,6 +28,7 @@ stringSources =
     , "gnome-tweak-tool"
     , "zsh"
     , "oh-my-zsh"
+    , "xclip"
     , "vim-plug"
     , "powerlevel9k"
     , "fonts-powerline"
