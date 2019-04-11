@@ -80,7 +80,7 @@ nnoremap <Leader>sv :source $MYVIMRC<cr>
 
 " Colors
 set termguicolors
-colorscheme iosvkem
+colorscheme Iosvkem
 
 " Neoformat on save and on ,f
 augroup fmt
