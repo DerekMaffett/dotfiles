@@ -129,7 +129,7 @@ brewCaskPackage name = Package
 pythonPackage name = Package
     { name         = name
     , source       = Python name
-    , dependencies = [python]
+    , dependencies = [python, pip3]
     , config       = Nothing
     , snippets     = []
     }
@@ -188,6 +188,8 @@ homebrew = Package
     , snippets     = []
     }
 
+curl = aptPackage "curl"
+
 rbenv = Package
     { name         = "rbenv"
     , source       = Batch
@@ -202,20 +204,25 @@ rbenv = Package
 
 ruby = Package
     { name         = "ruby"
-    , source       = Custom (Ruby.install "2.6.0")
-    , dependencies = [rbenv]
+    , source       = Custom (Ruby.install "2.6.2")
+    , dependencies = [ rbenv
+                     , aptPackage "libssl-dev"
+                     , aptPackage "libreadline-dev"
+                     , aptPackage "zlib1g-dev"
+                     ]
     , config       = Nothing
     , snippets     = []
     }
 
-stack = (brewPackage "stack")
+stack = (basicPackage "stack")
     { snippets = [ Snippet zshrc
                        $ unlines ["export PATH=$HOME/.local/bin:$PATH"]
                  ]
     }
 
 
-python = brewPackage "python"
+python = aptPackage "python3.7"
+pip3 = aptPackage "python3-pip"
 
 neovim = Package
     { name         = "neovim"
@@ -223,12 +230,17 @@ neovim = Package
         [ Github $ withBranch "release-0.3" $ githubAddress "neovim" "neovim"
         , Custom Vim.make
         ]
-    , dependencies = [ brewPackage "ninja"
-                     , brewPackage "libtool"
-                     , brewPackage "automake"
-                     , brewPackage "cmake"
-                     , brewPackage "pkg-config"
-                     , brewPackage "gettext"
+    , dependencies = [ aptPackage "ninja-build"
+                     , aptPackage "libtool"
+                     , aptPackage "libtool-bin"
+                     , aptPackage "cmake"
+                     , aptPackage "autoconf"
+                     , aptPackage "automake"
+                     , aptPackage "cmake"
+                     , aptPackage "g++"
+                     , aptPackage "unzip"
+                     , aptPackage "pkg-config"
+                     , aptPackage "gettext"
                      -- TODO: pynvim is really for deoplete, but we can't
                      -- currently express that dependency relationship
                      , pythonPackage "pynvim"
@@ -321,6 +333,7 @@ createRegistry = HashMap.fromList
 centralRegistry :: Registry
 centralRegistry = createRegistry
     [ (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
+    , aptPackage "gnome-tweak-tool"
     , stack
     , node
     , brewPackage "wine"
@@ -334,18 +347,20 @@ centralRegistry = createRegistry
                 , "defaults write -g ApplePressAndHoldEnabled -bool false"
                 ]
         }
-    , brewPackage "autojump"
+    , aptPackage "autojump"
     , brewCaskPackage "alfred"
-    , (brewPackage "tmux") { config = Just $ PackageConfig ".tmux.conf" Home }
-    , brewPackage "jq"
-    , (brewPackage "the_silver_searcher")
-        { config = Just $ PackageConfig ".agignore" Home
-        }
+    , (aptPackage "tmux") { config = Just $ PackageConfig ".tmux.conf" Home }
+    , aptPackage "jq"
+    , (aptPackage "silversearcher-ag") { config = Just $ PackageConfig
+                                           ".agignore"
+                                           Home
+                                       }
     , neovim
     , tmuxinator
     , (stackPackage "brittany")
         { config = Just $ PackageConfig "brittany.yaml"
                                         (XDGConfig "brittany" "config.yaml")
+        , dependencies = [aptPackage "libtinfo-dev"]
         }
     , npmPackage "elm-test"
     , npmPackage "elm"
@@ -359,27 +374,17 @@ centralRegistry = createRegistry
     , (githubPackage "oh-my-zsh" $ githubAddress "robbyrussell" "oh-my-zsh") { dependencies = [ zsh
                                                                                               ]
                                                                              }
-    , githubPackage "iTerm2-color-schemes"
+    , githubPackage "color-schemes"
         $ githubAddress "mbadolato" "iTerm2-Color-Schemes"
     , (basicPackage "vim-plug") { source       = Custom installVimPlug
-                                , dependencies = [neovim]
+                                , dependencies = [neovim, curl]
                                 }
     , zshTheme "powerlevel9k" $ githubAddress "bhilburn" "powerlevel9k"
-    , (basicPackage "powerline-fonts")
-        { source =
-            Batch
-                [ Github $ githubAddress "powerline" "fonts"
-                , Custom installPowerlineFonts
-                ]
-        }
+    , aptPackage "fonts-powerline"
     ]
 
 registryLookup registry packageName = HashMap.lookup packageName registry
 registryMember registry packageName = HashMap.member packageName registry
-
-installPowerlineFonts = do
-    Config { installationsDir } <- ask
-    runProcess' (installationsDir <> "/powerline/fonts/install.sh")
 
 
 installVimPlug =

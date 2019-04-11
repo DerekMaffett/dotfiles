@@ -57,22 +57,13 @@ installRbenvPlugin name = do
 
 
 install :: String -> ReaderT Config IO ()
-install version = do
-    output <- runProcess $ rbenvCommand "rbenv versions"
-    case parseRubyVersions output of
-        Left  err    -> logError (show err)
-        Right result -> setGlobalVersion version result
+install version = setGlobalVersion version
 
 
-setGlobalVersion :: String -> [RubyVersion] -> ReaderT Config IO ()
-setGlobalVersion version installedVersions = do
-    unless requestedVersionExists $ installRubyVersion version
+setGlobalVersion :: String -> ReaderT Config IO ()
+setGlobalVersion version = do
+    installRubyVersion version
     useRubyVersion version
-  where
-    requestedVersionExists = any isRequestedVersion installedVersions
-    isRequestedVersion installedVersion = case installedVersion of
-        SelectedVersion    v -> v == version
-        NonSelectedVersion v -> v == version
 
 
 useRubyVersion :: String -> ReaderT Config IO ()
@@ -87,7 +78,7 @@ installRubyVersion version = do
     runProcess $ rbenvCommand ("rbenv install " <> version)
     logNotice "Installation complete!"
 
-
+-- Unused currently since versions are no longer queried
 parseRubyVersions output = parse parser "" (output :: String)
   where
     parser           = lineParser `sepEndBy` newline

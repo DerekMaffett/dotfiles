@@ -13,4 +13,4 @@ import           Data.List
 setShell = do
     output <- dropWhileEnd (== '\n') <$> runProcess "echo $SHELL"
     logDebug $ "Current shell: \"" <> output <> "\""
-    when (output /= "/bin/zsh") (runProcess' "chsh -s $(which zsh)")
+    when (output /= "/usr/bin/zsh") (runProcess' "chsh -s $(which zsh)")

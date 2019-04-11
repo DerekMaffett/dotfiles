@@ -56,7 +56,7 @@ pip3Install name = runProcess' ("pip3 install --user " <> name)
 gemInstall name = runProcess' $ Ruby.rbenvCommand ("gem install " <> name)
 
 npmInstall name =
-    runProcess' ("source ~/.nvm/nvm.sh && npm install -g " <> name)
+    runProcess' (". ~/.nvm/nvm.sh && npm install -g " <> name)
 
 brewInstall name = do
     isUninstalled <- checkIfInstalled <$> runProcess "brew list"
@@ -65,7 +65,7 @@ brewInstall name = do
 
 brewCaskInstall name = runProcess' ("brew cask install " <> name)
 
-aptInstall name = runProcess' ("sudo apt-get install " <> name)
+aptInstall name = runProcess' ("sudo apt-get install --assume-yes " <> name)
 
 installFromSource source = case source of
     Python   name             -> pip3Install name
