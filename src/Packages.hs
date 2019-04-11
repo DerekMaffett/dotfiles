@@ -2,7 +2,6 @@ module Packages
     ( install
     , processPackageList
     , getConfigsAndSnippets
-    , stringSources
     )
 where
 
