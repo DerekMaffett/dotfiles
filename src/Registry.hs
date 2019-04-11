@@ -280,9 +280,8 @@ node = Package
 
 zsh = Package
     { name         = "zsh"
-    , source       = Custom Zsh.setShell
-    , dependencies = [ aptPackage "zsh"
-                     , Package
+    , source       = Batch [Apt "zsh", Custom Zsh.setShell]
+    , dependencies = [ Package
                          { name         = "zprofile"
                          , source       = noopSource
                          , dependencies = []
