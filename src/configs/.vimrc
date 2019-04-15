@@ -5,7 +5,7 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Plug 'phanviet/vim-monokai-pro'
+Plug 'phanviet/vim-monokai-pro'
 Plug 'neutaaaaan/iosvkem'
 
 Plug 'tomtom/tcomment_vim'
@@ -66,6 +66,9 @@ nnoremap <c-p> :Files<cr>
 nnoremap <Leader>a :Ag<cr>
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
+" If tabs happen, keep them reasonable
+set tabstop=4
+
 " Window management
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -80,7 +83,7 @@ nnoremap <Leader>sv :source $MYVIMRC<cr>
 
 " Colors
 set termguicolors
-colorscheme Iosvkem
+colorscheme monokai_pro
 
 " Neoformat on save and on ,f
 augroup fmt
