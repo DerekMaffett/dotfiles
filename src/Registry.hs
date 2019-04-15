@@ -340,6 +340,10 @@ centralRegistry = createRegistry
     , brewPackage "wine"
     , brewCaskPackage "google-chrome"
     , brewCaskPackage "postman"
+    , (basicPackage "ssh-config") { config = Just $ PackageConfig
+                                      "ssh-config"
+                                      SshConfig
+                                  }
     , (basicPackage "projects-tool")
         { config       = Just $ PackageConfig ".projects.json" Home
         , dependencies = [ (basicPackage "secret-projects-config")

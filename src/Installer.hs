@@ -55,8 +55,7 @@ pip3Install name = runProcess' ("pip3 install --user " <> name)
 
 gemInstall name = runProcess' $ Ruby.rbenvCommand ("gem install " <> name)
 
-npmInstall name =
-    runProcess' (". ~/.nvm/nvm.sh && npm install -g " <> name)
+npmInstall name = runProcess' (". ~/.nvm/nvm.sh && npm install -g " <> name)
 
 brewInstall name = do
     isUninstalled <- checkIfInstalled <$> runProcess "brew list"
@@ -103,7 +102,8 @@ installConfig (PackageConfig name symlinkTarget, snippets) = do
         Config { homeDir } <- ask
         xdgConfigDir       <- liftIO $ Dir.getXdgDirectory Dir.XdgConfig []
         return $ case symlinkTarget of
-            Home -> homeDir <> "/" <> name
+            Home      -> homeDir <> "/" <> name
+            SshConfig -> homeDir <> "/.ssh/config"
             XDGConfig folderName xdgName ->
                 xdgConfigDir <> "/" <> folderName <> "/" <> xdgName
     applySnippets filePath snippets = mapM_ (applySnippet filePath) snippets

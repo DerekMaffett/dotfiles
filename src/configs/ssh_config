@@ -1,0 +1,15 @@
+Host bitbucket.org
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/personal
+Host personal.bitbucket.org
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/personal
+Host client1.bitbucket.org
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/client1
+Host personal.github.com
+  HostName github.com
+  IdentityFile ~/.ssh/personal
+Host github.com
+  HostName github.com
+  IdentityFile ~/.ssh/personal

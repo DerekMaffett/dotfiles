@@ -5,6 +5,7 @@ where
 
 import qualified System.Directory              as Dir
 import           System.Process                 ( callCommand )
+import           System.Exit
 import           Control.Monad
 import           Data.Aeson
 
@@ -27,7 +28,15 @@ clone forceRemove = do
         homeDir <- Dir.getHomeDirectory
         return $ homeDir <> "/projects"
     getRepos = do
-        homeDir      <- Dir.getHomeDirectory
-        publicRepos  <- decodeFileStrict $ homeDir <> "/.projects.json"
-        privateRepos <- decodeFileStrict $ homeDir <> "/.work-projects.json"
-        return $ publicRepos <> privateRepos
+        homeDir           <- Dir.getHomeDirectory
+        publicReposResult <-
+            eitherDecodeFileStrict $ homeDir <> "/.projects.json"
+        privateReposResult <-
+            eitherDecodeFileStrict $ homeDir <> "/.work-projects.json"
+        case extractParsedResults publicReposResult privateReposResult of
+            Left  msg   -> die msg
+            Right repos -> return repos
+    extractParsedResults publicReposResult privateReposResult = do
+        publicRepos  <- publicReposResult
+        privateRepos <- privateReposResult
+        return $ (publicRepos :: [String]) <> (privateRepos :: [String])
