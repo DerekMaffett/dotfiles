@@ -1,7 +1,7 @@
 module Installer
-    ( installPackage
-    , installConfig
-    )
+  ( installPackage
+  , installConfig
+  )
 where
 
 import           Logger
@@ -23,31 +23,31 @@ import           Registry                       ( Package(..)
 
 
 zshInstall pluginType gitAddress = do
-    Config { installationsDir } <- ask
-    _githubInstall (packagePath installationsDir) gitAddress
-  where
-    packagePath installationsDir =
-        installationsDir
-            <> "/robbyrussell/oh-my-zsh/custom/"
-            <> pluginLocation
-            <> "/"
-            <> (name :: GitAddress -> String) gitAddress
-    pluginLocation = case pluginType of
-        Theme  -> "themes"
-        Plugin -> "plugins"
+  Config { installationsDir } <- ask
+  _githubInstall (packagePath installationsDir) gitAddress
+ where
+  packagePath installationsDir =
+    installationsDir
+      <> "/robbyrussell/oh-my-zsh/custom/"
+      <> pluginLocation
+      <> "/"
+      <> (name :: GitAddress -> String) gitAddress
+  pluginLocation = case pluginType of
+    Theme  -> "themes"
+    Plugin -> "plugins"
 
 githubInstall gitAddress = do
-    Config { installationsDir } <- ask
-    _githubInstall (installationsDir <> "/" <> toString gitAddress) gitAddress
+  Config { installationsDir } <- ask
+  _githubInstall (installationsDir <> "/" <> toString gitAddress) gitAddress
 
 _githubInstall targetPath gitAddress = runProcess'
-    (  "git clone --single-branch --branch "
-    <> (branch :: GitAddress -> String) gitAddress
-    <> " git@github.com:"
-    <> toString gitAddress
-    <> ".git "
-    <> targetPath
-    )
+  (  "git clone --single-branch --branch "
+  <> (branch :: GitAddress -> String) gitAddress
+  <> " git@github.com:"
+  <> toString gitAddress
+  <> ".git "
+  <> targetPath
+  )
 
 stackInstall name = runProcess' ("stack install " <> name)
 
@@ -58,54 +58,55 @@ gemInstall name = runProcess' $ Ruby.rbenvCommand ("gem install " <> name)
 npmInstall name = runProcess' (". ~/.nvm/nvm.sh && npm install -g " <> name)
 
 brewInstall name = do
-    isUninstalled <- checkIfInstalled <$> runProcess "brew list"
-    runProcess' ("brew install " <> name)
-    where checkIfInstalled name = (\installed -> name `elem` installed) . words
+  isUninstalled <- checkIfInstalled <$> runProcess "brew list"
+  runProcess' ("brew install " <> name)
+  where checkIfInstalled name = (\installed -> name `elem` installed) . words
 
 brewCaskInstall name = runProcess' ("brew cask install " <> name)
 
 aptInstall name = runProcess' ("sudo apt-get install --assume-yes " <> name)
 
 installFromSource source = case source of
-    Python   name             -> pip3Install name
-    Ruby     name             -> gemInstall name
-    Stack    name             -> stackInstall name
-    Npm      name             -> npmInstall name
-    Brew     name             -> brewInstall name
-    BrewCask name             -> brewCaskInstall name
-    Apt      name             -> aptInstall name
-    Github   gitAddress       -> githubInstall gitAddress
-    Zsh pluginType gitAddress -> zshInstall pluginType gitAddress
-    Custom installationMethod -> installationMethod
-    Batch  sources            -> mapM_ installFromSource sources
+  Python   name             -> pip3Install name
+  Ruby     name             -> gemInstall name
+  Stack    name             -> stackInstall name
+  Npm      name             -> npmInstall name
+  Brew     name             -> brewInstall name
+  BrewCask name             -> brewCaskInstall name
+  Apt      name             -> aptInstall name
+  Github   gitAddress       -> githubInstall gitAddress
+  Zsh pluginType gitAddress -> zshInstall pluginType gitAddress
+  Custom installationMethod -> installationMethod
+  Batch  sources            -> mapM_ installFromSource sources
 
 installPackage Package { name, source } = do
-    logNotice $ "Installing " <> name <> "..."
-    installFromSource source
+  logNotice $ "Installing " <> name <> "..."
+  installFromSource source
 
 installConfig :: (PackageConfig, [Snippet]) -> ReaderT Config IO ()
 installConfig (PackageConfig name symlinkTarget, snippets) = do
-    Config { configsDir, builtConfigsDir } <- ask
+  Config { configsDir, builtConfigsDir } <- ask
 
-    configExists <- liftIO $ Dir.doesPathExist (configsDir <> "/" <> name)
-    unless configExists $ logError (name <> " does not exist!")
+  configExists <- liftIO $ Dir.doesPathExist (configsDir <> "/" <> name)
+  unless configExists
+    $ logError ("Configuration \"" <> name <> "\" does not exist!")
 
-    liftIO $ Dir.copyFile (configsDir <> "/" <> name)
-                          (builtConfigsDir <> "/" <> name)
-    applySnippets (builtConfigsDir <> "/" <> name) snippets
+  liftIO $ Dir.copyFile (configsDir <> "/" <> name)
+                        (builtConfigsDir <> "/" <> name)
+  applySnippets (builtConfigsDir <> "/" <> name) snippets
 
-    linkPath <- getLinkPath name symlinkTarget
-    createSymlink (builtConfigsDir <> "/" <> name) linkPath
-  where
-    getLinkPath :: String -> SymlinkTarget -> ReaderT Config IO String
-    getLinkPath name symlinkTarget = do
-        Config { homeDir } <- ask
-        xdgConfigDir       <- liftIO $ Dir.getXdgDirectory Dir.XdgConfig []
-        return $ case symlinkTarget of
-            Home      -> homeDir <> "/" <> name
-            SshConfig -> homeDir <> "/.ssh/config"
-            XDGConfig folderName xdgName ->
-                xdgConfigDir <> "/" <> folderName <> "/" <> xdgName
-    applySnippets filePath snippets = mapM_ (applySnippet filePath) snippets
-    applySnippet filePath (Snippet _ snippetString) =
-        liftIO $ appendFile filePath ("\n" <> snippetString)
+  linkPath <- getLinkPath name symlinkTarget
+  createSymlink (builtConfigsDir <> "/" <> name) linkPath
+ where
+  getLinkPath :: String -> SymlinkTarget -> ReaderT Config IO String
+  getLinkPath name symlinkTarget = do
+    Config { homeDir } <- ask
+    xdgConfigDir       <- liftIO $ Dir.getXdgDirectory Dir.XdgConfig []
+    return $ case symlinkTarget of
+      Home      -> homeDir <> "/" <> name
+      SshConfig -> homeDir <> "/.ssh/config"
+      XDGConfig folderName xdgName ->
+        xdgConfigDir <> "/" <> folderName <> "/" <> xdgName
+  applySnippets filePath snippets = mapM_ (applySnippet filePath) snippets
+  applySnippet filePath (Snippet _ snippetString) =
+    liftIO $ appendFile filePath ("\n" <> snippetString)

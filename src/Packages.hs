@@ -25,6 +25,7 @@ import           Registry                       ( registryLookup
 
 stringSources =
     [ "git"
+    , "ssh-config"
     , "gnome-tweak-tool"
     , "zsh"
     , "oh-my-zsh"

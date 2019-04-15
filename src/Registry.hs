@@ -55,6 +55,7 @@ data Source
 
 data SymlinkTarget
   = Home
+  | SshConfig
   | XDGConfig String String deriving (Show, Eq)
 
 data PackageConfig
