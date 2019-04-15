@@ -9,3 +9,4 @@ stack-work/
 .build/
 .bin/
 .configs/
+src/configs/.work-projects.json

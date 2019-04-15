@@ -24,6 +24,7 @@ dependencies:
     - directory
     - process
     - optparse-applicative
+    - aeson
 
 library:
     source-dirs: src

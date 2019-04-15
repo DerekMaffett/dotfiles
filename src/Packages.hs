@@ -47,6 +47,7 @@ stringSources =
     , "cloc"
     , "tmux"
     , "silversearcher-ag"
+    , "projects-tool"
     ]
 
 

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: acab3c7e06d9446f790a01e0034f57e9f3f63a8224506914d68117738723d7ef
+-- hash: 3ea70a6ce77ab865a3c84b416014403bbbd5347c586fad11312d853378769f65
 
 name:           projects
 version:        0.1.0.0
@@ -33,7 +33,8 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , directory
     , optparse-applicative
     , process
@@ -47,7 +48,8 @@ executable projects
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , directory
     , optparse-applicative
     , process
@@ -63,7 +65,8 @@ test-suite projects-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , directory
     , optparse-applicative
     , process

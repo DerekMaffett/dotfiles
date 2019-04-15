@@ -340,6 +340,15 @@ centralRegistry = createRegistry
     , brewPackage "wine"
     , brewCaskPackage "google-chrome"
     , brewCaskPackage "postman"
+    , (basicPackage "projects-tool")
+        { config       = Just $ PackageConfig ".projects.json" Home
+        , dependencies = [ (basicPackage "secret-projects-config")
+                               { config = Just $ PackageConfig
+                                              ".work-projects.json"
+                                              Home
+                               }
+                         ]
+        }
     , (basicPackage "dereks-mac-prefs")
         { source =
             Custom $ mapM_
