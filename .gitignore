@@ -10,3 +10,4 @@ stack-work/
 .bin/
 .configs/
 src/configs/.work-projects.json
+src/configs/tmuxinator/client.yml
