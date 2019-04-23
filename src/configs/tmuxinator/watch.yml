@@ -1,12 +1,11 @@
-# /Users/derekmaffett/dotfiles/src/configs/tmuxinator/dotfiles.yml
+# /Users/derekmaffett/dotfiles/src/configs/tmuxinator/watch.yml
 
-name: dotfiles
+name: watch
 root: ~/dotfiles
 
 windows:
     - dotfiles:
           layout: 337b,204x51,0,0{139x51,0,0,11,64x51,140,0[64x35,140,0,12,64x15,140,36,13]}
           panes:
-              - vim
-              - stack build --copy-bins --file-watch --fast --test
+              - watch-dotfiles
               -  #Shell

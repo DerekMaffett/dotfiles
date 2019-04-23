@@ -25,7 +25,9 @@ alias br='copy-branch | xclip -selection clipboard'
 alias dot='txs dotfiles'
 alias os='txs open-source'
 alias client='txs client' 
+alias watch-dot='txs watch'
 alias tk='tmux kill-session && refresh'
+alias watch-dotfiles="ag -g src/configs --hidden | entr -s 'setup -r'"
 
 export ZSH=$DOTFILES/.devfiles/.installations/robbyrussell/oh-my-zsh
 

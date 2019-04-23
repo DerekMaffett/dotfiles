@@ -7,10 +7,14 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'phanviet/vim-monokai-pro'
 Plug 'neutaaaaan/iosvkem'
+Plug 'chase/focuspoint-vim'
+Plug 'benburrill/potato-colors'
 
 Plug 'tomtom/tcomment_vim'
 
-Plug 'leafgarland/typescript-vim'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
+let g:nvim_typescript#diagnostics_enable = 0
 
 Plug 'tpope/vim-eunuch'
 
@@ -68,6 +72,8 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : 
 
 " If tabs happen, keep them reasonable
 set tabstop=4
+set shiftwidth=4
+set expandtab
 
 " Window management
 nnoremap <C-h> <C-w>h
@@ -78,12 +84,12 @@ set splitright
 set splitbelow
 
 " Quick changes to vimrc
-nnoremap <Leader>ev :vsplit ~/.vimrc<cr>
+nnoremap <Leader>ev :vsplit ~/dotfiles/src/configs/.vimrc<cr>
 nnoremap <Leader>sv :source $MYVIMRC<cr>
 
 " Colors
 set termguicolors
-colorscheme monokai_pro
+colorscheme potato
 
 " Neoformat on save and on ,f
 augroup fmt

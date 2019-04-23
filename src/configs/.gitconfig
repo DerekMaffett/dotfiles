@@ -29,7 +29,5 @@
   autocrlf = input
 [pull]
   rebase = preserve
-[credential]
-  helper = osxkeychain
 [status]
   showUntrackedFiles = all
