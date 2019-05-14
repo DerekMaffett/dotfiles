@@ -6,15 +6,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'phanviet/vim-monokai-pro'
-Plug 'neutaaaaan/iosvkem'
+Plug 'neutaaaaan/iosvkem' " Iosvkem
 Plug 'chase/focuspoint-vim'
 Plug 'benburrill/potato-colors'
 
 Plug 'tomtom/tcomment_vim'
-
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
-let g:nvim_typescript#diagnostics_enable = 0
 
 Plug 'tpope/vim-eunuch'
 
@@ -23,8 +19,6 @@ Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-sleuth'
 
 Plug 'sbdchd/neoformat'
-
-Plug 'neovimhaskell/haskell-vim'
 
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = '<c-n>'
@@ -48,8 +42,15 @@ let g:deoplete#enable_at_startup = 1
 
 Plug 'christoomey/vim-tmux-navigator'
 
+Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
+let g:nvim_typescript#diagnostics_enable = 0
 
+Plug 'neovimhaskell/haskell-vim'
 Plug 'parsonsmatt/intero-neovim'
+
+Plug 'purescript-contrib/purescript-vim'
+Plug 'FrigoEU/psc-ide-vim'
 "
 " Plug 'autozimu/LanguageClient-neovim', {
 "     \ 'branch': 'next',

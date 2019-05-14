@@ -380,6 +380,9 @@ centralRegistry = createRegistry
     , npmPackage "elm-test"
     , npmPackage "elm"
     , npmPackage "elm-format"
+    , npmPackage "purescript"
+    , npmPackage "pulp"
+    , npmPackage "bower"
     , npmPackage "cloc"
     , (npmPackage "prettier") { config = Just $ PackageConfig
                                   ".prettierrc.js"
