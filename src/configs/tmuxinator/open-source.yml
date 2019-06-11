@@ -8,7 +8,7 @@ windows:
           root: ~/projects/river
           panes:
               - vim
-              - stack install --file-watch --fast --local-bin-path ./bin
+              - stack install --file-watch --fast
               -  #Shell
     - river-bitbucket:
           layout: main-vertical
