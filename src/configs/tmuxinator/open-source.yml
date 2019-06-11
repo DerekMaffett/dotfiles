@@ -32,3 +32,10 @@ windows:
                     - git pull
                     - npm run start
               -  #SHELL
+    - todo-app:
+          layout: main-vertical
+          root: ~/projects/todo-app
+          panes:
+              - vim
+              - pscid -I src
+              - parcel src/index.html
