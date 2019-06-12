@@ -377,6 +377,7 @@ centralRegistry = createRegistry
                                         (XDGConfig "brittany" "config.yaml")
         , dependencies = [aptPackage "libtinfo-dev"]
         }
+    , pythonPackage "awscli"
     , npmPackage "elm-test"
     , npmPackage "elm"
     , npmPackage "elm-format"

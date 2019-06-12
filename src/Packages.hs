@@ -41,6 +41,7 @@ stringSources =
     , "brittany"
     , "prettier"
     , "tmuxinator"
+    , "awscli"
     , "elm"
     , "elm-format"
     , "elm-test"
