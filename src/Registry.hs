@@ -378,6 +378,7 @@ centralRegistry = createRegistry
         , dependencies = [aptPackage "libtinfo-dev"]
         }
     , pythonPackage "awscli"
+    , rubyPackage "travis"
     , npmPackage "elm-test"
     , npmPackage "elm"
     , npmPackage "elm-format"

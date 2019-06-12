@@ -42,6 +42,7 @@ stringSources =
     , "prettier"
     , "tmuxinator"
     , "awscli"
+    , "travis"
     , "elm"
     , "elm-format"
     , "elm-test"
