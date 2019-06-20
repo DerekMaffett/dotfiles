@@ -51,7 +51,16 @@ Plug 'parsonsmatt/intero-neovim'
 
 Plug 'purescript-contrib/purescript-vim'
 Plug 'FrigoEU/psc-ide-vim'
-"
+
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'weavejester/cljfmt'
+Plug 'tpope/vim-fireplace'
+Plug 'venantius/vim-cljfmt'
+Plug 'tpope/vim-classpath'
+Plug 'tpope/vim-salve'
+let g:salve_auto_start_repl = 1
+" Plug 'guns/vim-clojure-static'
 " Plug 'autozimu/LanguageClient-neovim', {
 "     \ 'branch': 'next',
 "     \ 'do': './install.sh'

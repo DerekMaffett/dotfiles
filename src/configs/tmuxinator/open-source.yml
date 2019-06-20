@@ -39,3 +39,18 @@ windows:
               - vim
               - pscid -I src
               - parcel src/index.html
+    - clojure-test:
+          layout: main-vertical
+          root: ~/projects/clojure-test
+          panes:
+              - vim
+              -  #Shell
+    - pilloxa:
+          layout: main-vertical
+          root: ~/projects/pilloxa-assignment
+          panes:
+              - vim
+              - npm run cljs
+              - npm run bundler
+              - npm run ios
+              -  #Shell
