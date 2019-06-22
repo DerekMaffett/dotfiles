@@ -54,6 +54,7 @@ stringSources =
     , "tmux"
     , "silversearcher-ag"
     , "projects-tool"
+    , "re-natal"
     ]
 
 

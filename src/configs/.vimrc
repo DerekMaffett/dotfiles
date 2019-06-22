@@ -101,10 +101,18 @@ nnoremap <Leader>sv :source $MYVIMRC<cr>
 set termguicolors
 colorscheme potato
 
+" Avoid Neoformat on files known to not have formatters
+fun! RunNeoformat()
+    if exists('b:noNeoformat')
+        return
+    endif
+    try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
+endfun
+
 " Neoformat on save and on ,f
 augroup fmt
-  autocmd!
-  au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
+  autocmd FileType clojure let b:noNeoformat=1
+  au BufWritePre * call RunNeoformat()
 augroup END
 nnoremap <Leader>f :Neoformat<cr>
 

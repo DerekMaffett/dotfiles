@@ -386,6 +386,7 @@ centralRegistry = createRegistry
     , npmPackage "pulp"
     , npmPackage "bower"
     , npmPackage "cloc"
+    , npmPackage "re-natal"
     , (npmPackage "prettier") { config = Just $ PackageConfig
                                   ".prettierrc.js"
                                   Home
