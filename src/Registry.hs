@@ -225,43 +225,6 @@ stack = (basicPackage "stack")
 python = aptPackage "python3.7"
 pip3 = aptPackage "python3-pip"
 
-neovim = Package
-    { name         = "neovim"
-    , source       = Batch
-        [ Github $ withBranch "release-0.3" $ githubAddress "neovim" "neovim"
-        , Custom Vim.make
-        ]
-    , dependencies = [ aptPackage "ninja-build"
-                     , aptPackage "libtool"
-                     , aptPackage "libtool-bin"
-                     , aptPackage "cmake"
-                     , aptPackage "autoconf"
-                     , aptPackage "automake"
-                     , aptPackage "cmake"
-                     , aptPackage "g++"
-                     , aptPackage "unzip"
-                     , aptPackage "pkg-config"
-                     , aptPackage "gettext"
-                     -- TODO: pynvim is really for deoplete, but we can't
-                     -- currently express that dependency relationship
-                     , pythonPackage "pynvim"
-                     , Package
-                         { name         = "neovim-init-config"
-                         , source       = noopSource
-                         , dependencies = []
-                         , config       = Just $ PackageConfig
-                             "init.vim"
-                             (XDGConfig "nvim" "init.vim")
-                         , snippets     = []
-                         }
-                     ]
-    , config       = Just vimrc
-    , snippets     = [ Snippet zshrc $ unlines
-                           ["export EDITOR='nvim'", "export VISUAL='nvim'"]
-                     ]
-    }
-
-
 tmuxinator = ( withDependencies
                      [ githubPackage "tmuxinator-completions"
                            $ githubAddress "tmuxinator" "tmuxinator"
@@ -276,19 +239,6 @@ tmuxinator = ( withDependencies
         ]
     }
 
-
-node = Package
-    { name         = "node"
-    , source       = Custom Node.install
-    , dependencies = []
-    , config       = Nothing
-    , snippets     = [ Snippet zshrc $ unlines
-                           [ "export NVM_DIR=\"$HOME/.nvm\""
-                           , "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\""
-                           , "[ -s \"$NVM_DIR/bash_completion\" ] && . \"$NVM_DIR/bash_completion\""
-                           ]
-                     ]
-    }
 
 
 zsh = Package
@@ -333,60 +283,11 @@ createRegistry = HashMap.fromList
 
 centralRegistry :: Registry
 centralRegistry = createRegistry
-    [ (basicPackage "git") { config = Just $ PackageConfig ".gitconfig" Home }
-    , aptPackage "gnome-tweak-tool"
-    , aptPackage "xclip"
-    , stack
-    , node
-    , brewPackage "wine"
-    , brewCaskPackage "google-chrome"
-    , brewCaskPackage "postman"
-    , (basicPackage "ssh-config") { config = Just $ PackageConfig
-                                      "ssh-config"
-                                      SshConfig
-                                  }
-    , (basicPackage "projects-tool")
-        { config       = Just $ PackageConfig ".projects.json" Home
-        , dependencies = [ (basicPackage "secret-projects-config")
-                               { config = Just $ PackageConfig
-                                              ".work-projects.json"
-                                              Home
-                               }
-                         ]
-        }
-    , (basicPackage "dereks-mac-prefs")
-        { source =
-            Custom $ mapM_
-                runProcess'
-                [ "defaults write com.apple.Dock autohide-delay -float 5 && killall Dock"
-                , "defaults write -g ApplePressAndHoldEnabled -bool false"
-                ]
-        }
-    , aptPackage "autojump"
-    , brewCaskPackage "alfred"
-    , (aptPackage "tmux") { config = Just $ PackageConfig ".tmux.conf" Home }
-    , aptPackage "jq"
-    , (aptPackage "silversearcher-ag") { config = Just $ PackageConfig
-                                           ".agignore"
-                                           Home
-                                       }
-    , neovim
-    , tmuxinator
-    , (stackPackage "brittany")
+    [ (stackPackage "brittany")
         { config = Just $ PackageConfig "brittany.yaml"
                                         (XDGConfig "brittany" "config.yaml")
         , dependencies = [aptPackage "libtinfo-dev"]
         }
-    , pythonPackage "awscli"
-    , rubyPackage "travis"
-    , npmPackage "elm-test"
-    , npmPackage "elm"
-    , npmPackage "elm-format"
-    , npmPackage "purescript"
-    , npmPackage "pulp"
-    , npmPackage "bower"
-    , npmPackage "cloc"
-    , npmPackage "re-natal"
     , (npmPackage "prettier") { config = Just $ PackageConfig
                                   ".prettierrc.js"
                                   Home
@@ -397,9 +298,6 @@ centralRegistry = createRegistry
                                                                              }
     , githubPackage "color-schemes"
         $ githubAddress "mbadolato" "iTerm2-Color-Schemes"
-    , (basicPackage "vim-plug") { source       = Custom installVimPlug
-                                , dependencies = [neovim, curl]
-                                }
     , zshTheme "powerlevel9k" $ githubAddress "bhilburn" "powerlevel9k"
     , aptPackage "fonts-powerline"
     ]
