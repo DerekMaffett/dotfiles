@@ -50,3 +50,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Associated with vim plugin, so weird to autogenerate this currently...
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
+
+# Temp thing for nix, formalize later if desired
+. /Users/derekmaffett/.nix-profile/etc/profile.d/nix.sh
+
+eval "$(direnv hook zsh)"
+export DIRENV_LOG_FORMAT=

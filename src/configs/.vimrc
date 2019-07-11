@@ -93,9 +93,11 @@ nnoremap <C-l> <C-w>l
 set splitright
 set splitbelow
 
-" Quick changes to vimrc
-nnoremap <Leader>ev :vsplit ~/dotfiles/src/configs/.vimrc<cr>
-nnoremap <Leader>sv :source $MYVIMRC<cr>
+" Clojure REPL
+
+" Uses vim-fireplace to evaluate a block expression
+nnoremap <Leader>ee cpab
+nnoremap <Leader>ec cqab
 
 " Colors
 set termguicolors
