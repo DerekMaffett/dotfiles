@@ -283,21 +283,10 @@ createRegistry = HashMap.fromList
 
 centralRegistry :: Registry
 centralRegistry = createRegistry
-    [ (stackPackage "brittany")
-        { config = Just $ PackageConfig "brittany.yaml"
-                                        (XDGConfig "brittany" "config.yaml")
-        , dependencies = [aptPackage "libtinfo-dev"]
-        }
-    , (npmPackage "prettier") { config = Just $ PackageConfig
-                                  ".prettierrc.js"
-                                  Home
-                              }
-    , zsh
+    [ zsh
     , (githubPackage "oh-my-zsh" $ githubAddress "robbyrussell" "oh-my-zsh") { dependencies = [ zsh
                                                                                               ]
                                                                              }
-    , githubPackage "color-schemes"
-        $ githubAddress "mbadolato" "iTerm2-Color-Schemes"
     , zshTheme "powerlevel9k" $ githubAddress "bhilburn" "powerlevel9k"
     , aptPackage "fonts-powerline"
     ]
