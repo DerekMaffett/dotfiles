@@ -1,21 +1,9 @@
 let 
   pkgs = import <nixpkgs> {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
-  vimrc = import ./vimrc.nix;
+  vimrc = import ../../dotfiles/nix/vimrc;
 in {
   allowUnfree = true;
-
-  programs = {
-    zsh = {
-      enable = true;
-      promptInit = "source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
-      ohMyZsh = {
-          enable = true;
-          plugins = ["autojump"];
-          theme = "powerlevel9k/powerlevel9k";
-      };
-    };
-  };
 
   packageOverrides = pkgs: with pkgs; rec {
     iterm2ColorSchemes = stdenv.mkDerivation {
