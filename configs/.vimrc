@@ -1,6 +1,4 @@
 ''
-  """"""""""""""""""""""""""""""
-
   let g:SuperTabDefaultCompletionType = '<c-n>'
   set wildignore+=.git/,.DS_Store
   let g:auto_save = 0

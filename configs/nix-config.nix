@@ -1,7 +1,7 @@
 let 
   pkgs = import <nixpkgs> {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
-  vimrc = import ../../dotfiles/nix/vimrc;
+  vimrc = import ./.vimrc;
 in {
   allowUnfree = true;
 
@@ -72,6 +72,7 @@ in {
         autojump
         silver-searcher
 
+        # iterm2 BROKEN
         iterm2ColorSchemes
 
         nodePackages.prettier

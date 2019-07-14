@@ -1,6 +1,6 @@
-module Main where
+#!/usr/bin/env stack
+-- stack --resolver lts-12.21 script --package process
 
-import           Lib
 import           System.Process
 import           Data.List
 import           Data.Char
