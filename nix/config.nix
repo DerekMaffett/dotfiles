@@ -54,8 +54,8 @@ in {
         jq
         zsh
         oh-my-zsh
-        autojump
         cloc
+        autojump
         silver-searcher
 
         iterm2ColorSchemes
@@ -63,13 +63,12 @@ in {
 
         nodePackages.prettier
 
-        # haskellPackages.brittany
+        haskellPackages.brittany
 
         nodePackages.node2nix
         elm2nix
 
         purescript
-
         stack
 
         elmPackages.elm
@@ -78,6 +77,7 @@ in {
 
         travis
         awscli
+        nixops
       ];
     };
     myNeovim = neovim.override {
