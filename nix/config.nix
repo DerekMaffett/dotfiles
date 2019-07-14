@@ -6,6 +6,19 @@ in {
   allowUnfree = true;
 
   packageOverrides = pkgs: with pkgs; rec {
+    private-powerlevel9k = stdenv.mkDerivation {
+      name = "private-powerlevel9k";
+      src = fetchFromGitHub {
+        owner = "bhilburn";
+        repo = "powerlevel9k";
+        rev = "3dafd79c41f8601b055e607ffefbfe3250c26040";
+        sha256 = "0vc5d7w8djg3ah9jvd87xqbhpin1lpflm6wgmhn3jgijwcjkxpg3";
+      };
+      installPhase = ''
+          mkdir -p $out/share/
+          cp -r $src $out/share/powerlevel9k
+      '';
+    };
     iterm2ColorSchemes = stdenv.mkDerivation {
         name = "iterm2Colors";
         src = fetchFromGitHub {
@@ -16,7 +29,7 @@ in {
         };
         installPhase = ''
             mkdir -p $out/share/
-            cp -r $src $out/share/
+            cp -r $src $out/share/iterm2-colors
         '';
     };
     sideways-vim = vimUtils.buildVimPlugin {
@@ -53,13 +66,12 @@ in {
         fzf
         jq
         zsh
-        oh-my-zsh
+        private-powerlevel9k
         cloc
         autojump
         silver-searcher
 
         iterm2ColorSchemes
-        zsh-powerlevel9k
 
         nodePackages.prettier
 
