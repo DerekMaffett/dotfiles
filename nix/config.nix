@@ -67,6 +67,7 @@ in {
         jq
         zsh
         private-powerlevel9k
+        powerline-fonts
         cloc
         autojump
         silver-searcher

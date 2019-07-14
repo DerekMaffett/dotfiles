@@ -282,14 +282,7 @@ createRegistry = HashMap.fromList
     . fmap (\package -> ((name :: Package -> String) package, package))
 
 centralRegistry :: Registry
-centralRegistry = createRegistry
-    [ zsh
-    , (githubPackage "oh-my-zsh" $ githubAddress "robbyrussell" "oh-my-zsh") { dependencies = [ zsh
-                                                                                              ]
-                                                                             }
-    , zshTheme "powerlevel9k" $ githubAddress "bhilburn" "powerlevel9k"
-    , aptPackage "fonts-powerline"
-    ]
+centralRegistry = createRegistry []
 
 registryLookup registry packageName = HashMap.lookup packageName registry
 registryMember registry packageName = HashMap.member packageName registry
