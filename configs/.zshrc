@@ -50,3 +50,5 @@ export VISUAL='nvim'
 export PATH=$HOME/.local/bin:$PATH
 
 export TMUXINATOR_CONFIG="$HOME/dotfiles/configs/tmuxinator"
+
+source $HOME/.nix-profile/share/autojump/autojump.zsh
