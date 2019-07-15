@@ -19,6 +19,9 @@
 # resolver: https://example.com/snapshots/2018-01-01.yaml
 resolver: lts-12.24
 
+nix:
+    enable: true
+
 # User packages to be built.
 # Various formats can be used as shown in the example below.
 #
@@ -33,7 +36,7 @@ resolver: lts-12.24
 #  - auto-update
 #  - wai
 packages:
-- .
+    - .
 # Dependency packages to be pulled from upstream that are not in the resolver
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
