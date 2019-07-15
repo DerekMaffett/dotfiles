@@ -9,18 +9,16 @@ let
       cp -r $src $out/share/$name
     '';
   };
+  haskellScript = name: pkgs.haskell.lib.buildStackProject {
+    inherit name;
+    src = ../scripts + "/${name}";
+  };
 in {
   allowUnfree = true;
 
   packageOverrides = pkgs: with pkgs; rec {
-    copy = haskell.lib.buildStackProject {
-      name = "copy";
-      src = ../scripts/copy;
-    };
-    projects = haskell.lib.buildStackProject {
-      name = "projects";
-      src = ../scripts/projects;
-    };
+    copy = haskellScript "copy";
+    projects = haskellScript "projects";
     private-oh-my-zsh = copyToShare {
       name = "oh-my-zsh";
       src = fetchFromGitHub {
