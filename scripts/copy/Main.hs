@@ -1,5 +1,4 @@
-#!/usr/bin/env stack
--- stack --resolver lts-12.21 script --package process
+module Main where
 
 import           System.Process
 import           Data.List

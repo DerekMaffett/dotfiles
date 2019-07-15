@@ -13,7 +13,14 @@ in {
   allowUnfree = true;
 
   packageOverrides = pkgs: with pkgs; rec {
-    copy = callPackage ../scripts/copy/default.nix {};
+    copy = haskell.lib.buildStackProject {
+      name = "copy";
+      src = ../scripts/copy;
+    };
+    projects = haskell.lib.buildStackProject {
+      name = "projects";
+      src = ../scripts/projects;
+    };
     private-oh-my-zsh = copyToShare {
       name = "oh-my-zsh";
       src = fetchFromGitHub {
@@ -62,12 +69,14 @@ in {
     all = buildEnv {
       name = "all";
       paths = with pkgs; [
-        cowsay
         /* xclip */
         /* gnome-tweaks-3.32.0 */
         /* google-chrome  */
         /* postman */
+
         copy
+        projects
+
         nodejs
         direnv
         myNeovim

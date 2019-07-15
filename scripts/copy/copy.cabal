@@ -1,0 +1,50 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 9581d6b6fdc5a2efcb4e6387d3f8d7d58849d833f682866c0838de05bf87daf7
+
+name:           copy
+version:        0.1.0.0
+description:    Script
+homepage:       https://github.com/DerekMaffett/copy#readme
+bug-reports:    https://github.com/DerekMaffett/copy/issues
+author:         Derek Maffett
+maintainer:     derekgmaffett@gmail.com
+copyright:      GNU GPLv3
+license:        BSD3
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/DerekMaffett/copy
+
+library
+  exposed-modules:
+      Main
+  other-modules:
+      Paths_copy
+  hs-source-dirs:
+      ./.
+  build-depends:
+      base >=4.7 && <5
+    , process
+  default-language: Haskell2010
+
+executable copy
+  main-is: Main.hs
+  other-modules:
+      Paths_copy
+  hs-source-dirs:
+      ./.
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , copy
+    , process
+  default-language: Haskell2010
