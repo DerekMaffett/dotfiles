@@ -24,12 +24,14 @@ alias tk='tmux kill-session && refresh'
 
 export TERM="xterm-256color"
 
-ZSH_THEME="powerlevel9k/powerlevel9k"
+export ZSH=$HOME/.nix-profile/share/oh-my-zsh
+
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs time)
 POWERLEVEL9K_SHORTEN_STRATEGY="Default"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 source "$HOME/.nix-profile/share/powerlevel9k/powerlevel9k.zsh-theme"
+source "$HOME/.nix-profile/share/oh-my-zsh/oh-my-zsh.sh"
 
 autoload -U +X compinit && compinit
 

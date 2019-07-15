@@ -2,24 +2,37 @@ let
   pkgs = import <nixpkgs> {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
   vimrc = import ./.vimrc;
+  copyToShare = { name, src }: pkgs.stdenv.mkDerivation {
+    inherit name src;
+    installPhase = ''
+      mkdir -p $out/share/
+      cp -r $src $out/share/$name
+    '';
+  };
 in {
   allowUnfree = true;
 
   packageOverrides = pkgs: with pkgs; rec {
-    private-powerlevel9k = stdenv.mkDerivation {
-      name = "private-powerlevel9k";
+    copy = callPackage ../scripts/copy/default.nix {};
+    private-oh-my-zsh = copyToShare {
+      name = "oh-my-zsh";
+      src = fetchFromGitHub {
+        owner = "robbyrussell";
+        repo = "oh-my-zsh";
+        rev = "17f4cfca99398cb5511557b8515a17bf1bf2948a";
+        sha256 = "19f29mrvnhvndvl48fd5kdiixfs0apmb27h4mck5v95p6yw27b6f";
+      };
+    };
+    private-powerlevel9k = copyToShare {
+      name = "powerlevel9k";
       src = fetchFromGitHub {
         owner = "bhilburn";
         repo = "powerlevel9k";
         rev = "3dafd79c41f8601b055e607ffefbfe3250c26040";
         sha256 = "0vc5d7w8djg3ah9jvd87xqbhpin1lpflm6wgmhn3jgijwcjkxpg3";
       };
-      installPhase = ''
-          mkdir -p $out/share/
-          cp -r $src $out/share/powerlevel9k
-      '';
     };
-    iterm2ColorSchemes = stdenv.mkDerivation {
+    iterm2ColorSchemes = copyToShare {
         name = "iterm2Colors";
         src = fetchFromGitHub {
             owner = "mbadolato";
@@ -27,10 +40,6 @@ in {
             rev = "b935cde717cabbfcafe3dca0725e7addc71f92b7";
             sha256 = "0pxrz7h52d4g55nbk9wbn8j51wkdwqvvh0cgg5xc4j4s2kyhdig1";
         };
-        installPhase = ''
-            mkdir -p $out/share/
-            cp -r $src $out/share/iterm2-colors
-        '';
     };
     sideways-vim = vimUtils.buildVimPlugin {
         name = "sideways.vim";
@@ -58,6 +67,7 @@ in {
         /* gnome-tweaks-3.32.0 */
         /* google-chrome  */
         /* postman */
+        copy
         nodejs
         direnv
         myNeovim
@@ -67,6 +77,7 @@ in {
         jq
         zsh
         private-powerlevel9k
+        private-oh-my-zsh
         powerline-fonts
         cloc
         autojump
@@ -121,7 +132,6 @@ in {
             deoplete-nvim 
             yats-vim 
             haskell-vim 
-            intero-neovim 
             purescript-vim 
             psc-ide-vim
             vim-fireplace
