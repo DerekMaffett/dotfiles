@@ -13,6 +13,9 @@ let
     inherit name;
     src = ../scripts + "/${name}";
   };
+  onlyForSystem = systemName: derivations: if builtins.currentSystem == systemName then derivations else [];
+  linuxOnly = onlyForSystem "linux";
+  macOnly = onlyForSystem "x86_64-darwin";
 in {
   allowUnfree = true;
 
@@ -67,40 +70,32 @@ in {
     all = buildEnv {
       name = "all";
       paths = with pkgs; [
-        /* xclip */
-        /* gnome-tweaks-3.32.0 */
-        /* google-chrome  */
-        /* postman */
-
+        cloc
+        jq
         copy
+        # Something wrong with GHC through Nix, Stack install works fine with nix support
         # projects
 
-        nodejs
         direnv
         myNeovim
         tmux
         tmuxinator
         fzf
-        jq
         zsh
         private-powerlevel9k
         private-oh-my-zsh
         powerline-fonts
         zsh-completions
-        cloc
         autojump
         silver-searcher
 
-        # iterm2 BROKEN
-        iterm2ColorSchemes
-
         nodePackages.prettier
-
         haskellPackages.brittany
 
         nodePackages.node2nix
         elm2nix
 
+        nodejs
         purescript
         stack
 
@@ -111,6 +106,14 @@ in {
         travis
         awscli
         nixops
+      ] ++ linuxOnly [
+        xclip 
+        gnome-tweaks-3.32.0 
+        google-chrome  
+        postman 
+      ] ++ macOnly [
+        # iterm2 BROKEN
+        iterm2ColorSchemes
       ];
     };
     myNeovim = neovim.override {
