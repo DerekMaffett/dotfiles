@@ -14,7 +14,7 @@ let
     src = ../scripts + "/${name}";
   };
   onlyForSystem = systemName: derivations: if builtins.currentSystem == systemName then derivations else [];
-  linuxOnly = onlyForSystem "linux";
+  linuxOnly = onlyForSystem "x86_64-linux";
   macOnly = onlyForSystem "x86_64-darwin";
 in {
   allowUnfree = true;
@@ -108,7 +108,8 @@ in {
         nixops
       ] ++ linuxOnly [
         xclip 
-        gnome-tweaks-3.32.0 
+        gnome3.gnome-tweak-tool
+        gnome3.gnome-terminal
         google-chrome  
         postman 
       ] ++ macOnly [
