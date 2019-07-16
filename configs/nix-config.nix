@@ -72,7 +72,7 @@ in {
       paths = with pkgs; [
         cloc
         jq
-        copy
+        # copy
         # Something wrong with GHC through Nix, Stack install works fine with nix support
         # projects
 
