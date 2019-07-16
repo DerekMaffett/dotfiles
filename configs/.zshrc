@@ -38,13 +38,10 @@ autoload -U +X compinit && compinit
 # Associated with vim plugin, so weird to autogenerate this currently...
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 
-. /Users/derekmaffett/.nix-profile/etc/profile.d/nix.sh
+. $HOME/.nix-profile/etc/profile.d/nix.sh
 
 # eval "$(direnv hook zsh)"
 # export DIRENV_LOG_FORMAT=
-
-export fpath=(path/to/zsh-completions/src $fpath)
-rm -f ~/.zcompdump; compinit
 
 export EDITOR='nvim'
 export VISUAL='nvim'
