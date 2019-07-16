@@ -1,7 +1,7 @@
 let 
   pkgs = import <nixpkgs> {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
-  vimrc = import ./.vimrc;
+  vimrc = import ./.vimrc.vim;
   copyToShare = { name, src }: pkgs.stdenv.mkDerivation {
     inherit name src;
     installPhase = ''
@@ -73,7 +73,7 @@ in {
         /* postman */
 
         copy
-        projects
+        # projects
 
         nodejs
         direnv
@@ -86,6 +86,7 @@ in {
         private-powerlevel9k
         private-oh-my-zsh
         powerline-fonts
+        zsh-completions
         cloc
         autojump
         silver-searcher

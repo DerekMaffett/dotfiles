@@ -1,4 +1,5 @@
 curl https://nixos.org/nix/install | sh
+. /Users/derekmaffett/.nix-profile/etc/profile.d/nix.sh
 
 ./link-configs.sh
 
