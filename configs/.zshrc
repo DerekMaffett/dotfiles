@@ -40,8 +40,8 @@ export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 
-# eval "$(direnv hook zsh)"
-# export DIRENV_LOG_FORMAT=
+eval "$(direnv hook zsh)"
+export DIRENV_LOG_FORMAT=
 
 export EDITOR='nvim'
 export VISUAL='nvim'
