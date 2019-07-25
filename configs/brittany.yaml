@@ -14,6 +14,7 @@ conf_debug:
 conf_forward:
     options_ghc:
         - -XTemplateHaskell
+        - -XLambdaCase
 conf_errorHandling:
     econf_ExactPrintFallback: ExactPrintFallbackModeInline
     econf_Werror: false

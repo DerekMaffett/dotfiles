@@ -121,6 +121,9 @@ in {
       vimAlias = true;
       configure = {
         customRC = vimrc;
+        plug.plugins = with pkgs.vimPlugins; [
+          haskell-vim
+        ];
         packages.myVimPackage = with pkgs.vimPlugins; {
           # see examples below how to use custom packages
           # vim-sexp vim-sexp-mappings-for-regular-people cljfmt vim-classpath vim-salve
@@ -143,7 +146,7 @@ in {
             vim-tmux-navigator
             deoplete-nvim 
             yats-vim 
-            haskell-vim 
+            # haskell-vim 
             purescript-vim 
             psc-ide-vim
             vim-fireplace
