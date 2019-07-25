@@ -1,6 +1,9 @@
 ''
 " The quoted document is so that it can be interpreted as a Nix text string
 
+syntax on
+filetype plugin indent on
+
 let g:SuperTabDefaultCompletionType = '<c-n>'
 set wildignore+=.git/,.DS_Store
 let g:auto_save = 0

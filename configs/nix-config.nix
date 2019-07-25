@@ -74,7 +74,7 @@ in {
         jq
         # copy
         # Something wrong with GHC through Nix, Stack install works fine with nix support
-        # projects
+        projects
 
         direnv
         myNeovim
