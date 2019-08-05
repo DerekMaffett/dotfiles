@@ -21,7 +21,7 @@ in {
 
   packageOverrides = pkgs: with pkgs; rec {
     copy = haskellScript "copy";
-    projects = haskellScript "projects";
+    # projects = haskellScript "projects";
     private-oh-my-zsh = copyToShare {
       name = "oh-my-zsh";
       src = fetchFromGitHub {
@@ -74,7 +74,7 @@ in {
         jq
         # copy
         # Something wrong with GHC through Nix, Stack install works fine with nix support
-        projects
+        # projects
 
         direnv
         myNeovim
