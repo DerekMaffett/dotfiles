@@ -1,0 +1,32 @@
+[global_config]
+  window_state = fullscreen
+
+  [keybindings]
+
+  [profiles]
+    [[default]]
+      show_titlebar = false
+      scrollbar_position = disabled
+
+      # Symfonic
+      palette = "#000000:#dc322f:#56db3a:#ff8400:#0084d4:#b729d9:#ccccff:#ffffff:#1b1d21:#dc322f:#56db3a:#ff8400:#0084d4:#b729d9:#ccccff:#ffffff"
+      background_color = "#000000"
+      cursor_color = "#dc322f"
+      foreground_color = "#ffffff"
+      background_image = None
+
+      # Dracula
+      # palette = "#000000:#ff5555:#50fa7b:#f1fa8c:#bd93f9:#ff79c6:#8be9fd:#bbbbbb:#555555:#ff5555:#50fa7b:#f1fa8c:#bd93f9:#ff79c6:#8be9fd:#ffffff"
+      # background_color = "#1e1f29"
+      # cursor_color = "#bbbbbb"
+      # foreground_color = "#f8f8f2"
+      # background_image = None
+  [layouts]
+    [[default]]
+      [[[child1]]]
+        type = Terminal
+        parent = window0
+      [[[window0]]]
+        type = Window
+        parent = ""
+  [plugins]

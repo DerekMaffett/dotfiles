@@ -1,5 +1,5 @@
 let 
-  pkgs = import <nixpkgs> {};
+  pkgs = import <nixpkgs-unstable> {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
   vimrc = import ./.vimrc.vim;
   copyToShare = { name, src }: pkgs.stdenv.mkDerivation {
@@ -19,7 +19,7 @@ let
 in {
   allowUnfree = true;
 
-  packageOverrides = pkgs: with pkgs; rec {
+  packageOverrides = _: with pkgs; rec {
     copy = haskellScript "copy";
     # projects = haskellScript "projects";
     private-oh-my-zsh = copyToShare {
@@ -108,9 +108,7 @@ in {
         nixops
       ] ++ linuxOnly [
         xclip 
-        gnome3.gnome-tweak-tool
-        gnome3.gnome-terminal
-        google-chrome  
+        slack
         postman 
       ] ++ macOnly [
         # iterm2 BROKEN
@@ -134,8 +132,8 @@ in {
             vim-surround 
             fzfWrapper
             fzf-vim 
-            tcomment_vim 
             vim-eunuch 
+            tcomment_vim 
             vim-rsi 
             vim-sleuth
             neoformat 
