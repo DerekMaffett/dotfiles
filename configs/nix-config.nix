@@ -106,6 +106,8 @@ in {
         travis
         awscli
         nixops
+
+        kitty
       ] ++ linuxOnly [
         xclip 
         slack

@@ -7,6 +7,7 @@ mkdir -p ~/.config/brittany/
 mkdir -p ~/.config/nvim/
 mkdir -p ~/.config/nixpkgs/
 mkdir -p ~/.config/terminator/
+mkdir -p ~/.config/kitty/
 mkdir -p ~/.stack/
 
 link .projects.json .config/projects/.projects.json
@@ -15,6 +16,7 @@ link brittany.yaml .config/brittany/config.yaml
 link init.vim .config/nvim/init.vim
 link nix-config.nix .config/nixpkgs/config.nix
 link terminator-config .config/terminator/config
+link kitty.conf .config/kitty/kitty.conf
 link stack.yaml .stack/config.yaml
 
 link .agignore .agignore
