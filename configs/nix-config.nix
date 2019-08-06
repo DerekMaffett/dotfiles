@@ -144,7 +144,6 @@ in {
             vim-tmux-navigator
             deoplete-nvim 
             yats-vim 
-            # haskell-vim 
             purescript-vim 
             psc-ide-vim
             vim-fireplace
