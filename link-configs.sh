@@ -17,6 +17,7 @@ link init.vim .config/nvim/init.vim
 link nix-config.nix .config/nixpkgs/config.nix
 link terminator-config .config/terminator/config
 link kitty.conf .config/kitty/kitty.conf
+link kitty-mac-cmdline-options .config/kitty/macos-launch-services-cmdline
 link stack.yaml .stack/config.yaml
 
 link .agignore .agignore
