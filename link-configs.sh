@@ -24,6 +24,5 @@ link .agignore .agignore
 link .gitconfig .gitconfig
 link .prettierrc.js .prettierrc.js
 link .tmux.conf .tmux.conf
-link .zprofile .zprofile
 link .zshrc .zshrc
 link ssh-config .ssh/config

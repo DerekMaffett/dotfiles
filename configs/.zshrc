@@ -1,5 +1,3 @@
-export DOTFILES=$HOME/dotfiles
-
 alias ls='ls -G'
 alias ll='ls -Al'
 alias l='ls -lrthG'
