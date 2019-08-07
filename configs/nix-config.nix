@@ -2,11 +2,11 @@ let
   pkgs = import <nixpkgs-unstable> {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
   vimrc = import ./.vimrc.vim;
-  copyToShare = { name, src }: pkgs.stdenv.mkDerivation {
-    inherit name src;
+  copyToShare = { name, src, dir ? "" }: pkgs.stdenv.mkDerivation {
+    inherit name src dir;
     installPhase = ''
       mkdir -p $out/share/
-      cp -r $src $out/share/$name
+      cp -r $src/$dir $out/share/$name
     '';
   };
   haskellScript = name: pkgs.haskell.lib.buildStackProject {
@@ -40,13 +40,14 @@ in {
         sha256 = "0vc5d7w8djg3ah9jvd87xqbhpin1lpflm6wgmhn3jgijwcjkxpg3";
       };
     };
-    iterm2ColorSchemes = copyToShare {
-        name = "iterm2Colors";
+    kittyThemes = copyToShare {
+        name = "kittyThemes";
+        dir = "themes";
         src = fetchFromGitHub {
-            owner = "mbadolato";
-            repo = "iTerm2-Color-Schemes";
-            rev = "b935cde717cabbfcafe3dca0725e7addc71f92b7";
-            sha256 = "0pxrz7h52d4g55nbk9wbn8j51wkdwqvvh0cgg5xc4j4s2kyhdig1";
+            owner = "dexpota";
+            repo = "kitty-themes";
+            rev = "3594682c0fa2ab11c792176de35feb5159e27c99";
+            sha256 = "1py3acrya8mzcwj3qz8ycqwmmshpjnz7i1lv1hnmciij1v22j1zk";
         };
     };
     sideways-vim = vimUtils.buildVimPlugin {
@@ -70,6 +71,8 @@ in {
     all = buildEnv {
       name = "all";
       paths = with pkgs; [
+        kitty
+        kittyThemes
         cloc
         jq
         # copy
@@ -82,8 +85,6 @@ in {
         tmuxinator
         fzf
         zsh
-        private-powerlevel9k
-        private-oh-my-zsh
         powerline-fonts
         zsh-completions
         autojump
@@ -106,15 +107,13 @@ in {
         travis
         awscli
         nixops
-
-        kitty
       ] ++ linuxOnly [
         xclip 
         slack
         postman 
       ] ++ macOnly [
-        # iterm2 BROKEN
-        iterm2ColorSchemes
+        private-powerlevel9k
+        private-oh-my-zsh
       ];
     };
     myNeovim = neovim.override {
