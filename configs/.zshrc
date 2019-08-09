@@ -17,7 +17,6 @@ alias br='copy-branch | xclip -selection clipboard'
 alias dot='tmuxinator start dotfiles'
 alias os='tmuxinator start open-source'
 alias client='tmuxinator start client' 
-alias watch-dot='tmuxinator start watch'
 alias tk='tmux kill-session && refresh'
 
 export TERM="xterm-256color"
