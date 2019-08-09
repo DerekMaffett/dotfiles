@@ -128,6 +128,7 @@ in {
           # vim-sexp vim-sexp-mappings-for-regular-people cljfmt vim-classpath vim-salve
           start = [
             potato-colors 
+            vim-css-color
             vim-nix 
             sideways-vim 
             vim-surround 
