@@ -9,5 +9,3 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 nix-env -i all
 
 chsh -s "$(which zsh)"
-
-echo "Install iterm, iterm colors, and powerline fonts manually. Colors and fonts are in ~/.nix-profile/share/"
