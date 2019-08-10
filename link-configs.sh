@@ -26,3 +26,8 @@ link .prettierrc.js .prettierrc.js
 link .tmux.conf .tmux.conf
 link .zshrc .zshrc
 link ssh-config .ssh/config
+
+if [[ "$OSTYPE" != "darwin"* ]]; then
+    # Link nixos config to root
+    sudo ln -fvs $HOME/dotfiles/configs/nixos-configuration.nix /etc/nixos/configuration.nix
+fi
