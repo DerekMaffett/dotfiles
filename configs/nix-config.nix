@@ -97,6 +97,10 @@ in {
         elm2nix
 
         nodejs
+        yarn
+        customNodePackages.pnpm
+        customNodePackages.parcel-bundler
+
         purescript
         stack
 
