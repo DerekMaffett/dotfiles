@@ -22,6 +22,15 @@ in {
   packageOverrides = _: with pkgs; rec {
     copy = haskellScript "copy";
     # projects = haskellScript "projects";
+    private-qutebrowser = copyToShare {
+      name = "qutebrowser";
+      src = fetchFromGitHub {
+        owner = "qutebrowser";
+        repo = "qutebrowser";
+        rev = "2624220778f6fdad41b30333bd58a9ea9f2fdfbb";
+        sha256 = "1g1qjm5zg5lksi17la0zyhfd21lkyqpl4rvcpnsfy23j4h76nq95";
+      };
+    };
     private-oh-my-zsh = copyToShare {
       name = "oh-my-zsh";
       src = fetchFromGitHub {
@@ -111,6 +120,8 @@ in {
         travis
         awscli
         nixops
+
+        private-qutebrowser
       ] ++ linuxOnly [
         xclip 
         slack
