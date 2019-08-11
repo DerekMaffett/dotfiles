@@ -8,6 +8,7 @@ mkdir -p ~/.config/nvim/
 mkdir -p ~/.config/nixpkgs/
 mkdir -p ~/.config/terminator/
 mkdir -p ~/.config/kitty/
+mkdir -p ~/.config/qutebrowser/
 mkdir -p ~/.stack/
 mkdir -p ~/.ssh/
 
@@ -19,6 +20,7 @@ link nix-config.nix .config/nixpkgs/config.nix
 link terminator-config .config/terminator/config
 link kitty.conf .config/kitty/kitty.conf
 link kitty-mac-cmdline-options .config/kitty/macos-launch-services-cmdline
+link qutebrowser.py .config/qutebrowser/config.py
 link stack.yaml .stack/config.yaml
 
 link .agignore .agignore
