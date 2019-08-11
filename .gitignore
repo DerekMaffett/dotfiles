@@ -1,4 +1,4 @@
 *.DS_Store
-.stack-work
+*/**/.stack-work
 src/configs/.work-projects.json
 src/configs/tmuxinator/client.yml

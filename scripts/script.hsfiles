@@ -30,6 +30,16 @@ executables:
     dependencies:
     - {{name}}
 
+default-extensions:
+    - NoImplicitPrelude
+    - OverloadedStrings
+    - LambdaCase
+    - RecordWildCards
+    - NamedFieldPuns
+    - DuplicateRecordFields
+    - DeriveGeneric
+    - DeriveAnyClass
+
 {-# START_FILE Setup.hs #-}
 import Distribution.Simple
 main = defaultMain
@@ -40,4 +50,3 @@ module Main where
 main :: IO ()
 main = do
   putStrLn "hello world"
-

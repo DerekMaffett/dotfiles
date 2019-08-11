@@ -9,6 +9,7 @@ mkdir -p ~/.config/nixpkgs/
 mkdir -p ~/.config/terminator/
 mkdir -p ~/.config/kitty/
 mkdir -p ~/.stack/
+mkdir -p ~/.ssh/
 
 link .projects.json .config/projects/.projects.json
 link .work-projects.json .config/projects/.work-projects.json
@@ -25,7 +26,7 @@ link .gitconfig .gitconfig
 link .prettierrc.js .prettierrc.js
 link .tmux.conf .tmux.conf
 link .zshrc .zshrc
-link ssh-config .ssh/config
+link ssh-init.json .ssh/ssh-init.json
 
 if [[ "$OSTYPE" != "darwin"* ]]; then
     # Link nixos config to root
