@@ -80,6 +80,9 @@ in {
     all = buildEnv {
       name = "all";
       paths = with pkgs; [
+        qutebrowser
+        lastpass-cli
+
         kitty
         kittyThemes
         cloc
