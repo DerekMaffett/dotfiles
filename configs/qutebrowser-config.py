@@ -1,4 +1,5 @@
 c.tabs.position = "left"
+c.zoom.default = "200%"
 
 # Ctrl-c as Escape
 c.bindings.key_mappings['<Ctrl-c>'] = '<Escape>'
