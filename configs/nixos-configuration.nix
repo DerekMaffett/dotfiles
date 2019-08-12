@@ -64,6 +64,8 @@
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "terminal"
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "kitty --start-as fullscreen"
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "<Alt>Return"
+      gsettings set org.gnome.desktop.peripherals.mouse natural-scroll true
+      gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
     '';
     ohMyZsh = {
       enable = true;
