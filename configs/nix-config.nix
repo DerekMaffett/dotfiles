@@ -80,7 +80,6 @@ in {
     all = buildEnv {
       name = "all";
       paths = with pkgs; [
-        qutebrowser
         lastpass-cli
 
         kitty
@@ -123,13 +122,13 @@ in {
         travis
         awscli
         nixops
-
-        private-qutebrowser
       ] ++ linuxOnly [
+        qutebrowser
         xclip 
         slack
         postman 
       ] ++ macOnly [
+        private-qutebrowser
         private-powerlevel9k
         private-oh-my-zsh
       ];
