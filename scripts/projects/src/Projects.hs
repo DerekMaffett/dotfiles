@@ -30,9 +30,13 @@ clone forceRemove = do
     getRepos = do
         homeDir           <- Dir.getHomeDirectory
         publicReposResult <-
-            eitherDecodeFileStrict $ homeDir <> "/.projects.json"
+            eitherDecodeFileStrict
+            $  homeDir
+            <> "/.config/projects/.projects.json"
         privateReposResult <-
-            eitherDecodeFileStrict $ homeDir <> "/.work-projects.json"
+            eitherDecodeFileStrict
+            $  homeDir
+            <> "/.config/projects/.work-projects.json"
         case extractParsedResults publicReposResult privateReposResult of
             Left  msg   -> die msg
             Right repos -> return repos
