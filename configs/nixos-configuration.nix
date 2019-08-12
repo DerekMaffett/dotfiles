@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [
-    "acpi_osi=! acpi_osi=\"Windows 2013\""
+    "nouveau.modeset=0 acpi_osi=Linux acpi_rev_override=1"
   ];
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -101,6 +101,7 @@
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
+  services.xserver.libinput.naturalScrolling = true;
 
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
