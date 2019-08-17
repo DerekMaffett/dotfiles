@@ -10,6 +10,7 @@ mkdir -p ~/.config/terminator/
 mkdir -p ~/.config/kitty/
 mkdir -p ~/.config/qutebrowser/
 mkdir -p ~/.config/qutebrowser/bookmarks/
+mkdir -p ~/.xmonad/
 mkdir -p ~/.stack/
 mkdir -p ~/.ssh/
 
@@ -24,6 +25,7 @@ link kitty-mac-cmdline-options .config/kitty/macos-launch-services-cmdline
 link qutebrowser-config.py .config/qutebrowser/config.py
 link qutebrowser-bookmarks .config/qutebrowser/bookmarks/urls
 link qutebrowser-quickmarks .config/qutebrowser/quickmarks
+link xmonad.hs .xmonad/xmonad.hs
 link stack.yaml .stack/config.yaml
 
 link .agignore .agignore

@@ -81,6 +81,7 @@ in {
       name = "all";
       paths = with pkgs; [
         lastpass-cli
+        wmctrl
 
         kitty
         kittyThemes

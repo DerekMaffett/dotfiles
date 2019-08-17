@@ -38,6 +38,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     networkmanager 
+    dmenu
     wget 
     vim
     google-chrome
@@ -55,18 +56,23 @@
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
 
-  programs.zsh = {
-    enable = true;
-    promptInit = "source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
-    loginShellInit = ''
-      export TERM="xterm-256color"
+  programs.zsh = let 
+    gnomeConfigs = ''
       gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "terminal"
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "kitty --start-as fullscreen"
       gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "<Alt>Return"
+    '';
+    gnomeScrollSettings = ''
       gsettings set org.gnome.desktop.peripherals.mouse natural-scroll true
       gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
     '';
+  in {
+    enable = true;
+    promptInit = "source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
+    loginShellInit = ''
+      export TERM="xterm-256color"
+    '' + gnomeConfigs + gnomeScrollSettings;
     ohMyZsh = {
       enable = true;
     };
@@ -94,6 +100,7 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -106,13 +113,26 @@
   services.xserver.libinput.naturalScrolling = true;
 
   services.xserver.displayManager.sddm.enable = true;
+
   services.xserver.desktopManager.gnome3.enable = true;
+  # services.xserver.windowManager = {
+  #   xmonad = {
+  #     enable = true;
+  #     enableContribAndExtras = true;
+  #     extraPackages = haskellPackages: [
+  #       haskellPackages.xmonad-contrib
+  #       haskellPackages.xmonad-extras
+  #       haskellPackages.xmonad
+  #     ];
+  #   };
+  #   default = "xmonad";
+  # };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.derek = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ]; 
   };
 
   # This value determines the NixOS release with which your system is to be
