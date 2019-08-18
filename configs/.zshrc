@@ -19,6 +19,10 @@ alias os='tmuxinator start open-source'
 alias client='tmuxinator start client' 
 alias tk='tmux kill-session && refresh'
 
+alias start-browser='wmctrl -a google-chrome.Google-chrome -x'
+alias start-term='wmctrl -a kitty.kitty -x'
+alias start-slack='wmctrl -a Slack -x'
+
 export TERM="xterm-256color"
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)

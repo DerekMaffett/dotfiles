@@ -2,9 +2,23 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+with lib;
+
+let 
+  setGnome = address: target: setting: "gsettings set " + address + " " + target + " " + setting + "\n";
+  createKeybindSlot = i: "'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom" + (toString i) + "/'";
+  setCustoms = num: setGnome 
+    "org.gnome.settings-daemon.plugins.media-keys" 
+    "custom-keybindings" 
+    ("[" + foldl (a: b: a + ", " + b) (createKeybindSlot 0) (map createKeybindSlot (range 1 (num - 1))) + "]");
+  keybind = i: {key, command}: 
+    setGnome ("org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom" + i + "/") "name" ("\"" + i + "\"")
+    + setGnome ("org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom" + i + "/") "command" ("\"" + command + "\"")
+    + setGnome ("org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom" + i + "/") "binding" ("\"" + key + "\"");
+
+in {
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
@@ -57,22 +71,20 @@
   ];
 
   programs.zsh = let 
-    gnomeConfigs = ''
-      gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "terminal"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "kitty --start-as fullscreen"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "<Alt>Return"
-    '';
-    gnomeScrollSettings = ''
-      gsettings set org.gnome.desktop.peripherals.mouse natural-scroll true
-      gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
-    '';
+    gnomeConfigs = 
+      setCustoms 3
+      + keybind "0" {key = "<Alt>t"; command = "start-term";} 
+      + keybind "1" {key = "<Alt>b"; command =  "start-chrome";}
+      + keybind "2" {key = "<Alt>l"; command =  "start-slack";};
+    gnomeScrollSettings = 
+      setGnome "org.gnome.desktop.peripherals.mouse" "natural-scroll" "true"
+      + setGnome "org.gnome.desktop.peripherals.touchpad" "natural-scroll" "true";
   in {
     enable = true;
     promptInit = "source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
     loginShellInit = ''
       export TERM="xterm-256color"
-    '' + gnomeConfigs + gnomeScrollSettings;
+    '';
     ohMyZsh = {
       enable = true;
     };
@@ -114,19 +126,19 @@
 
   services.xserver.displayManager.sddm.enable = true;
 
-  services.xserver.desktopManager.gnome3.enable = true;
-  # services.xserver.windowManager = {
-  #   xmonad = {
-  #     enable = true;
-  #     enableContribAndExtras = true;
-  #     extraPackages = haskellPackages: [
-  #       haskellPackages.xmonad-contrib
-  #       haskellPackages.xmonad-extras
-  #       haskellPackages.xmonad
-  #     ];
-  #   };
-  #   default = "xmonad";
-  # };
+  # services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.windowManager = {
+    xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      extraPackages = haskellPackages: [
+        haskellPackages.xmonad-contrib
+        haskellPackages.xmonad-extras
+        haskellPackages.xmonad
+      ];
+    };
+    default = "xmonad";
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.derek = {
