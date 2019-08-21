@@ -97,6 +97,7 @@ in {
         tmuxinator
         fzf
         zsh
+        any-nix-shell
         powerline-fonts
         zsh-completions
         autojump

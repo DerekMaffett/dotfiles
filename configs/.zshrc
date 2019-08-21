@@ -25,6 +25,7 @@ alias start-slack='wmctrl -a Slack -x'
 
 export TERM="xterm-256color"
 
+
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs time)
 POWERLEVEL9K_SHORTEN_STRATEGY="Default"
@@ -38,7 +39,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     source "$HOME/.nix-profile/share/oh-my-zsh/oh-my-zsh.sh"
     export NIX_PATH=nixpkgs-unstable=/Users/derekmaffett/.nix-defexpr/channels/nixpkgs:$NIX_PATH
 else
-    # Above already handled in configuration.nix
+    # Nix-shell use zsh
+    # Not available in OSX
+    any-nix-shell zsh --info-right | source /dev/stdin
 fi
 
 # Associated with vim plugin, so weird to autogenerate this currently...
