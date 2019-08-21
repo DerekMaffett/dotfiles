@@ -1,1 +1,1 @@
-["pnpm", "parcel-bundler"]
+["pnpm", "parcel-bundler", "deepspeech"]

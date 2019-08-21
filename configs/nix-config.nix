@@ -113,6 +113,7 @@ in {
         yarn
         customNodePackages.pnpm
         customNodePackages.parcel-bundler
+        customNodePackages.deepspeech
 
         purescript
         stack

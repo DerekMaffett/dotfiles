@@ -84,7 +84,7 @@ in {
     promptInit = "source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
     loginShellInit = ''
       export TERM="xterm-256color"
-    '';
+    '' + gnomeScrollSettings;
     ohMyZsh = {
       enable = true;
     };
@@ -126,19 +126,19 @@ in {
 
   services.xserver.displayManager.sddm.enable = true;
 
-  # services.xserver.desktopManager.gnome3.enable = true;
-  services.xserver.windowManager = {
-    xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      extraPackages = haskellPackages: [
-        haskellPackages.xmonad-contrib
-        haskellPackages.xmonad-extras
-        haskellPackages.xmonad
-      ];
-    };
-    default = "xmonad";
-  };
+  services.xserver.desktopManager.gnome3.enable = true;
+  # services.xserver.windowManager = {
+  #   xmonad = {
+  #     enable = true;
+  #     enableContribAndExtras = true;
+  #     extraPackages = haskellPackages: [
+  #       haskellPackages.xmonad-contrib
+  #       haskellPackages.xmonad-extras
+  #       haskellPackages.xmonad
+  #     ];
+  #   };
+  #   default = "xmonad";
+  # };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.derek = {

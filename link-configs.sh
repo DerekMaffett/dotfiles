@@ -28,7 +28,7 @@ link qutebrowser-quickmarks .config/qutebrowser/quickmarks
 link xmonad.hs .xmonad/xmonad.hs
 link stack.yaml .stack/config.yaml
 
-link .XResources .Xresources
+link .Xresources .Xresources
 link .agignore .agignore
 link .gitconfig .gitconfig
 link .prettierrc.js .prettierrc.js
