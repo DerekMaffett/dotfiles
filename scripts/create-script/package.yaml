@@ -1,0 +1,43 @@
+name: create-script
+version: 0.1.0.0
+github: "DerekMaffett/create-script"
+license: BSD3
+author: "Derek Maffett"
+maintainer: "derekgmaffett@gmail.com"
+copyright: "GNU GPLv3"
+
+extra-source-files:
+    - README.md
+    - ChangeLog.md
+
+description: Script
+
+dependencies:
+    - base >= 4.7 && < 5
+    - process
+    - unordered-containers
+    - directory
+    - yaml
+
+library:
+    source-dirs: .
+
+executables:
+    create-script:
+        main: Main.hs
+        source-dirs: .
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - create-script
+
+default-extensions:
+    - OverloadedStrings
+    - LambdaCase
+    - RecordWildCards
+    - NamedFieldPuns
+    - DuplicateRecordFields
+    - DeriveGeneric
+    - DeriveAnyClass

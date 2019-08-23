@@ -1,11 +1,36 @@
-# /Users/derekmaffett/dotfiles/src/configs/tmuxinator/dotfiles.yml
-
 name: dotfiles
-root: ~/dotfiles
-
 windows:
     - dotfiles:
-          layout: 337b,204x51,0,0{139x51,0,0,11,64x51,140,0[64x35,140,0,12,64x15,140,36,13]}
+          layout: main-vertical
+          root: ~/dotfiles
           panes:
               - vim
-              -  #Shell
+              - null
+    - copy:
+          layout: main-vertical
+          root: ~/dotfiles/scripts/copy
+          panes:
+              - vim
+              - stack install --file-watch
+              - null
+    - projects:
+          layout: main-vertical
+          root: ~/dotfiles/scripts/projects
+          panes:
+              - vim
+              - stack install --file-watch
+              - null
+    - ssh-init:
+          layout: main-vertical
+          root: ~/dotfiles/scripts/ssh-init
+          panes:
+              - vim
+              - stack install --file-watch
+              - null
+    - create-script:
+          layout: main-vertical
+          root: ~/dotfiles/scripts/create-script
+          panes:
+              - vim
+              - stack install --file-watch
+              - null
