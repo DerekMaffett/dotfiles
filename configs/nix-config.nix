@@ -21,7 +21,7 @@ in {
 
   packageOverrides = _: with pkgs; rec {
     copy = haskellScript "copy";
-    # projects = haskellScript "projects";
+    projects = haskellScript "projects";
     private-qutebrowser = copyToShare {
       name = "qutebrowser";
       src = fetchFromGitHub {
@@ -66,6 +66,15 @@ in {
           repo = "sideways.vim";
           rev = "17c03c59913f76bbdede07b8f9d4a1f163d9b2f2";
           sha256 = "1f1s5i8rrgvz1rpyy7lnhrid05ps9fnqryyqpz2nfq0aggws93sr";
+        };
+    };
+    vimCopyAsRTF = vimUtils.buildVimPlugin {
+        name = "vimCopyAsRTF";
+        src = fetchFromGitHub {
+          owner = "zerowidth";
+          repo = "vim-copy-as-rtf";
+          rev = "f7a9ac450e4ac1e7d4b946a8dd85bb1596fb135b";
+          sha256 = "0335a54hxgk4q0ziy9v49zwzpzjw5kwfj2ajssb8bhybrrjsqr0p";
         };
     };
     potato-colors = vimUtils.buildVimPlugin {
@@ -151,6 +160,7 @@ in {
             potato-colors 
             vim-css-color
             vim-nix 
+            vimCopyAsRTF
             sideways-vim 
             vim-surround 
             fzfWrapper
