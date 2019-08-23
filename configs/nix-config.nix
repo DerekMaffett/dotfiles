@@ -114,6 +114,7 @@ in {
         customNodePackages.pnpm
         customNodePackages.parcel-bundler
         customNodePackages.deepspeech
+        customNodePackages.git-stats
 
         purescript
         stack
