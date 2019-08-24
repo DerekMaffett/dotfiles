@@ -4468,13 +4468,13 @@ let
         sha1 = "a35008b20f41383eec1fb914f4cd5df79a264284";
       };
     };
-    "minipass-2.3.5" = {
+    "minipass-2.4.0" = {
       name = "minipass";
       packageName = "minipass";
-      version = "2.3.5";
+      version = "2.4.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/minipass/-/minipass-2.3.5.tgz";
-        sha512 = "Gi1W4k059gyRbyVUZQ4mEqLm0YIUiGYfvxhF6SIlk3ui1WVxMTGfGdQ2SInh3PDrRTVvPKgULkpJtT4RH10+VA==";
+        url = "https://registry.npmjs.org/minipass/-/minipass-2.4.0.tgz";
+        sha512 = "6PmOuSP4NnZXzs2z6rbwzLJu/c5gdzYg1mRI/WIYdx45iiX7T+a4esOzavD6V/KmBzAaopFSTZPZcUx73bqKWA==";
       };
     };
     "minizlib-1.2.1" = {
@@ -7261,6 +7261,24 @@ let
   };
 in
 {
+  river-cli = nodeEnv.buildNodePackage {
+    name = "river-cli";
+    packageName = "river-cli";
+    version = "1.0.6";
+    src = fetchurl {
+      url = "https://registry.npmjs.org/river-cli/-/river-cli-1.0.6.tgz";
+      sha512 = "Y09EcW9KgNqnTcDh42+KYYHG05JI9um16qIi9B10ep2WA+a3a2o7hdRwZ0VgPGj9vhV+u4ob5nIFzG6pta2YWw==";
+    };
+    buildInputs = globalBuildInputs;
+    meta = {
+      description = "Workflow management CLI";
+      homepage = "https://github.com/DerekMaffett/river#readme";
+      license = "MIT";
+    };
+    production = true;
+    bypassCache = true;
+    reconstructLock = true;
+  };
   pnpm = nodeEnv.buildNodePackage {
     name = "pnpm";
     packageName = "pnpm";
@@ -8303,7 +8321,7 @@ in
       })
       sources."minimatch-3.0.4"
       sources."minimist-0.0.8"
-      sources."minipass-2.3.5"
+      sources."minipass-2.4.0"
       sources."minizlib-1.2.1"
       sources."mkdirp-0.5.1"
       sources."ms-2.1.2"

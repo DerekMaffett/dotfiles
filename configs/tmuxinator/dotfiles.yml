@@ -1,36 +1,50 @@
 name: dotfiles
 windows:
-    - dotfiles:
-          layout: main-vertical
-          root: ~/dotfiles
-          panes:
-              - vim
-              - null
-    - copy:
-          layout: main-vertical
-          root: ~/dotfiles/scripts/copy
-          panes:
-              - vim
-              - stack install --file-watch
-              - null
-    - projects:
-          layout: main-vertical
-          root: ~/dotfiles/scripts/projects
-          panes:
-              - vim
-              - stack install --file-watch
-              - null
-    - ssh-init:
-          layout: main-vertical
-          root: ~/dotfiles/scripts/ssh-init
-          panes:
-              - vim
-              - stack install --file-watch
-              - null
-    - create-script:
-          layout: main-vertical
-          root: ~/dotfiles/scripts/create-script
-          panes:
-              - vim
-              - stack install --file-watch
-              - null
+- dotfiles:
+    layout: main-vertical
+    root: ~/dotfiles
+    panes:
+    - vim
+    - null
+- copy:
+    layout: main-vertical
+    root: ~/dotfiles/scripts/copy
+    panes:
+    - vim
+    - stack install --file-watch
+    - null
+- projects:
+    layout: main-vertical
+    root: ~/dotfiles/scripts/projects
+    panes:
+    - vim
+    - stack install --file-watch
+    - null
+- ssh-init:
+    layout: main-vertical
+    root: ~/dotfiles/scripts/ssh-init
+    panes:
+    - vim
+    - stack install --file-watch
+    - null
+- create-script:
+    layout: main-vertical
+    root: ~/dotfiles/scripts/create-script
+    panes:
+    - vim
+    - stack install --file-watch
+    - null
+- utils:
+    layout: main-vertical
+    root: ~/dotfiles/scripts/utils
+    panes:
+    - vim
+    - stack install --file-watch
+    - null
+- nix-npm-add:
+    layout: main-vertical
+    root: ~/dotfiles/scripts/nix-npm-add
+    panes:
+    - vim
+    - stack install --file-watch
+    - null

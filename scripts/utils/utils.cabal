@@ -4,13 +4,13 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 26a62846d9539a54a131dfe2a7c2de1d2d49dab18e16d571b036266209c9b360
+-- hash: e0e8f75f9c4e31f8996fc7835ea4919ba37592e296f54e90397b85a80595b478
 
-name:           create-script
+name:           utils
 version:        0.1.0.0
 description:    Script
-homepage:       https://github.com/DerekMaffett/create-script#readme
-bug-reports:    https://github.com/DerekMaffett/create-script/issues
+homepage:       https://github.com/DerekMaffett/utils#readme
+bug-reports:    https://github.com/DerekMaffett/utils/issues
 author:         Derek Maffett
 maintainer:     derekgmaffett@gmail.com
 copyright:      GNU GPLv3
@@ -22,22 +22,20 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/DerekMaffett/create-script
+  location: https://github.com/DerekMaffett/utils
 
-executable create-script
-  main-is: Main.hs
-  other-modules:
+library
+  exposed-modules:
       Utils
-      Paths_create_script
+  other-modules:
+      Paths_utils
   hs-source-dirs:
-      ./.
-      ../utils/src
+      ./src
   default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , directory
     , process
-    , unordered-containers
     , yaml
   default-language: Haskell2010

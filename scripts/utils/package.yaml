@@ -1,6 +1,6 @@
-name: create-script
+name: utils
 version: 0.1.0.0
-github: "DerekMaffett/create-script"
+github: "DerekMaffett/utils"
 license: BSD3
 author: "Derek Maffett"
 maintainer: "derekgmaffett@gmail.com"
@@ -14,21 +14,13 @@ description: Script
 
 dependencies:
     - base >= 4.7 && < 5
-    - unordered-containers
-    - process
+    - aeson
     - directory
+    - process
     - yaml
 
-executables:
-    create-script:
-        main: Main.hs
-        source-dirs:
-            - .
-            - ../utils/src
-        ghc-options:
-            - -threaded
-            - -rtsopts
-            - -with-rtsopts=-N
+library:
+    source-dirs: ./src
 
 default-extensions:
     - OverloadedStrings

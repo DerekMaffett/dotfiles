@@ -3,8 +3,11 @@ module Main where
 import           GHC.Generics
 import           System.Directory
 import           System.Environment
-import           System.Process                 ( callCommand )
-import           Data.Yaml
+import           Utils                          ( callCommand
+                                                , alterYamlFile
+                                                , FromJSON
+                                                , ToJSON
+                                                )
 import           Data.HashMap.Strict
 
 data TmuxinatorConfig = TmuxinatorConfig
@@ -18,20 +21,12 @@ data WindowConfig = WindowConfig
     , panes :: [Maybe String]
     } deriving (Generic, FromJSON, ToJSON)
 
--- instance FromJSON WindowConfig where
---     parseJSON = withObject "object" $ \o -> do
---         username <- o .: "username"
---         password <- o .: "password"
---         return $ BasicAuthCredentials username password
-
-
-
 main :: IO ()
 main = do
     scriptName <- head <$> getArgs
     createScript scriptName
-    dotfilesTmuxinatorConfig <- getDotfilesConfig
-    writeDotfilesConfig scriptName dotfilesTmuxinatorConfig
+    alterYamlFile "dotfiles/configs/tmuxinator/dotfiles.yml"
+        $ updateContents scriptName
 
 createScript scriptName =
     callCommand
@@ -39,14 +34,8 @@ createScript scriptName =
         <> scriptName
         <> " script.hsfiles"
 
-getDotfilesConfig = do
-    homeDir <- getHomeDirectory
-    decodeFileThrow $ homeDir <> "/dotfiles/configs/tmuxinator/dotfiles.yml"
-
-writeDotfilesConfig scriptName dotfilesConfig =
-    let newConfig = dotfilesConfig
-            { windows =
-                (windows dotfilesConfig)
+updateContents scriptName dotfilesConfig = dotfilesConfig
+    { windows = (windows dotfilesConfig)
                     <> [ singleton scriptName $ WindowConfig
                              { root   = "~/dotfiles/scripts/" <> scriptName
                              , layout = "main-vertical"
@@ -56,10 +45,4 @@ writeDotfilesConfig scriptName dotfilesConfig =
                                         ]
                              }
                        ]
-            }
-    in  do
-
-            homeDir <- getHomeDirectory
-            encodeFile
-                (homeDir <> "/dotfiles/configs/tmuxinator/dotfiles.yml")
-                newConfig
+    }

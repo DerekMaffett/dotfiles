@@ -4,13 +4,13 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 26a62846d9539a54a131dfe2a7c2de1d2d49dab18e16d571b036266209c9b360
+-- hash: bb13b868dafeffbc89e7ec4c337eb3f95deb5adc36bf3c98c7a004828b83abe2
 
-name:           create-script
+name:           nix-npm-add
 version:        0.1.0.0
 description:    Script
-homepage:       https://github.com/DerekMaffett/create-script#readme
-bug-reports:    https://github.com/DerekMaffett/create-script/issues
+homepage:       https://github.com/DerekMaffett/nix-npm-add#readme
+bug-reports:    https://github.com/DerekMaffett/nix-npm-add/issues
 author:         Derek Maffett
 maintainer:     derekgmaffett@gmail.com
 copyright:      GNU GPLv3
@@ -22,22 +22,22 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/DerekMaffett/create-script
+  location: https://github.com/DerekMaffett/nix-npm-add
 
-executable create-script
+executable nix-npm-add
   main-is: Main.hs
   other-modules:
       Utils
-      Paths_create_script
+      Paths_nix_npm_add
   hs-source-dirs:
       ./.
       ../utils/src
-  default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass
+  default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass ScopedTypeVariables
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , directory
     , process
-    , unordered-containers
     , yaml
   default-language: Haskell2010

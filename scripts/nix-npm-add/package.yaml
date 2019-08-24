@@ -1,6 +1,6 @@
-name: create-script
+name: nix-npm-add
 version: 0.1.0.0
-github: "DerekMaffett/create-script"
+github: "DerekMaffett/nix-npm-add"
 license: BSD3
 author: "Derek Maffett"
 maintainer: "derekgmaffett@gmail.com"
@@ -14,13 +14,13 @@ description: Script
 
 dependencies:
     - base >= 4.7 && < 5
-    - unordered-containers
-    - process
+    - aeson
     - directory
+    - process
     - yaml
 
 executables:
-    create-script:
+    nix-npm-add:
         main: Main.hs
         source-dirs:
             - .
@@ -38,3 +38,4 @@ default-extensions:
     - DuplicateRecordFields
     - DeriveGeneric
     - DeriveAnyClass
+    - ScopedTypeVariables
