@@ -124,6 +124,7 @@ in {
         customNodePackages.parcel-bundler
         customNodePackages.deepspeech
         customNodePackages.git-stats
+        customNodePackages.river-cli
 
         purescript
         stack

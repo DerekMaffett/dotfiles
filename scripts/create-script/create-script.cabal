@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 26a62846d9539a54a131dfe2a7c2de1d2d49dab18e16d571b036266209c9b360
+-- hash: 6054df3a24e6b35aced506482d0434ce761d852ec955e41ebfd365d696ca9aac
 
 name:           create-script
 version:        0.1.0.0
@@ -35,7 +35,8 @@ executable create-script
   default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
     , directory
     , process
     , unordered-containers

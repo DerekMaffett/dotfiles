@@ -6,18 +6,11 @@ author: "Derek Maffett"
 maintainer: "derekgmaffett@gmail.com"
 copyright: "GNU GPLv3"
 
-extra-source-files:
-    - README.md
-    - ChangeLog.md
-
 description: Script
 
 dependencies:
     - base >= 4.7 && < 5
     - process
-
-library:
-    source-dirs: .
 
 executables:
     copy:
@@ -27,5 +20,3 @@ executables:
             - -threaded
             - -rtsopts
             - -with-rtsopts=-N
-        dependencies:
-            - copy
