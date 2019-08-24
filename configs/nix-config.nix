@@ -123,7 +123,9 @@ in {
         customNodePackages.pnpm
         customNodePackages.parcel-bundler
         customNodePackages.deepspeech
+        git-quick-stats
         customNodePackages.git-stats
+        customNodePackages.git-stats-importer
         customNodePackages.river-cli
 
         purescript

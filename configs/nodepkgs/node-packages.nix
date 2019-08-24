@@ -877,6 +877,15 @@ let
         sha1 = "97a1119649b211ad33691d9f9f486a8ec9fbe0a3";
       };
     };
+    "ansi-parser-2.0.0" = {
+      name = "ansi-parser";
+      packageName = "ansi-parser";
+      version = "2.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/ansi-parser/-/ansi-parser-2.0.0.tgz";
+        sha1 = "433498af32fee8c2a1df2c4e47941bc029bcf407";
+      };
+    };
     "ansi-parser-3.0.0" = {
       name = "ansi-parser";
       packageName = "ansi-parser";
@@ -1694,6 +1703,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/clones/-/clones-1.2.0.tgz";
         sha512 = "FXDYw4TjR8wgPZYui2LeTqWh1BLpfQ8lB6upMtlpDF6WlOOxghmTTxWyngdKTgozqBgKnHbTVwTE+hOHqAykuQ==";
+      };
+    };
+    "clp-3.2.1" = {
+      name = "clp";
+      packageName = "clp";
+      version = "3.2.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/clp/-/clp-3.2.1.tgz";
+        sha1 = "af1ed66db895a5c9ce9b6d32e9c33dee02b3edf2";
       };
     };
     "clp-4.0.11" = {
@@ -2947,6 +2965,15 @@ let
         sha512 = "WjV09RN7NEp1EazSNKJVZCVHeWYj4MNyb4HX1BAyrW4j0OW2UPJukP4SUkJt9Nj7gWgyD6avK0mH5bjwOZFViw==";
       };
     };
+    "findit-2.0.0" = {
+      name = "findit";
+      packageName = "findit";
+      version = "2.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/findit/-/findit-2.0.0.tgz";
+        sha1 = "6509f0126af4c178551cfa99394e032e13a4d56e";
+      };
+    };
     "flat-colors-3.0.0" = {
       name = "flat-colors";
       packageName = "flat-colors";
@@ -3109,6 +3136,24 @@ let
         sha1 = "5eff8e3e684d569ae4cb2b1282604e8ba62149fa";
       };
     };
+    "git-repos-1.2.9" = {
+      name = "git-repos";
+      packageName = "git-repos";
+      version = "1.2.9";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/git-repos/-/git-repos-1.2.9.tgz";
+        sha512 = "rjw6ZoQQnY7ErMZUNUbRS7OzKACyU9oLDwkXEPNV5/zBuv2GZUyMKdLUY+YqhZhV2pSaYWuZc6NrIX2heeNoIQ==";
+      };
+    };
+    "git-stats-2.10.11" = {
+      name = "git-stats";
+      packageName = "git-stats";
+      version = "2.10.11";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/git-stats/-/git-stats-2.10.11.tgz";
+        sha512 = "d+eTcDpaV/xWYEeMtS78AvF2gX+g4B2cTedPsGPoW55vNUIOZrQj3PaPzwr0z+KZ8+qMLVX1tRX27WxC1GHLxg==";
+      };
+    };
     "git-stats-colors-2.3.12" = {
       name = "git-stats-colors";
       packageName = "git-stats-colors";
@@ -3197,6 +3242,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/growl/-/growl-1.10.5.tgz";
         sha512 = "qBr4OuELkhPenW6goKVXiv47US3clb3/IbuWF9KNKEijAy9oeHxU9IgzjvJhHkUzhaj7rOUD7+YGWqUjLp5oSA==";
+      };
+    };
+    "gry-4.3.1" = {
+      name = "gry";
+      packageName = "gry";
+      version = "4.3.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/gry/-/gry-4.3.1.tgz";
+        sha1 = "278f6fdf89d5e8972e4b7c78ac2d1a0ccd632941";
       };
     };
     "gry-5.0.8" = {
@@ -4180,6 +4234,15 @@ let
         sha512 = "zhc7uLX5Sl0GK82ESHWpLPSmL21PSDeBkksExu+DgicmiNr0wv33oR3Nb8wT3Mxv3G15D5i1+atkUIKDR5Kvaw==";
       };
     };
+    "le-table-4.0.0" = {
+      name = "le-table";
+      packageName = "le-table";
+      version = "4.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/le-table/-/le-table-4.0.0.tgz";
+        sha1 = "3bfeb72d24cbfc37752f01539f9006d711d9be93";
+      };
+    };
     "le-table-6.1.9" = {
       name = "le-table";
       packageName = "le-table";
@@ -4756,6 +4819,15 @@ let
         sha512 = "iGfd9Y6SFdTNldEy2L0GUhcarIutFmk+MPWIn9dmj8NMIup03G08uUF2KGbbmv/Ux4RT0VZJoP/sVbWA6d/VIw==";
       };
     };
+    "oargv-3.4.9" = {
+      name = "oargv";
+      packageName = "oargv";
+      version = "3.4.9";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/oargv/-/oargv-3.4.9.tgz";
+        sha512 = "24Eatdf7OGezTAU0Yw3HaoO9x+GTFnmBkuFHfWEQtVsIKbD7VMHhyIlDMtxxUxfZKPBPHYsTo8UgGwKr4ySewA==";
+      };
+    };
     "oauth-sign-0.9.0" = {
       name = "oauth-sign";
       packageName = "oauth-sign";
@@ -4873,6 +4945,15 @@ let
         sha1 = "583b1aa775961d4b113ac17d9c50baef9dd76bd1";
       };
     };
+    "one-by-one-2.2.1" = {
+      name = "one-by-one";
+      packageName = "one-by-one";
+      version = "2.2.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/one-by-one/-/one-by-one-2.2.1.tgz";
+        sha1 = "61c812e013475f4bdb2af5d38e056963bf6355c4";
+      };
+    };
     "one-by-one-3.2.7" = {
       name = "one-by-one";
       packageName = "one-by-one";
@@ -4954,6 +5035,15 @@ let
         sha512 = "0CWcCECdMVc2Rw3U5w9ZjqX6ga6ubk1xDVKxtBQPK7wis/0F2r9T6k4ydGYhecl7YUBxBVxhL5oisPsNxAPe2g==";
       };
     };
+    "overlap-2.0.0" = {
+      name = "overlap";
+      packageName = "overlap";
+      version = "2.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/overlap/-/overlap-2.0.0.tgz";
+        sha1 = "b29b6bb2ad7569c4e66faef28cb5d74361179cb4";
+      };
+    };
     "overlap-2.2.9" = {
       name = "overlap";
       packageName = "overlap";
@@ -4979,6 +5069,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/pako/-/pako-1.0.10.tgz";
         sha512 = "0DTvPVU3ed8+HNXOu5Bs+o//Mbdj9VNQMUOe9oKCwh8l0GNwpTDMKCWbRjgtD291AWnkAgkqA/LOnQS8AmS1tw==";
+      };
+    };
+    "parent-search-1.3.9" = {
+      name = "parent-search";
+      packageName = "parent-search";
+      version = "1.3.9";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/parent-search/-/parent-search-1.3.9.tgz";
+        sha512 = "8VQ3y4wiEblvoyQE31hWRS+igbBpGE2074qvsdoN//bFoGoAkb0GUCOub6LpihadhUB0xNhggfzxsfqMxThbbQ==";
       };
     };
     "parse-asn1-5.1.4" = {
@@ -7261,6 +7360,228 @@ let
   };
 in
 {
+  git-stats-importer = nodeEnv.buildNodePackage {
+    name = "git-stats-importer";
+    packageName = "git-stats-importer";
+    version = "2.4.10";
+    src = fetchurl {
+      url = "https://registry.npmjs.org/git-stats-importer/-/git-stats-importer-2.4.10.tgz";
+      sha512 = "okxEMx0dub+yAGMOkYS6+nUnTyDXb7C4QqJMvx0+uylq8qO8ZeeJN+tO09BJ/ez2iAd/DN93aNoyUt4c/cOWCw==";
+    };
+    dependencies = [
+      sources."abs-1.3.13"
+      sources."add-subtract-date-1.0.14"
+      sources."ansi-parser-2.0.0"
+      sources."ansi-regex-4.1.0"
+      sources."ansi-styles-3.2.1"
+      sources."ansy-1.0.14"
+      sources."arrs-to-obj-1.0.11"
+      sources."auto-parse-1.8.0"
+      sources."balanced-match-1.0.0"
+      sources."barbe-3.0.15"
+      sources."brace-expansion-1.1.11"
+      sources."browser-stdout-1.3.1"
+      (sources."bug-killer-4.4.4" // {
+        dependencies = [
+          sources."ansi-parser-3.2.9"
+          sources."couleurs-6.0.10"
+          sources."deffy-2.2.3"
+        ];
+      })
+      sources."byline-4.2.2"
+      sources."camelo-1.1.12"
+      sources."class-methods-1.0.11"
+      (sources."cli-box-5.0.0" // {
+        dependencies = [
+          sources."ansi-parser-3.0.0"
+          sources."typpy-2.0.0"
+          sources."ul-5.0.0"
+        ];
+      })
+      sources."cli-circle-3.2.10"
+      (sources."cli-gh-cal-1.4.12" // {
+        dependencies = [
+          sources."ansi-parser-3.2.9"
+          (sources."cli-box-6.0.9" // {
+            dependencies = [
+              sources."deffy-2.2.3"
+            ];
+          })
+          sources."couleurs-6.0.10"
+        ];
+      })
+      (sources."cli-graph-3.2.2" // {
+        dependencies = [
+          sources."typpy-2.0.0"
+          sources."ul-5.0.0"
+        ];
+      })
+      sources."cli-pie-2.4.1"
+      (sources."clp-3.2.1" // {
+        dependencies = [
+          sources."typpy-2.0.0"
+          sources."ul-5.0.0"
+        ];
+      })
+      sources."color-convert-1.9.3"
+      sources."color-name-1.1.3"
+      sources."commander-2.15.1"
+      sources."concat-map-0.0.1"
+      (sources."couleurs-5.0.0" // {
+        dependencies = [
+          sources."typpy-2.0.0"
+        ];
+      })
+      sources."custom-return-1.0.11"
+      sources."date-unit-ms-1.1.13"
+      sources."daty-1.2.0"
+      sources."days-1.1.1"
+      sources."debug-3.1.0"
+      sources."debug-mode-1.0.9"
+      sources."deffy-2.0.0"
+      sources."define-property-1.0.0"
+      sources."diff-3.5.0"
+      sources."diff-dates-1.0.12"
+      sources."err-2.1.11"
+      sources."escape-string-regexp-1.0.5"
+      sources."exclude-arr-1.0.10"
+      sources."exec-limiter-3.2.12"
+      sources."fillo-1.0.12"
+      sources."findit-2.0.0"
+      sources."flat-colors-3.0.0"
+      sources."flatcolors-3.0.0"
+      sources."formatoid-1.2.3"
+      sources."fs.realpath-1.0.0"
+      sources."function.name-1.0.12"
+      sources."git-repos-1.2.9"
+      (sources."git-stats-2.10.11" // {
+        dependencies = [
+          sources."deffy-2.2.3"
+          sources."gry-5.0.8"
+          sources."one-by-one-3.2.7"
+        ];
+      })
+      (sources."git-stats-colors-2.3.12" // {
+        dependencies = [
+          sources."couleurs-6.0.10"
+        ];
+      })
+      sources."gitlog-parser-0.0.4"
+      sources."glob-7.1.2"
+      sources."growl-1.10.5"
+      sources."gry-4.3.1"
+      sources."has-flag-1.0.0"
+      sources."he-1.1.1"
+      sources."indento-1.1.12"
+      sources."inflight-1.0.6"
+      sources."inherits-2.0.4"
+      sources."is-accessor-descriptor-1.0.0"
+      sources."is-buffer-1.1.6"
+      sources."is-data-descriptor-1.0.0"
+      sources."is-descriptor-1.0.2"
+      sources."is-empty-obj-1.0.11"
+      (sources."is-number-3.0.0" // {
+        dependencies = [
+          sources."kind-of-3.2.2"
+        ];
+      })
+      sources."is-there-4.4.4"
+      sources."is-undefined-1.0.10"
+      sources."is-win-1.0.9"
+      sources."iterate-object-1.3.3"
+      sources."kind-of-6.0.2"
+      sources."last-char-1.3.10"
+      (sources."le-table-4.0.0" // {
+        dependencies = [
+          sources."typpy-2.0.0"
+          sources."ul-5.0.0"
+        ];
+      })
+      sources."limit-it-3.2.9"
+      sources."match-it-1.0.8"
+      sources."minimatch-3.0.4"
+      sources."minimist-0.0.8"
+      sources."mkdirp-0.5.1"
+      (sources."mocha-5.2.0" // {
+        dependencies = [
+          sources."has-flag-3.0.0"
+          sources."supports-color-5.4.0"
+        ];
+      })
+      sources."moment-2.24.0"
+      sources."months-1.2.0"
+      sources."ms-2.0.0"
+      sources."noop6-1.0.8"
+      sources."oargv-3.4.9"
+      (sources."obj-def-1.0.7" // {
+        dependencies = [
+          sources."deffy-2.2.3"
+        ];
+      })
+      sources."once-1.4.0"
+      sources."one-by-one-2.2.1"
+      (sources."overlap-2.0.0" // {
+        dependencies = [
+          sources."ansi-parser-3.0.0"
+        ];
+      })
+      sources."parent-search-1.3.9"
+      sources."parse-it-1.0.9"
+      sources."path-is-absolute-1.0.1"
+      sources."prompt-sync-4.1.7"
+      sources."promptify-1.0.1"
+      sources."r-json-1.2.9"
+      sources."regex-escape-3.4.9"
+      sources."remove-blank-lines-1.1.1"
+      sources."semver-5.7.1"
+      sources."sliced-1.0.1"
+      sources."static-methods-1.0.11"
+      sources."strip-ansi-5.2.0"
+      sources."supports-color-3.2.3"
+      (sources."tilda-4.4.14" // {
+        dependencies = [
+          sources."ansi-parser-3.2.9"
+          sources."cli-box-6.0.9"
+          sources."clp-4.0.11"
+          sources."deffy-2.2.3"
+          sources."is-number-2.1.0"
+          sources."kind-of-3.2.2"
+          sources."le-table-6.1.9"
+          (sources."overlap-2.2.9" // {
+            dependencies = [
+              sources."ansi-parser-3.0.0"
+              sources."cli-box-5.0.0"
+              sources."deffy-2.0.0"
+              sources."typpy-2.0.0"
+              sources."ul-5.0.0"
+            ];
+          })
+        ];
+      })
+      sources."typpy-2.3.11"
+      sources."uc-first-array-1.1.9"
+      sources."ucfirst-1.0.0"
+      (sources."ul-5.2.14" // {
+        dependencies = [
+          sources."deffy-2.2.3"
+        ];
+      })
+      sources."w-json-1.3.9"
+      sources."window-size-1.1.1"
+      sources."wrap-text-1.0.8"
+      sources."wrappy-1.0.2"
+      sources."x256-0.0.2"
+    ];
+    buildInputs = globalBuildInputs;
+    meta = {
+      description = "Imports your commits from a repository into git-stats history.";
+      homepage = https://github.com/IonicaBizau/git-stats-importer;
+      license = "MIT";
+    };
+    production = true;
+    bypassCache = true;
+    reconstructLock = true;
+  };
   river-cli = nodeEnv.buildNodePackage {
     name = "river-cli";
     packageName = "river-cli";
