@@ -1,0 +1,74 @@
+name: scripts
+version: 0.1.0.0
+github: "DerekMaffett/scripts"
+license: BSD3
+author: "Derek Maffett"
+maintainer: "derekgmaffett@gmail.com"
+copyright: "GNU GPLv3"
+
+extra-source-files:
+    - README.md
+    - ChangeLog.md
+
+description: Script
+
+dependencies:
+    - base >= 4.7 && < 5
+    - aeson
+    - yaml
+    - process
+    - directory
+    - unordered-containers
+    - text
+    - optparse-applicative
+
+library:
+    source-dirs: ./common
+
+executables:
+    ssh-init:
+        main: Main.hs
+        source-dirs: ssh-init
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - scripts
+    copy:
+        main: Main.hs
+        source-dirs: copy
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - scripts
+    nix-npm-add:
+        main: Main.hs
+        source-dirs: nix-npm-add
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - scripts
+    projects:
+        main: Main.hs
+        source-dirs: projects
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - scripts
+
+default-extensions:
+    - OverloadedStrings
+    - LambdaCase
+    - RecordWildCards
+    - NamedFieldPuns
+    - DuplicateRecordFields
+    - DeriveGeneric
+    - DeriveAnyClass
+    - ScopedTypeVariables

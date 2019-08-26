@@ -1,0 +1,126 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 4723bdc99a45dc24c0be2c23f7fe69bd03f837908b0d1c9d869b2aa9a34a9f40
+
+name:           scripts
+version:        0.1.0.0
+description:    Script
+homepage:       https://github.com/DerekMaffett/scripts#readme
+bug-reports:    https://github.com/DerekMaffett/scripts/issues
+author:         Derek Maffett
+maintainer:     derekgmaffett@gmail.com
+copyright:      GNU GPLv3
+license:        BSD3
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/DerekMaffett/scripts
+
+library
+  exposed-modules:
+      Files
+      Tmuxinator
+  other-modules:
+      Paths_scripts
+  hs-source-dirs:
+      ./common
+  default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass ScopedTypeVariables
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , directory
+    , optparse-applicative
+    , process
+    , text
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010
+
+executable copy
+  main-is: Main.hs
+  other-modules:
+      Paths_scripts
+  hs-source-dirs:
+      copy
+  default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass ScopedTypeVariables
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , directory
+    , optparse-applicative
+    , process
+    , scripts
+    , text
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010
+
+executable nix-npm-add
+  main-is: Main.hs
+  other-modules:
+      Paths_scripts
+  hs-source-dirs:
+      nix-npm-add
+  default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass ScopedTypeVariables
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , directory
+    , optparse-applicative
+    , process
+    , scripts
+    , text
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010
+
+executable projects
+  main-is: Main.hs
+  other-modules:
+      Projects
+      Paths_scripts
+  hs-source-dirs:
+      projects
+  default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass ScopedTypeVariables
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , directory
+    , optparse-applicative
+    , process
+    , scripts
+    , text
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010
+
+executable ssh-init
+  main-is: Main.hs
+  other-modules:
+      Paths_scripts
+  hs-source-dirs:
+      ssh-init
+  default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass ScopedTypeVariables
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , directory
+    , optparse-applicative
+    , process
+    , scripts
+    , text
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010

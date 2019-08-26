@@ -1,9 +1,8 @@
 module Main where
 
+import           System.Process                 ( callCommand )
 import           System.Environment
-import           Utils                          ( callCommand
-                                                , alterJsonFile
-                                                )
+import           Files                          ( alterJsonFile )
 
 main :: IO ()
 main = do

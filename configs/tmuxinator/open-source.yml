@@ -1,41 +1,42 @@
-# /Users/derekmaffett/dotfiles/src/configs/tmuxinator/open-source.yml
-
 name: open-source
-root: ~/projects
 windows:
-    - river:
-          layout: main-vertical
-          root: ~/projects/river
-          panes:
-              - vim
-              -  #Shell
-              -  #Shell
-    - river-bitbucket:
-          layout: main-vertical
-          root: ~/projects/river-bitbucket-test
-          panes:
-              - vim
-              -  #SHELL
-    - river-github:
-          layout: main-vertical
-          root: ~/projects/river-github-test
-          panes:
-              - vim
-              -  #SHELL
-    - react-elm:
-          layout: main-vertical
-          root: ~/projects/react-elm
-          panes:
-              - vim
-              - js-compiler:
-                    - git co master
-                    - git pull
-                    - npm run start
-              -  #SHELL
-    - todo-app:
-          layout: main-vertical
-          root: ~/projects/todo-app
-          panes:
-              - vim
-              - pscid -I src
-              - parcel src/index.html
+- river:
+    layout: main-vertical
+    root: ~/projects/river
+    panes:
+    - vim
+    - watch-dev
+    - null
+- river-bitbucket:
+    layout: main-vertical
+    root: ~/projects/river-bitbucket-test
+    panes:
+    - vim
+    - null
+- river-github:
+    layout: main-vertical
+    root: ~/projects/river-github-test
+    panes:
+    - vim
+    - null
+- react-elm:
+    layout: main-vertical
+    root: ~/projects/react-elm
+    panes:
+    - vim
+    - npm run start
+    - null
+- todo-app:
+    layout: main-vertical
+    root: ~/projects/todo-app
+    panes:
+    - vim
+    - pscid -I src
+    - parcel src/index.html
+- haskell-presentation:
+    layout: main-vertical
+    root: ~/projects/haskell-presentation
+    panes:
+    - vim
+    - null
+    - null
