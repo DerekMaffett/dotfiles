@@ -9,6 +9,10 @@ alterYamlFile filePath alterFn = do
     fileContents <- Y.decodeFileThrow $ homeDir <> "/" <> filePath
     Y.encodeFile (homeDir <> "/" <> filePath) (alterFn fileContents)
 
+writeYamlFile :: (Y.ToJSON a) => String -> a -> IO ()
+writeYamlFile filePath content = do
+    Y.encodeFile filePath content
+
 alterJsonFile :: (A.FromJSON a, A.ToJSON a) => String -> (a -> a) -> IO ()
 alterJsonFile filePath alterFn = do
     homeDir      <- getHomeDirectory

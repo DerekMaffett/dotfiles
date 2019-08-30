@@ -31,6 +31,12 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs time)
 POWERLEVEL9K_SHORTEN_STRATEGY="Default"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 
+# Presentation
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir)
+# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
+# POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # OSX hooks into custom nix installations here since it can't use configuration.nix
     # Downside is these packages are custom and get stale easier

@@ -21,6 +21,8 @@ dependencies:
     - unordered-containers
     - text
     - optparse-applicative
+    - split
+    - ilist
 
 library:
     source-dirs: ./common
@@ -56,6 +58,15 @@ executables:
     projects:
         main: Main.hs
         source-dirs: projects
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - scripts
+    create-interactive-slideshow:
+        main: Main.hs
+        source-dirs: create-interactive-slideshow
         ghc-options:
             - -threaded
             - -rtsopts

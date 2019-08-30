@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4723bdc99a45dc24c0be2c23f7fe69bd03f837908b0d1c9d869b2aa9a34a9f40
+-- hash: 1356cf0dd356b0d8bcdc7f08b27e52b1f6284aa351e2c5cace4c26aff3d3028b
 
 name:           scripts
 version:        0.1.0.0
@@ -37,8 +37,10 @@ library
       aeson
     , base >=4.7 && <5
     , directory
+    , ilist
     , optparse-applicative
     , process
+    , split
     , text
     , unordered-containers
     , yaml
@@ -56,9 +58,33 @@ executable copy
       aeson
     , base >=4.7 && <5
     , directory
+    , ilist
     , optparse-applicative
     , process
     , scripts
+    , split
+    , text
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010
+
+executable create-interactive-slideshow
+  main-is: Main.hs
+  other-modules:
+      Paths_scripts
+  hs-source-dirs:
+      create-interactive-slideshow
+  default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass ScopedTypeVariables
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , directory
+    , ilist
+    , optparse-applicative
+    , process
+    , scripts
+    , split
     , text
     , unordered-containers
     , yaml
@@ -76,9 +102,11 @@ executable nix-npm-add
       aeson
     , base >=4.7 && <5
     , directory
+    , ilist
     , optparse-applicative
     , process
     , scripts
+    , split
     , text
     , unordered-containers
     , yaml
@@ -97,9 +125,11 @@ executable projects
       aeson
     , base >=4.7 && <5
     , directory
+    , ilist
     , optparse-applicative
     , process
     , scripts
+    , split
     , text
     , unordered-containers
     , yaml
@@ -117,9 +147,11 @@ executable ssh-init
       aeson
     , base >=4.7 && <5
     , directory
+    , ilist
     , optparse-applicative
     , process
     , scripts
+    , split
     , text
     , unordered-containers
     , yaml

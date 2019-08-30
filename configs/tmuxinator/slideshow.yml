@@ -1,0 +1,20 @@
+name: slideshow
+windows:
+- '':
+    layout: main-vertical
+    root: /Users/derekmaffett/projects/haskell-presentation/
+    panes:
+    - vim /Users/derekmaffett/projects/haskell-presentation/.slides/0.hs
+    - stack ghc /Users/derekmaffett/projects/haskell-presentation/.slides/0.hs
+- '':
+    layout: main-vertical
+    root: /Users/derekmaffett/projects/haskell-presentation/
+    panes:
+    - vim /Users/derekmaffett/projects/haskell-presentation/.slides/1.hs
+    - stack ghc /Users/derekmaffett/projects/haskell-presentation/.slides/1.hs
+- '':
+    layout: main-vertical
+    root: /Users/derekmaffett/projects/haskell-presentation/
+    panes:
+    - vim /Users/derekmaffett/projects/haskell-presentation/.slides/2.hs
+    - stack ghc /Users/derekmaffett/projects/haskell-presentation/.slides/2.hs
