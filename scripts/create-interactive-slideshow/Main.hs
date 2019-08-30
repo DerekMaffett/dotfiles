@@ -15,7 +15,7 @@ main = do
     filePath         <- Dir.makeAbsolute informalFilePath
     let fileParentPath = dropWhileEnd (/= '/') filePath
     contents <- lines <$> readFile filePath
-    let slides = splitWhen ("##" `isPrefixOf`) contents
+    let slides = splitWhen ("-- SLIDE" `isPrefixOf`) contents
 
     Dir.removePathForcibly $ fileParentPath <> "/.slides"
     Dir.createDirectoryIfMissing True $ fileParentPath <> "/.slides"
@@ -26,7 +26,7 @@ main = do
   where
     writeSlideFile fileParentPath index slideContent = writeFile
         (fileParentPath <> "/.slides/" <> (show index) <> ".hs")
-        (("module Main where\n\n" <>) . trim . unlines $ slideContent)
+        (trim . unlines $ slideContent)
     trim = dropWhile isSpace . dropWhileEnd isSpace
 
 
@@ -38,9 +38,13 @@ writeTmuxinatorConfig fileParentPath slides = do
             , windows = IL.imap (slideToWindows fileParentPath) slides
             }
 
-slideToWindows fileParentPath index slide = singleton "" $ WindowConfig
-    { root   = fileParentPath
-    , layout = "main-vertical"
-    , panes  = [Just $ "vim " <> slidePath, Just $ "stack ghc " <> slidePath]
-    }
+slideToWindows fileParentPath index slide =
+    singleton (show index) $ WindowConfig
+        { root   = fileParentPath
+        , layout = "main-vertical"
+        , panes  = [ Just $ "vim " <> slidePath
+                   , Just $ "watch " <> show index
+                   , Nothing
+                   ]
+        }
     where slidePath = fileParentPath <> ".slides/" <> show index <> ".hs"

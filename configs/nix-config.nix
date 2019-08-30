@@ -111,6 +111,7 @@ in {
         zsh-completions
         autojump
         silver-searcher
+        fswatch
 
         nodePackages.prettier
         haskellPackages.brittany
