@@ -35,6 +35,7 @@ link .prettierrc.js .prettierrc.js
 link .tmux.conf .tmux.conf
 link .zshrc .zshrc
 link ssh-init.json .ssh/ssh-init.json
+link .nix-channels .nix-channels
 
 if test -f /etc/NIXOS; then
     # Link nixos config to root

@@ -17,7 +17,7 @@ let
 in {
   allowUnfree = true;
 
-  packageOverrides = pkgs: with pkgs; rec {
+  packageOverrides = _: with pkgs; rec {
     private-qutebrowser = copyToShare {
         name = "qutebrowser";
         src = fromGithubMaster "qutebrowser";

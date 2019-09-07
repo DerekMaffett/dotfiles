@@ -8,6 +8,7 @@ fi
 
 ./link-configs.sh
 
+nix-channel --update
 nix-env -i all
 
 if [[ "$OSTYPE" == "darwin"* ]]; then

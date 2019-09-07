@@ -1,5 +1,5 @@
 let
-  pkgs = import <nixpkgs-unstable> {};
+  pkgs = import <nixpkgs> {};
 in
 pkgs.mkShell {
   name="scripts";
