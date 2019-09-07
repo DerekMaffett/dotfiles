@@ -6673,13 +6673,13 @@ let
         sha512 = "/FQzzPJmCpjAH9Xvk2paiWrFq+5M6aVOf+2KRbwhByISDX/EujxsK+BAvrhb6H+2rtrLCHK9N01wO014vrIwVQ==";
       };
     };
-    "terser-4.2.1" = {
+    "terser-4.3.0" = {
       name = "terser";
       packageName = "terser";
-      version = "4.2.1";
+      version = "4.3.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/terser/-/terser-4.2.1.tgz";
-        sha512 = "cGbc5utAcX4a9+2GGVX4DsenG6v0x3glnDi5hx8816X1McEAwPlPgRtXPJzSBsbpILxZ8MQMT0KvArLuE0HP5A==";
+        url = "https://registry.npmjs.org/terser/-/terser-4.3.0.tgz";
+        sha512 = "w5CzrvQOwYAH54aG22IrUJI4yX1w62XQmMdEOM6H4w0ii6rc3HJ89fmcOGN5mRwBWfUgaqO7RJTp4aoY/uE+qQ==";
       };
     };
     "through2-2.0.5" = {
@@ -8101,7 +8101,7 @@ in
       sources."html-tags-1.2.0"
       (sources."htmlnano-0.2.4" // {
         dependencies = [
-          sources."terser-4.2.1"
+          sources."terser-4.3.0"
         ];
       })
       (sources."htmlparser2-3.10.1" // {
