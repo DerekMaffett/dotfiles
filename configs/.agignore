@@ -4,3 +4,4 @@ node_modules/
 elm-stuff/
 .stack/
 .stack-work/
+dist-newstyle/

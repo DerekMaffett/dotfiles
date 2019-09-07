@@ -13,6 +13,12 @@ writeYamlFile :: (Y.ToJSON a) => String -> a -> IO ()
 writeYamlFile filePath content = do
     Y.encodeFile filePath content
 
+writeJsonFile :: (A.FromJSON a, A.ToJSON a) => String -> a -> IO ()
+writeJsonFile filePath contents = do
+    homeDir <- getHomeDirectory
+    A.encodeFile (homeDir <> "/" <> filePath) contents
+
+
 alterJsonFile :: (A.FromJSON a, A.ToJSON a) => String -> (a -> a) -> IO ()
 alterJsonFile filePath alterFn = do
     homeDir      <- getHomeDirectory

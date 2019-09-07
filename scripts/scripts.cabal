@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1356cf0dd356b0d8bcdc7f08b27e52b1f6284aa351e2c5cace4c26aff3d3028b
+-- hash: 61a42b682d4150b308dd519a97eb45585463ac3e8f0c731890d94f3dc6e98f68
 
 name:           scripts
 version:        0.1.0.0
@@ -36,8 +36,10 @@ library
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , directory
     , ilist
+    , monad-parallel
     , optparse-applicative
     , process
     , split
@@ -57,8 +59,10 @@ executable copy
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , directory
     , ilist
+    , monad-parallel
     , optparse-applicative
     , process
     , scripts
@@ -79,8 +83,10 @@ executable create-interactive-slideshow
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , directory
     , ilist
+    , monad-parallel
     , optparse-applicative
     , process
     , scripts
@@ -90,19 +96,45 @@ executable create-interactive-slideshow
     , yaml
   default-language: Haskell2010
 
-executable nix-npm-add
+executable nix-github
   main-is: Main.hs
   other-modules:
       Paths_scripts
   hs-source-dirs:
-      nix-npm-add
+      nix-github
   default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass ScopedTypeVariables
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , directory
     , ilist
+    , monad-parallel
+    , optparse-applicative
+    , process
+    , scripts
+    , split
+    , text
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010
+
+executable nix-npm
+  main-is: Main.hs
+  other-modules:
+      Paths_scripts
+  hs-source-dirs:
+      nix-npm
+  default-extensions: OverloadedStrings LambdaCase RecordWildCards NamedFieldPuns DuplicateRecordFields DeriveGeneric DeriveAnyClass ScopedTypeVariables
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , directory
+    , ilist
+    , monad-parallel
     , optparse-applicative
     , process
     , scripts
@@ -124,8 +156,10 @@ executable projects
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , directory
     , ilist
+    , monad-parallel
     , optparse-applicative
     , process
     , scripts
@@ -146,8 +180,10 @@ executable ssh-init
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , directory
     , ilist
+    , monad-parallel
     , optparse-applicative
     , process
     , scripts

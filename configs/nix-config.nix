@@ -9,86 +9,49 @@ let
       cp -r $src/$dir $out/share/$name
     '';
   };
-  haskellScript = name: pkgs.haskell.lib.buildStackProject {
-    inherit name;
-    src = ../scripts + "/${name}";
-  };
+  scripts = import ../scripts/release.nix;
   onlyForSystem = systemName: derivations: if builtins.currentSystem == systemName then derivations else [];
   linuxOnly = onlyForSystem "x86_64-linux";
   macOnly = onlyForSystem "x86_64-darwin";
+  fromGithubMaster = name: pkgs.fetchFromGitHub (builtins.fromJSON (builtins.readFile ./github-pkgs/compiled-github-pkgs.json))."${name}";
 in {
   allowUnfree = true;
 
   packageOverrides = _: with pkgs; rec {
-    copy = haskellScript "copy";
-    projects = haskellScript "projects";
     private-qutebrowser = copyToShare {
-      name = "qutebrowser";
-      src = fetchFromGitHub {
-        owner = "qutebrowser";
-        repo = "qutebrowser";
-        rev = "2624220778f6fdad41b30333bd58a9ea9f2fdfbb";
-        sha256 = "1g1qjm5zg5lksi17la0zyhfd21lkyqpl4rvcpnsfy23j4h76nq95";
-      };
+        name = "qutebrowser";
+        src = fromGithubMaster "qutebrowser";
     };
     private-oh-my-zsh = copyToShare {
-      name = "oh-my-zsh";
-      src = fetchFromGitHub {
-        owner = "robbyrussell";
-        repo = "oh-my-zsh";
-        rev = "17f4cfca99398cb5511557b8515a17bf1bf2948a";
-        sha256 = "19f29mrvnhvndvl48fd5kdiixfs0apmb27h4mck5v95p6yw27b6f";
-      };
+        name = "oh-my-zsh";
+        src = fromGithubMaster "oh-my-zsh";
     };
     private-powerlevel9k = copyToShare {
-      name = "powerlevel9k";
-      src = fetchFromGitHub {
-        owner = "bhilburn";
-        repo = "powerlevel9k";
-        rev = "3dafd79c41f8601b055e607ffefbfe3250c26040";
-        sha256 = "0vc5d7w8djg3ah9jvd87xqbhpin1lpflm6wgmhn3jgijwcjkxpg3";
-      };
+        name = "powerlevel9k";
+        src = fromGithubMaster "powerlevel9k";
     };
     kittyThemes = copyToShare {
         name = "kittyThemes";
         dir = "themes";
-        src = fetchFromGitHub {
-            owner = "dexpota";
-            repo = "kitty-themes";
-            rev = "3594682c0fa2ab11c792176de35feb5159e27c99";
-            sha256 = "1py3acrya8mzcwj3qz8ycqwmmshpjnz7i1lv1hnmciij1v22j1zk";
-        };
+        src = fromGithubMaster "kitty-themes";
     };
     sideways-vim = vimUtils.buildVimPlugin {
         name = "sideways.vim";
-        src = fetchFromGitHub {
-          owner = "AndrewRadev";
-          repo = "sideways.vim";
-          rev = "17c03c59913f76bbdede07b8f9d4a1f163d9b2f2";
-          sha256 = "1f1s5i8rrgvz1rpyy7lnhrid05ps9fnqryyqpz2nfq0aggws93sr";
-        };
+        src = fromGithubMaster "sideways.vim";
     };
     vimCopyAsRTF = vimUtils.buildVimPlugin {
         name = "vimCopyAsRTF";
-        src = fetchFromGitHub {
-          owner = "zerowidth";
-          repo = "vim-copy-as-rtf";
-          rev = "f7a9ac450e4ac1e7d4b946a8dd85bb1596fb135b";
-          sha256 = "0335a54hxgk4q0ziy9v49zwzpzjw5kwfj2ajssb8bhybrrjsqr0p";
-        };
+        src = fromGithubMaster "vim-copy-as-rtf";
     };
     potato-colors = vimUtils.buildVimPlugin {
         name = "potato-colors";
-        src = fetchFromGitHub {
-          owner = "benburrill";
-          repo = "potato-colors";
-          rev = "847fb980cab48b8a5a240ef1d35473d399d0db9e";
-          sha256 = "0w99bzqgc6bc3riqaaba8b04065jaxndxmm83zcsmvav1msbhx95";
-        };
+        src = fromGithubMaster "potato-colors";
     };
     all = buildEnv {
       name = "all";
       paths = with pkgs; [
+        scripts
+
         lastpass-cli
         wmctrl
 
@@ -96,9 +59,6 @@ in {
         kittyThemes
         cloc
         jq
-        # copy
-        # Something wrong with GHC through Nix, Stack install works fine with nix support
-        # projects
 
         direnv
         myNeovim
@@ -116,6 +76,10 @@ in {
         nodePackages.prettier
         haskellPackages.brittany
 
+        nix-prefetch-git
+        nix-prefetch-github
+        cabal-install
+        cabal2nix
         nodePackages.node2nix
         elm2nix
 
@@ -124,6 +88,7 @@ in {
         customNodePackages.pnpm
         customNodePackages.parcel-bundler
         customNodePackages.deepspeech
+
         git-quick-stats
         customNodePackages.git-stats
         customNodePackages.git-stats-importer

@@ -63,7 +63,8 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 
 # Haskell installation path for executables
-export PATH=$HOME/.local/bin:$PATH
+# Trying out Cabal and Nix instead of Stack
+# export PATH=$HOME/.local/bin:$PATH
 
 # Puts tmuxinator config into dotfiles control
 export TMUXINATOR_CONFIG="$HOME/dotfiles/configs/tmuxinator"

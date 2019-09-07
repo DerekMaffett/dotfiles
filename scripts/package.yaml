@@ -23,6 +23,8 @@ dependencies:
     - optparse-applicative
     - split
     - ilist
+    - bytestring
+    - monad-parallel
 
 library:
     source-dirs: ./common
@@ -46,9 +48,18 @@ executables:
             - -with-rtsopts=-N
         dependencies:
             - scripts
-    nix-npm-add:
+    nix-npm:
         main: Main.hs
-        source-dirs: nix-npm-add
+        source-dirs: nix-npm
+        ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+        dependencies:
+            - scripts
+    nix-github:
+        main: Main.hs
+        source-dirs: nix-github
         ghc-options:
             - -threaded
             - -rtsopts
