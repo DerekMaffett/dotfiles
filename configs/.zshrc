@@ -37,20 +37,17 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 # POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # OSX hooks into custom nix installations here since it can't use configuration.nix
-    # Downside is these packages are custom and get stale easier
+if test -f /etc/NIXOS; then
+    # Nix-shell use zsh, usually supplanted by direnv nix support
+    any-nix-shell zsh --info-right | source /dev/stdin
+else
+    # If not NixOS
     export ZSH=$HOME/.nix-profile/share/oh-my-zsh
     source "$HOME/.nix-profile/share/powerlevel9k/powerlevel9k.zsh-theme"
     source "$HOME/.nix-profile/share/oh-my-zsh/oh-my-zsh.sh"
-    export NIX_PATH=nixpkgs-unstable=/Users/derekmaffett/.nix-defexpr/channels/nixpkgs:$NIX_PATH
-else
-    # Nix-shell use zsh
-    # Not available in OSX
-    any-nix-shell zsh --info-right | source /dev/stdin
+    # export NIX_PATH=nixpkgs-unstable=/Users/derekmaffett/.nix-defexpr/channels/nixpkgs:$NIX_PATH
 fi
 
-# Associated with vim plugin, so weird to autogenerate this currently...
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 
 . $HOME/.nix-profile/etc/profile.d/nix.sh
@@ -61,10 +58,6 @@ export DIRENV_LOG_FORMAT=
 
 export EDITOR='nvim'
 export VISUAL='nvim'
-
-# Haskell installation path for executables
-# Trying out Cabal and Nix instead of Stack
-# export PATH=$HOME/.local/bin:$PATH
 
 # Puts tmuxinator config into dotfiles control
 export TMUXINATOR_CONFIG="$HOME/dotfiles/configs/tmuxinator"

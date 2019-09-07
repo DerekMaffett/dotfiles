@@ -36,7 +36,7 @@ link .tmux.conf .tmux.conf
 link .zshrc .zshrc
 link ssh-init.json .ssh/ssh-init.json
 
-if [[ "$OSTYPE" != "darwin"* ]]; then
+if test -f /etc/NIXOS; then
     # Link nixos config to root
     sudo ln -fvs $HOME/dotfiles/configs/nixos-configuration.nix /etc/nixos/configuration.nix
 fi
