@@ -58,7 +58,6 @@ in {
     google-chrome
     git
     zsh
-    zsh-powerlevel9k
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -83,7 +82,6 @@ in {
       + setGnome "org.gnome.desktop.peripherals.touchpad" "natural-scroll" "true";
   in {
     enable = true;
-    promptInit = "source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
     loginShellInit = ''
       export TERM="xterm-256color"
     '' + gnomeScrollSettings;

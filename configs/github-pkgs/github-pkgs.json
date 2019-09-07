@@ -2,8 +2,10 @@
     "qutebrowser/qutebrowser",
     "robbyrussell/oh-my-zsh",
     "bhilburn/powerlevel9k",
+    "romkatv/powerlevel10k",
     "dexpota/kitty-themes",
     "AndrewRadev/sideways.vim",
     "zerowidth/vim-copy-as-rtf",
-    "benburrill/potato-colors"
+    "benburrill/potato-colors",
+    "NixOS/nixpkgs-channels"
 ]

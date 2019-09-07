@@ -11,5 +11,5 @@ windows:
           root: ~/dotfiles/scripts
           panes:
               - vim
-              - stack install --file-watch scripts
+              - watch
               - null

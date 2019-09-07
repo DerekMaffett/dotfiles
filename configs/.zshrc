@@ -36,6 +36,7 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 # POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 
+source "$HOME/.nix-profile/share/powerlevel10k/powerlevel10k.zsh-theme"
 
 if test -f /etc/NIXOS; then
     # Nix-shell use zsh, usually supplanted by direnv nix support
@@ -43,9 +44,7 @@ if test -f /etc/NIXOS; then
 else
     # If not NixOS
     export ZSH=$HOME/.nix-profile/share/oh-my-zsh
-    source "$HOME/.nix-profile/share/powerlevel9k/powerlevel9k.zsh-theme"
     source "$HOME/.nix-profile/share/oh-my-zsh/oh-my-zsh.sh"
-    # export NIX_PATH=nixpkgs-unstable=/Users/derekmaffett/.nix-defexpr/channels/nixpkgs:$NIX_PATH
 fi
 
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'

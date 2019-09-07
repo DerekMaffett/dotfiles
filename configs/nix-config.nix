@@ -1,7 +1,16 @@
 let 
   pkgs = import <nixpkgs> {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
+  scripts = (import ../scripts/release.nix).project;
+
   vimrc = import ./.vimrc.vim;
+
+  isNixOS = pkgs.builtins.pathExists /etc/NIXOS;
+
+  ifNixOS = derivations: if isNixOS then derivations else [];
+  ifNotNixOS = derivations: if !isNixOS then derivations else [];
+
+  fromGithubMaster = name: pkgs.fetchFromGitHub (builtins.fromJSON (builtins.readFile ./github-pkgs/compiled-github-pkgs.json))."${name}";
   copyToShare = { name, src, dir ? "" }: pkgs.stdenv.mkDerivation {
     inherit name src dir;
     installPhase = ''
@@ -9,11 +18,6 @@ let
       cp -r $src/$dir $out/share/$name
     '';
   };
-  scripts = import ../scripts/release.nix;
-  onlyForSystem = systemName: derivations: if builtins.currentSystem == systemName then derivations else [];
-  linuxOnly = onlyForSystem "x86_64-linux";
-  macOnly = onlyForSystem "x86_64-darwin";
-  fromGithubMaster = name: pkgs.fetchFromGitHub (builtins.fromJSON (builtins.readFile ./github-pkgs/compiled-github-pkgs.json))."${name}";
 in {
   allowUnfree = true;
 
@@ -26,9 +30,9 @@ in {
         name = "oh-my-zsh";
         src = fromGithubMaster "oh-my-zsh";
     };
-    private-powerlevel9k = copyToShare {
-        name = "powerlevel9k";
-        src = fromGithubMaster "powerlevel9k";
+    private-powerlevel10k = copyToShare {
+        name = "powerlevel10k";
+        src = fromGithubMaster "powerlevel10k";
     };
     kittyThemes = copyToShare {
         name = "kittyThemes";
@@ -59,6 +63,7 @@ in {
         kittyThemes
         cloc
         jq
+        private-powerlevel10k
 
         direnv
         myNeovim
@@ -104,15 +109,14 @@ in {
         travis
         awscli
         nixops
-      ] ++ linuxOnly [
+      ] ++ ifNixOS [
         steam
         qutebrowser
         xclip 
         slack
         postman 
-      ] ++ macOnly [
+      ] ++ ifNotNixOS [
         private-qutebrowser
-        private-powerlevel9k
         private-oh-my-zsh
       ];
     };
