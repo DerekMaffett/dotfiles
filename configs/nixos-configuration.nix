@@ -63,8 +63,6 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   nix.nixPath = [
-    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
-    "nixpkgs-unstable=/nix/var/nix/profiles/per-user/derek/channels/nixpkgs"
     "nixos-config=/etc/nixos/configuration.nix"
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
