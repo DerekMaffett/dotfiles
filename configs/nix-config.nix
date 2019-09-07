@@ -5,7 +5,7 @@ let
 
   vimrc = import ./.vimrc.vim;
 
-  isNixOS = pkgs.builtins.pathExists /etc/NIXOS;
+  isNixOS = builtins.pathExists /etc/NIXOS;
 
   ifNixOS = derivations: if isNixOS then derivations else [];
   ifNotNixOS = derivations: if !isNixOS then derivations else [];
@@ -134,7 +134,6 @@ in {
             potato-colors 
             vim-css-color
             vim-nix 
-            vimCopyAsRTF
             sideways-vim 
             vim-surround 
             fzfWrapper
