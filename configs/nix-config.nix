@@ -1,5 +1,5 @@
 let 
-  pkgs = import <nixpkgs-unstable> {};
+  pkgs = import <nixpkgs> {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
   vimrc = import ./.vimrc.vim;
   copyToShare = { name, src, dir ? "" }: pkgs.stdenv.mkDerivation {
@@ -17,7 +17,7 @@ let
 in {
   allowUnfree = true;
 
-  packageOverrides = _: with pkgs; rec {
+  packageOverrides = pkgs: with pkgs; rec {
     private-qutebrowser = copyToShare {
         name = "qutebrowser";
         src = fromGithubMaster "qutebrowser";
