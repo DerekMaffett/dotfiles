@@ -105,6 +105,7 @@ in {
         awscli
         nixops
       ] ++ linuxOnly [
+        steam
         qutebrowser
         xclip 
         slack
