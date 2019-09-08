@@ -7,8 +7,12 @@ pkgs.mkShell {
     (import ./release.nix).project.env
   ];
   buildInputs=[
-    pkgs.fswatch
-    (pkgs.writeScriptBin "watch" "fswatch -r -o -l 0.2 ./nix-github/ | (while read; do cabal new-build nix-github; done)")
+    (pkgs.writeWatchScript {
+      name = "watch-all";
+      src = "."; 
+      exclude = "dist-newstyle";
+      command = "cabal new-build all";
+    })
   ];
 }
 
