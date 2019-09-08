@@ -1,5 +1,3 @@
 *.DS_Store
-**/.stack-work
 src/configs/.work-projects.json
 src/configs/tmuxinator/client.yml
-scripts/dist-newstyle/

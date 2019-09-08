@@ -6,10 +6,3 @@ windows:
           panes:
               - vim
               - null
-    - scripts:
-          layout: main-vertical
-          root: ~/dotfiles/scripts
-          panes:
-              - vim
-              - watch
-              - null

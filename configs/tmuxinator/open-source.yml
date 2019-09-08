@@ -40,3 +40,10 @@ windows:
     - vim
     - null
     - null
+- scripts:
+    layout: main-vertical
+    root: ~/projects/scripts
+    panes:
+    - vim
+    - null
+    - null
