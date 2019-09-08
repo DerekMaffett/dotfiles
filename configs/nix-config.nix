@@ -68,6 +68,7 @@ in {
         direnv
         myNeovim
         tmux
+        tmuxPlugins.vim-tmux-navigator
         tmuxinator
         fzf
         zsh
