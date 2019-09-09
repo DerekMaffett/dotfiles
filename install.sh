@@ -1,8 +1,6 @@
-if test -f /etc/NIXOS; then
-    echo "" 
-else
+# Install nix
+if test ! -f /etc/NIXOS; then
     curl https://nixos.org/nix/install | sh 
-
     . ~/.nix-profile/etc/profile.d/nix.sh
 fi
 
@@ -16,8 +14,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     defaults write -g ApplePressAndHoldEnabled -bool false
 fi
 
-if test -f /etc/NIXOS; then
-    echo ""
-else
+if test ! -e /etc/NIXOS; then
     chsh -s "$(which zsh)"
 fi

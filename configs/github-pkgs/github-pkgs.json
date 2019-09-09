@@ -7,5 +7,6 @@
     "AndrewRadev/sideways.vim",
     "zerowidth/vim-copy-as-rtf",
     "benburrill/potato-colors",
-    "NixOS/nixpkgs-channels"
+    "NixOS/nixpkgs-channels",
+    "DerekMaffett/scripts"
 ]

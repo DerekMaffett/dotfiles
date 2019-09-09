@@ -1,1 +1,8 @@
-["git-stats-importer","river-cli","pnpm","parcel-bundler","deepspeech","git-stats"]
+[
+    "river-cli",
+    "git-stats-importer",
+    "pnpm",
+    "parcel-bundler",
+    "deepspeech",
+    "git-stats"
+]

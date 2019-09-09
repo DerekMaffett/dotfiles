@@ -1,7 +1,7 @@
 let 
   pkgs = import <nixpkgs> {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
-  scripts = (import ../scripts/release.nix).project;
+  scripts = import "${(fromGithubMaster "scripts")}/default.nix";
 
   vimrc = import ./.vimrc.vim;
 
@@ -97,7 +97,6 @@ in {
         nodePackages.prettier
         haskellPackages.brittany
 
-        nix-prefetch-git
         nix-prefetch-github
         cabal-install
         cabal2nix
@@ -131,7 +130,6 @@ in {
         slack
         postman 
       ] ++ ifNotNixOS [
-        private-powerlevel9k
         private-oh-my-zsh
       ] ++ linuxOnly [
         hydra
