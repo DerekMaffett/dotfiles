@@ -64,8 +64,12 @@ in {
         name = "potato-colors";
         src = fromGithubMaster "potato-colors";
     };
+
     writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
       writeScriptBin name "${fswatch}/bin/fswatch -r -o -l 0.2 -e ${exclude} ${src} | (while read; do ${command}; done)";
+
+    localCabalRun = name: writeScriptBin name "cabal new-run ${name} $@";
+
     all = buildEnv {
       name = "all";
       paths = with pkgs; [
