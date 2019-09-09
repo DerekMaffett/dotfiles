@@ -6,9 +6,13 @@ let
   vimrc = import ./.vimrc.vim;
 
   isNixOS = builtins.pathExists /etc/NIXOS;
+  isLinux = builtins.currentSystem == "x86_64-linux";
+  isMac = builtins.currentSystem == "x86_64-darwin";
 
   ifNixOS = derivations: if isNixOS then derivations else [];
   ifNotNixOS = derivations: if !isNixOS then derivations else [];
+  linuxOnly = derivations: if isLinux then derivations else [];
+  macOnly = derivations: if isMac then derivations else [];
 
   fromGithubMaster = name: pkgs.fetchFromGitHub (builtins.fromJSON (builtins.readFile ./github-pkgs/compiled-github-pkgs.json))."${name}";
   copyToShare = { name, src, dir ? "" }: pkgs.stdenv.mkDerivation {
@@ -46,6 +50,15 @@ in {
     vimCopyAsRTF = vimUtils.buildVimPlugin {
         name = "vimCopyAsRTF";
         src = fromGithubMaster "vim-copy-as-rtf";
+    };
+    Dockerfile-vim = vimUtils.buildVimPlugin {
+        name = "Dockerfile.vim";
+        src = fetchFromGitHub {
+          owner = "ekalinin";
+          repo = "Dockerfile.vim";
+          rev = "e15706106a5edd1120c23a593e560e51218c77bd";
+          sha256 = "188kx7f44ykbms57wgabgd3fczxy6w14axa4dv3b0v54m28i2rzc";
+        };
     };
     potato-colors = vimUtils.buildVimPlugin {
         name = "potato-colors";
@@ -91,7 +104,7 @@ in {
         nodePackages.node2nix
         elm2nix
 
-        nodejs
+        nodejs-12_x
         yarn
         customNodePackages.pnpm
         customNodePackages.parcel-bundler
@@ -113,14 +126,17 @@ in {
         awscli
         nixops
       ] ++ ifNixOS [
-        steam
         qutebrowser
         xclip 
         slack
         postman 
       ] ++ ifNotNixOS [
-        private-qutebrowser
+        private-powerlevel9k
         private-oh-my-zsh
+      ] ++ linuxOnly [
+        hydra
+        gnome3.gnome-tweak-tool
+      ] ++ macOnly [
       ];
     };
     myNeovim = neovim.override {
@@ -153,7 +169,11 @@ in {
             vim-tmux-navigator
             deoplete-nvim 
             yats-vim 
+            vim-javascript
+            vim-jsx-pretty
             purescript-vim 
+            Jenkinsfile-vim-syntax
+            Dockerfile-vim
             psc-ide-vim
             vim-fireplace
             elm-vim

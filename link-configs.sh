@@ -17,7 +17,6 @@ mkdir -p ~/.ssh/
 link .projects.json .config/projects/.projects.json
 link .work-projects.json .config/projects/.work-projects.json
 link brittany.yaml .config/brittany/config.yaml
-link init.vim .config/nvim/init.vim
 link nix-config.nix .config/nixpkgs/config.nix
 link terminator-config .config/terminator/config
 link kitty.conf .config/kitty/kitty.conf
@@ -39,5 +38,5 @@ link .nix-channels .nix-channels
 
 if test -f /etc/NIXOS; then
     # Link nixos config to root
-    sudo ln -fvs $HOME/dotfiles/configs/nixos-configuration.nix /etc/nixos/configuration.nix
+    # sudo ln -fvs $HOME/dotfiles/configs/nixos-configuration.nix /etc/nixos/configuration.nix
 fi

@@ -36,6 +36,8 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 # POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 
+. $HOME/.nix-profile/etc/profile.d/nix.sh
+
 source "$HOME/.nix-profile/share/powerlevel10k/powerlevel10k.zsh-theme"
 
 if test -f /etc/NIXOS; then
@@ -48,8 +50,6 @@ else
 fi
 
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
-
-. $HOME/.nix-profile/etc/profile.d/nix.sh
 
 # Direnv for nix
 eval "$(direnv hook zsh)"
