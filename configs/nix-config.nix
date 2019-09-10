@@ -54,12 +54,7 @@ in {
     };
     Dockerfile-vim = vimUtils.buildVimPlugin {
         name = "Dockerfile.vim";
-        src = fetchFromGitHub {
-          owner = "ekalinin";
-          repo = "Dockerfile.vim";
-          rev = "e15706106a5edd1120c23a593e560e51218c77bd";
-          sha256 = "188kx7f44ykbms57wgabgd3fczxy6w14axa4dv3b0v54m28i2rzc";
-        };
+        src = fromGithubMaster "Dockerfile.vim";
     };
     potato-colors = vimUtils.buildVimPlugin {
         name = "potato-colors";
@@ -127,6 +122,7 @@ in {
         elmPackages.elm-test
         elmPackages.elm-format
 
+        haskellPackages.fswatcher
         travis
         awscli
         nixops
@@ -177,7 +173,7 @@ in {
             vim-jsx-pretty
             purescript-vim 
             Jenkinsfile-vim-syntax
-            Dockerfile-vim
+            # Dockerfile-vim - has makefile that references $HOME, can't be built from github install
             psc-ide-vim
             vim-fireplace
             elm-vim
