@@ -60,6 +60,10 @@ in {
         name = "potato-colors";
         src = fromGithubMaster "potato-colors";
     };
+    dracula = vimUtils.buildVimPlugin {
+        name = "dracula";
+        src = fromGithubMaster "vim"; # Yeah, this is a problem... bad repo names out of context
+    };
 
     writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
       writeShellScriptBin name "${fswatch}/bin/fswatch -0 --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | xargs -0 -I {} -n 1 ${command}";
@@ -145,12 +149,14 @@ in {
         customRC = vimrc;
         plug.plugins = with pkgs.vimPlugins; [
           haskell-vim
+          dracula
         ];
         packages.myVimPackage = with pkgs.vimPlugins; {
           # see examples below how to use custom packages
           # vim-sexp vim-sexp-mappings-for-regular-people cljfmt vim-classpath vim-salve
           start = [
             potato-colors 
+
             vim-css-color
             vim-nix 
             sideways-vim 
