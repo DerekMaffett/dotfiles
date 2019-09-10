@@ -26,6 +26,7 @@ in {
   allowUnfree = true;
 
   packageOverrides = _: with pkgs; rec {
+    system-update = writeShellScriptBin "system-update" "nix-npm update && nix-github update && nix-env -i all";
     private-qutebrowser = copyToShare {
         name = "qutebrowser";
         src = fromGithubMaster "qutebrowser";
@@ -66,13 +67,14 @@ in {
     };
 
     writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
-      writeShellScriptBin name "${fswatch}/bin/fswatch --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | (while read; do ${command}; done)";
+      writeShellScriptBin name "${fswatch}/bin/fswatch -0 --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | xargs -0 -I {} -n 1 ${command}";
 
     localCabalRun = name: writeShellScriptBin name "cabal new-run ${name} $@";
 
     all = buildEnv {
       name = "all";
       paths = with pkgs; [
+        system-update
         scripts
 
         lastpass-cli
