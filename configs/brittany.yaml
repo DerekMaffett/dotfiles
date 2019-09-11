@@ -15,6 +15,7 @@ conf_forward:
     options_ghc:
         - -XTemplateHaskell
         - -XLambdaCase
+        - -XRecursiveDo
 conf_errorHandling:
     econf_ExactPrintFallback: ExactPrintFallbackModeInline
     econf_Werror: false
