@@ -1,3 +1,5 @@
+#! /bin/bash 
+
 # Install nix
 if test ! -f /etc/NIXOS; then
     curl https://nixos.org/nix/install | sh 
