@@ -15,7 +15,6 @@ mkdir -p ~/.stack/
 mkdir -p ~/.ssh/
 
 link .projects.json .config/projects/.projects.json
-link .work-projects.json .config/projects/.work-projects.json
 link brittany.yaml .config/brittany/config.yaml
 link nix-config.nix .config/nixpkgs/config.nix
 link terminator-config .config/terminator/config
