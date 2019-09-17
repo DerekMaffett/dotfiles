@@ -68,7 +68,7 @@ in {
     writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
       writeShellScriptBin name "${fswatch}/bin/fswatch -0 --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | xargs -0 -I {} -n 1 ${command}";
 
-    localCabalRun = name: writeShellScriptBin name "cabal new-run ${name} $@";
+    localCabalRun = name: executable: writeShellScriptBin name "cabal new-run ${executable} $@";
 
     all = buildEnv {
       name = "all";

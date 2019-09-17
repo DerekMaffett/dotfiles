@@ -63,3 +63,6 @@ export TMUXINATOR_CONFIG="$HOME/dotfiles/configs/tmuxinator"
 
 # Autojump activation, installed through nix
 source $HOME/.nix-profile/share/autojump/autojump.zsh
+
+# added by travis gem
+[ -f /home/derekmaffett/.travis/travis.sh ] && source /home/derekmaffett/.travis/travis.sh
