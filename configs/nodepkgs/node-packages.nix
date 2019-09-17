@@ -4522,13 +4522,13 @@ let
         sha1 = "a35008b20f41383eec1fb914f4cd5df79a264284";
       };
     };
-    "minipass-2.6.2" = {
+    "minipass-2.6.4" = {
       name = "minipass";
       packageName = "minipass";
-      version = "2.6.2";
+      version = "2.6.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/minipass/-/minipass-2.6.2.tgz";
-        sha512 = "38Jwdc8AttUDaQAIRX8Iaw3QoCDWjAwKMGeGDF9JUi9QCPMjH5qAQg/hdO8o1nC7Nmh1/CqzMg5FQPEKuKwznQ==";
+        url = "https://registry.npmjs.org/minipass/-/minipass-2.6.4.tgz";
+        sha512 = "D/+wBy2YykFsCcWvaIslCKKus5tqGQZ8MhEzNx4mujLNgHhXWaaUOZkok6/kztAlTt0QkYLEyIShrybNmzoeTA==";
       };
     };
     "minizlib-1.2.2" = {
@@ -6646,13 +6646,13 @@ let
         sha512 = "9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==";
       };
     };
-    "tar-4.4.10" = {
+    "tar-4.4.11" = {
       name = "tar";
       packageName = "tar";
-      version = "4.4.10";
+      version = "4.4.11";
       src = fetchurl {
-        url = "https://registry.npmjs.org/tar/-/tar-4.4.10.tgz";
-        sha512 = "g2SVs5QIxvo6OLp0GudTqEf05maawKUxXru104iaayWA09551tFCTI8f1Asb4lPfkBr91k07iL4c11XO3/b0tA==";
+        url = "https://registry.npmjs.org/tar/-/tar-4.4.11.tgz";
+        sha512 = "iI4zh3ktLJKaDNZKZc+fUONiQrSn9HkCFzamtb7k8FFmVilHVob7QsLX/VySAW8lAviMzMbFw4QtFb4errwgYA==";
       };
     };
     "tempfile-1.1.1" = {
@@ -7372,10 +7372,10 @@ in
   river-cli = nodeEnv.buildNodePackage {
     name = "river-cli";
     packageName = "river-cli";
-    version = "1.1.2";
+    version = "1.2.1";
     src = fetchurl {
-      url = "https://registry.npmjs.org/river-cli/-/river-cli-1.1.2.tgz";
-      sha512 = "iyb2a2oeIQQlk68+BL+G9F6Y9l8b2rBcN6FANH5BmC6LPL95J5Z3kIA0tR/RqFw0y2gtADjc7nRFfF3G6u4cNw==";
+      url = "https://registry.npmjs.org/river-cli/-/river-cli-1.2.1.tgz";
+      sha512 = "7GwHtvtzn+DGt1qcnyGkU1MWFII/q1lo7x9OIsXKRvY55JMuKFzJFqFpvgozCFfNJd9W123ARcL0XCThhceYxQ==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -8652,7 +8652,7 @@ in
       })
       sources."minimatch-3.0.4"
       sources."minimist-0.0.8"
-      sources."minipass-2.6.2"
+      sources."minipass-2.6.4"
       sources."minizlib-1.2.2"
       sources."mkdirp-0.5.1"
       sources."ms-2.1.2"
@@ -8690,7 +8690,7 @@ in
       sources."string_decoder-1.1.1"
       sources."strip-ansi-3.0.1"
       sources."strip-json-comments-2.0.1"
-      sources."tar-4.4.10"
+      sources."tar-4.4.11"
       sources."tempfile-1.1.1"
       sources."util-deprecate-1.0.2"
       sources."uuid-2.0.3"

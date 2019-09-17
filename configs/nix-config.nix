@@ -105,6 +105,7 @@ in {
         nix-prefetch-github
         cabal-install
         cabal2nix
+        haskellPackages.hpack
         nodePackages.node2nix
         elm2nix
 
