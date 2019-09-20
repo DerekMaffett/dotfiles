@@ -2632,13 +2632,13 @@ let
         sha1 = "590c61156b0ae2f4f0255732a158b266bc56b21d";
       };
     };
-    "electron-to-chromium-1.3.260" = {
+    "electron-to-chromium-1.3.263" = {
       name = "electron-to-chromium";
       packageName = "electron-to-chromium";
-      version = "1.3.260";
+      version = "1.3.263";
       src = fetchurl {
-        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.260.tgz";
-        sha512 = "wGt+OivF1C1MPwaSv3LJ96ebNbLAWlx3HndivDDWqwIVSQxmhL17Y/YmwUdEMtS/bPyommELt47Dct0/VZNQBQ==";
+        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.263.tgz";
+        sha512 = "VfPi+sE/1nEKOV7DWDqWSUGP7ztJG5FeqHbMEj6dBb/arKnxpOCnRXOSC6HBV6qTfK5v8CX7xWCqzN36UqG1oA==";
       };
     };
     "elliptic-6.5.1" = {
@@ -4522,13 +4522,13 @@ let
         sha1 = "a35008b20f41383eec1fb914f4cd5df79a264284";
       };
     };
-    "minipass-2.6.4" = {
+    "minipass-2.6.5" = {
       name = "minipass";
       packageName = "minipass";
-      version = "2.6.4";
+      version = "2.6.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/minipass/-/minipass-2.6.4.tgz";
-        sha512 = "D/+wBy2YykFsCcWvaIslCKKus5tqGQZ8MhEzNx4mujLNgHhXWaaUOZkok6/kztAlTt0QkYLEyIShrybNmzoeTA==";
+        url = "https://registry.npmjs.org/minipass/-/minipass-2.6.5.tgz";
+        sha512 = "ewSKOPFH9blOLXx0YSE+mbrNMBFPS+11a2b03QZ+P4LVrUHW/GAlqeYC7DBknDyMWkHzrzTpDhUvy7MUxqyrPA==";
       };
     };
     "minizlib-1.2.2" = {
@@ -5080,13 +5080,13 @@ let
         sha512 = "8VQ3y4wiEblvoyQE31hWRS+igbBpGE2074qvsdoN//bFoGoAkb0GUCOub6LpihadhUB0xNhggfzxsfqMxThbbQ==";
       };
     };
-    "parse-asn1-5.1.4" = {
+    "parse-asn1-5.1.5" = {
       name = "parse-asn1";
       packageName = "parse-asn1";
-      version = "5.1.4";
+      version = "5.1.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/parse-asn1/-/parse-asn1-5.1.4.tgz";
-        sha512 = "Qs5duJcuvNExRfFZ99HDD3z4mAi3r9Wl/FOjEOijlxwCZs7E7mW2vjTpgQ4J8LpTF8x5v+1Vn5UQFejmWT11aw==";
+        url = "https://registry.npmjs.org/parse-asn1/-/parse-asn1-5.1.5.tgz";
+        sha512 = "jkMYn1dcJqF6d5CpU689bq7w/b5ALS9ROVSpQDPrZsqqesUJii9qutvoT5ltGedNXMO2e16YUWIghG9KxaViTQ==";
       };
     };
     "parse-it-1.0.9" = {
@@ -8010,7 +8010,7 @@ in
       sources."ecc-jsbn-0.1.2"
       sources."editorconfig-0.15.3"
       sources."ee-first-1.1.1"
-      sources."electron-to-chromium-1.3.260"
+      sources."electron-to-chromium-1.3.263"
       sources."elliptic-6.5.1"
       sources."encodeurl-1.0.2"
       sources."entities-1.1.2"
@@ -8280,7 +8280,7 @@ in
       sources."os-tmpdir-1.0.2"
       sources."osenv-0.1.5"
       sources."pako-0.2.9"
-      sources."parse-asn1-5.1.4"
+      sources."parse-asn1-5.1.5"
       sources."parse-json-4.0.0"
       sources."parse5-5.1.0"
       sources."parseurl-1.3.3"
@@ -8652,7 +8652,7 @@ in
       })
       sources."minimatch-3.0.4"
       sources."minimist-0.0.8"
-      sources."minipass-2.6.4"
+      sources."minipass-2.6.5"
       sources."minizlib-1.2.2"
       sources."mkdirp-0.5.1"
       sources."ms-2.1.2"
