@@ -24,6 +24,7 @@ let
   };
 in {
   allowUnfree = true;
+  allowBroken = true;
 
   packageOverrides = _: with pkgs; rec {
     system-update = writeShellScriptBin "system-update" "nix-npm update && nix-github update && nix-env -i all";
@@ -131,6 +132,8 @@ in {
         travis
         awscli
         nixops
+        terraform_0_12
+        kubernetes
       ] ++ ifNixOS [
         qutebrowser
         xclip 
@@ -184,6 +187,7 @@ in {
             psc-ide-vim
             vim-fireplace
             elm-vim
+            vim-terraform
           ];
           opt = [ ];
         }; 
