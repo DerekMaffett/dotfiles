@@ -2632,13 +2632,13 @@ let
         sha1 = "590c61156b0ae2f4f0255732a158b266bc56b21d";
       };
     };
-    "electron-to-chromium-1.3.269" = {
+    "electron-to-chromium-1.3.270" = {
       name = "electron-to-chromium";
       packageName = "electron-to-chromium";
-      version = "1.3.269";
+      version = "1.3.270";
       src = fetchurl {
-        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.269.tgz";
-        sha512 = "t2ZTfo07HxkxTOUbIwMmqHBSnJsC9heqJUm7LwQu2iSk0wNhG4H5cMREtb8XxeCrQABDZ6IqQKY3yZq+NfAqwg==";
+        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.270.tgz";
+        sha512 = "426qbfgLn0hVE4pDxok2dcAhA3u5lwXlBg2+i6VWQJvnMZNgevkC6s/qr91YH/avVMKXKwxnR5iBznpivg210A==";
       };
     };
     "elliptic-6.5.1" = {
@@ -4531,13 +4531,13 @@ let
         sha512 = "wxfUjg9WebH+CUDX/CdbRlh5SmfZiy/hpkxaRI16Y9W56Pa75sWgd/rvFilSgrauD9NyFymP/+JFV3KwzIsJeg==";
       };
     };
-    "minizlib-1.3.2" = {
+    "minizlib-1.3.3" = {
       name = "minizlib";
       packageName = "minizlib";
-      version = "1.3.2";
+      version = "1.3.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/minizlib/-/minizlib-1.3.2.tgz";
-        sha512 = "lsNFqSHdJ21EwKzCp12HHJGxSMtHkCW1EMA9cceG3MkMNARjuWotZnMe3NKNshAvFXpm4loZqmYsCmRwhS2JMw==";
+        url = "https://registry.npmjs.org/minizlib/-/minizlib-1.3.3.tgz";
+        sha512 = "6ZYMOEnmVsdCeTJVE0W9ZD+pVnE8h9Hma/iOwwRDsdQoePpoX56/8B6z3P9VNwppJuBKNRuFDRNRqRWexT9G9Q==";
       };
     };
     "mixin-deep-1.3.2" = {
@@ -4684,13 +4684,13 @@ let
         sha512 = "Md1D3xnEne8b/HGVQkZZwV27WUi1ZRuZBij24TNaZwUPU3ZAFtvT6xxJGaUVillfmMKnn5oD1HoGsp2Ftik7SQ==";
       };
     };
-    "node-releases-1.1.32" = {
+    "node-releases-1.1.33" = {
       name = "node-releases";
       packageName = "node-releases";
-      version = "1.1.32";
+      version = "1.1.33";
       src = fetchurl {
-        url = "https://registry.npmjs.org/node-releases/-/node-releases-1.1.32.tgz";
-        sha512 = "VhVknkitq8dqtWoluagsGPn3dxTvN9fwgR59fV3D7sLBHe0JfDramsMI8n8mY//ccq/Kkrf8ZRHRpsyVZ3qw1A==";
+        url = "https://registry.npmjs.org/node-releases/-/node-releases-1.1.33.tgz";
+        sha512 = "I0V30bWQEoHb+10W8oedVoUrdjW5wIkYm0w7vvcrPO95pZY738m1k77GF5sO0vKg5eXYg9oGtrMAETbgZGm11A==";
       };
     };
     "node-wav-0.0.2" = {
@@ -7348,13 +7348,13 @@ let
         sha1 = "1c11f9218f076089a47dd512f93c6699a6a81d52";
       };
     };
-    "yallist-3.1.0" = {
+    "yallist-3.1.1" = {
       name = "yallist";
       packageName = "yallist";
-      version = "3.1.0";
+      version = "3.1.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/yallist/-/yallist-3.1.0.tgz";
-        sha512 = "6gpP93MR+VOOehKbCPchro3wFZNSNmek8A2kbkOAZLIZAYx1KP/zAqwO0sOHi3xJEb+UBz8NaYt/17UNit1Q9w==";
+        url = "https://registry.npmjs.org/yallist/-/yallist-3.1.1.tgz";
+        sha512 = "a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==";
       };
     };
   };
@@ -8001,7 +8001,7 @@ in
       sources."ecc-jsbn-0.1.2"
       sources."editorconfig-0.15.3"
       sources."ee-first-1.1.1"
-      sources."electron-to-chromium-1.3.269"
+      sources."electron-to-chromium-1.3.270"
       sources."elliptic-6.5.1"
       sources."encodeurl-1.0.2"
       sources."entities-1.1.2"
@@ -8243,7 +8243,7 @@ in
           sources."punycode-1.4.1"
         ];
       })
-      sources."node-releases-1.1.32"
+      sources."node-releases-1.1.33"
       sources."nopt-4.0.1"
       sources."normalize-html-whitespace-1.0.0"
       sources."normalize-path-3.0.0"
@@ -8643,7 +8643,7 @@ in
       sources."minimatch-3.0.4"
       sources."minimist-0.0.8"
       sources."minipass-2.9.0"
-      sources."minizlib-1.3.2"
+      sources."minizlib-1.3.3"
       sources."mkdirp-0.5.1"
       sources."ms-2.1.2"
       sources."needle-2.4.0"
@@ -8686,7 +8686,7 @@ in
       sources."uuid-2.0.3"
       sources."wide-align-1.1.3"
       sources."wrappy-1.0.2"
-      sources."yallist-3.1.0"
+      sources."yallist-3.1.1"
     ];
     buildInputs = globalBuildInputs;
     meta = {
