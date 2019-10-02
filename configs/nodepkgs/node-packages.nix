@@ -1525,13 +1525,13 @@ let
         sha512 = "bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==";
       };
     };
-    "caniuse-lite-1.0.30000997" = {
+    "caniuse-lite-1.0.30000998" = {
       name = "caniuse-lite";
       packageName = "caniuse-lite";
-      version = "1.0.30000997";
+      version = "1.0.30000998";
       src = fetchurl {
-        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000997.tgz";
-        sha512 = "BQLFPIdj2ntgBNWp9Q64LGUIEmvhKkzzHhUHR3CD5A9Lb7ZKF20/+sgadhFap69lk5XmK1fTUleDclaRFvgVUA==";
+        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000998.tgz";
+        sha512 = "8Tj5sPZR9kMHeDD9SZXIVr5m9ofufLLCG2Y4QwQrH18GIwG+kCc+zYdlR036ZRkuKjVVetyxeAgGA1xF7XdmzQ==";
       };
     };
     "caseless-0.12.0" = {
@@ -2632,13 +2632,13 @@ let
         sha1 = "590c61156b0ae2f4f0255732a158b266bc56b21d";
       };
     };
-    "electron-to-chromium-1.3.270" = {
+    "electron-to-chromium-1.3.273" = {
       name = "electron-to-chromium";
       packageName = "electron-to-chromium";
-      version = "1.3.270";
+      version = "1.3.273";
       src = fetchurl {
-        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.270.tgz";
-        sha512 = "426qbfgLn0hVE4pDxok2dcAhA3u5lwXlBg2+i6VWQJvnMZNgevkC6s/qr91YH/avVMKXKwxnR5iBznpivg210A==";
+        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.273.tgz";
+        sha512 = "0kUppiHQvHEENHh+nTtvTt4eXMwcPyWmMaj73GPrSEm3ldKhmmHuOH6IjrmuW6YmyS/fpXcLvMQLNVpqRhpNWw==";
       };
     };
     "elliptic-6.5.1" = {
@@ -7863,7 +7863,7 @@ in
       sources."caller-path-2.0.0"
       sources."callsites-2.0.0"
       sources."caniuse-api-3.0.0"
-      sources."caniuse-lite-1.0.30000997"
+      sources."caniuse-lite-1.0.30000998"
       sources."caseless-0.12.0"
       sources."chalk-2.4.2"
       sources."chokidar-2.1.8"
@@ -8001,7 +8001,7 @@ in
       sources."ecc-jsbn-0.1.2"
       sources."editorconfig-0.15.3"
       sources."ee-first-1.1.1"
-      sources."electron-to-chromium-1.3.270"
+      sources."electron-to-chromium-1.3.273"
       sources."elliptic-6.5.1"
       sources."encodeurl-1.0.2"
       sources."entities-1.1.2"

@@ -27,11 +27,7 @@ in {
   allowBroken = true;
 
   packageOverrides = _: with pkgs; rec {
-    system-update = writeShellScriptBin "system-update" "nix-npm update && nix-github update && nix-env -i all";
-    private-qutebrowser = copyToShare {
-        name = "qutebrowser";
-        src = fromGithubMaster "qutebrowser";
-    };
+    system-update = writeShellScriptBin "system-update" "nix-npm update && nix-github update && nix-env -i all && nix-collect-garbage";
     private-oh-my-zsh = copyToShare {
         name = "oh-my-zsh";
         src = fromGithubMaster "oh-my-zsh";
@@ -52,10 +48,6 @@ in {
     vimCopyAsRTF = vimUtils.buildVimPlugin {
         name = "vimCopyAsRTF";
         src = fromGithubMaster "vim-copy-as-rtf";
-    };
-    Dockerfile-vim = vimUtils.buildVimPlugin {
-        name = "Dockerfile.vim";
-        src = fromGithubMaster "Dockerfile.vim";
     };
     potato-colors = vimUtils.buildVimPlugin {
         name = "potato-colors";
@@ -133,7 +125,6 @@ in {
         awscli
         nixops
         terraform_0_12
-        kubernetes
       ] ++ ifNixOS [
         qutebrowser
         xclip 
@@ -183,7 +174,6 @@ in {
             vim-jsx-pretty
             purescript-vim 
             Jenkinsfile-vim-syntax
-            # Dockerfile-vim - has makefile that references $HOME, can't be built from github install
             psc-ide-vim
             vim-fireplace
             elm-vim
