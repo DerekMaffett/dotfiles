@@ -2695,13 +2695,13 @@ let
         sha512 = "7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==";
       };
     };
-    "es-abstract-1.14.2" = {
+    "es-abstract-1.15.0" = {
       name = "es-abstract";
       packageName = "es-abstract";
-      version = "1.14.2";
+      version = "1.15.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.14.2.tgz";
-        sha512 = "DgoQmbpFNOofkjJtKwr87Ma5EW4Dc8fWhD0R+ndq7Oc456ivUfGOOP6oAZTTKl5/CcNMP+EN+e3/iUzgE0veZg==";
+        url = "https://registry.npmjs.org/es-abstract/-/es-abstract-1.15.0.tgz";
+        sha512 = "bhkEqWJ2t2lMeaJDuk7okMkJWI/yqgH/EoGwpcvv0XW9RWQsRspI4wt6xuyuvMvvQE3gg/D9HXppgk21w78GyQ==";
       };
     };
     "es-to-primitive-1.2.0" = {
@@ -4162,13 +4162,13 @@ let
         sha512 = "aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==";
       };
     };
-    "json5-2.1.0" = {
+    "json5-2.1.1" = {
       name = "json5";
       packageName = "json5";
-      version = "2.1.0";
+      version = "2.1.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/json5/-/json5-2.1.0.tgz";
-        sha512 = "8Mh9h6xViijj36g7Dxi+Y4S6hNGV96vcJZr/SrlHh1LR/pEn/8j/+qIBbs44YKl69Lrfctp4QD+AdWLTMqEZAQ==";
+        url = "https://registry.npmjs.org/json5/-/json5-2.1.1.tgz";
+        sha512 = "l+3HXD0GEI3huGq1njuqtzYK8OYJyXMkOLtQ53pjWh89tvWS2h6l+1zMkYWqlb57+SiQodKZyvMEFb2X+KrFhQ==";
       };
     };
     "jsprim-1.4.1" = {
@@ -7630,7 +7630,7 @@ in
       sources."@babel/code-frame-7.0.0"
       (sources."@babel/core-7.3.4" // {
         dependencies = [
-          sources."json5-2.1.0"
+          sources."json5-2.1.1"
           sources."source-map-0.5.7"
         ];
       })
@@ -8006,7 +8006,7 @@ in
       sources."encodeurl-1.0.2"
       sources."entities-1.1.2"
       sources."error-ex-1.3.2"
-      (sources."es-abstract-1.14.2" // {
+      (sources."es-abstract-1.15.0" // {
         dependencies = [
           sources."object-inspect-1.6.0"
         ];
