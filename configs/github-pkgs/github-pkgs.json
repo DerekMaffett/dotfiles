@@ -1,5 +1,6 @@
 [
     "dracula/vim",
+    "jparise/vim-graphql",
     "robbyrussell/oh-my-zsh",
     "bhilburn/powerlevel9k",
     "romkatv/powerlevel10k",

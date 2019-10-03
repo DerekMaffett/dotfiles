@@ -57,6 +57,10 @@ in {
         name = "dracula";
         src = fromGithubMaster "vim"; # Yeah, this is a problem... bad repo names out of context
     };
+    vim-graphql = vimUtils.buildVimPluginFrom2Nix { # no clue what the difference is right now
+      name = "vim-graphql";
+      src = fromGithubMaster "vim-graphql";
+    };
 
     writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
       writeShellScriptBin name "${fswatch}/bin/fswatch -0 --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | xargs -0 -I {} -n 1 ${command}";
@@ -145,6 +149,7 @@ in {
         plug.plugins = with pkgs.vimPlugins; [
           haskell-vim
           dracula
+          vim-graphql
         ];
         packages.myVimPackage = with pkgs.vimPlugins; {
           # see examples below how to use custom packages
