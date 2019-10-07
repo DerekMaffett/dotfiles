@@ -106,10 +106,9 @@ map <Up> :echo 'no!'<cr>
 map <Down> :echo 'no!'<cr>
 
 " Copy paste system clipboard
+set clipboard+=unnamedplus
 map <leader>y "*y
 map <leader>p "*p
-map <leader>P "*P
-map <leader>gr "*gr
 
 " Disable wrapping
 set wrap!
