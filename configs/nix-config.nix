@@ -95,6 +95,7 @@ in {
         autojump
         silver-searcher
         fswatch
+        unixtools.netstat
 
         nodePackages.prettier
         haskellPackages.brittany

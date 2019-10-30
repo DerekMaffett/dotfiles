@@ -23,6 +23,8 @@ alias start-browser='wmctrl -a google-chrome.Google-chrome -x'
 alias start-term='wmctrl -a kitty.kitty -x'
 alias start-slack='wmctrl -a Slack -x'
 
+alias connect='eval `ssh-agent -s` && ssh-add ~/.ssh/ec2-access-client'
+
 export TERM="xterm-256color"
 
 
