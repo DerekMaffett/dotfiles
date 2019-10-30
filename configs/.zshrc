@@ -66,5 +66,8 @@ export TMUXINATOR_CONFIG="$HOME/dotfiles/configs/tmuxinator"
 # Autojump activation, installed through nix
 source $HOME/.nix-profile/share/autojump/autojump.zsh
 
+# Should deactivate shared history from oh-my-zsh
+unsetopt share_history
+
 # added by travis gem
 [ -f /home/derekmaffett/.travis/travis.sh ] && source /home/derekmaffett/.travis/travis.sh

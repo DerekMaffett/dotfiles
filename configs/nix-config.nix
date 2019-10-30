@@ -128,6 +128,7 @@ in {
         haskellPackages.fswatcher
         travis
         awscli
+        aws-iam-authenticator
         nixops
         terraform_0_12
       ] ++ ifNixOS [
