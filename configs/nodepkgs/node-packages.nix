@@ -2605,13 +2605,13 @@ let
         sha1 = "590c61156b0ae2f4f0255732a158b266bc56b21d";
       };
     };
-    "electron-to-chromium-1.3.305" = {
+    "electron-to-chromium-1.3.306" = {
       name = "electron-to-chromium";
       packageName = "electron-to-chromium";
-      version = "1.3.305";
+      version = "1.3.306";
       src = fetchurl {
-        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.305.tgz";
-        sha512 = "jBEhRZ3eeJWf3eAnGYB1vDy09uBQpZWshC5fxiiIRofA9L3vkpa3SxsXleVS2MvuYir15oTVxzWPsOwj7KBzUw==";
+        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.306.tgz";
+        sha512 = "frDqXvrIROoYvikSKTIKbHbzO6M3/qC6kCIt/1FOa9kALe++c4VAJnwjSFvf1tYLEUsP2n9XZ4XSCyqc3l7A/A==";
       };
     };
     "elliptic-6.5.1" = {
@@ -5530,13 +5530,13 @@ let
         sha512 = "C2hrAPzmRdpuL3iH0TDdQ6XCc9M7Dcc3zEW5BLerY65G4tWWszwv6nG/ksi6ul5i2mx22ubdljgktXCtNkydkw==";
       };
     };
-    "posthtml-parser-0.4.1" = {
+    "posthtml-parser-0.4.2" = {
       name = "posthtml-parser";
       packageName = "posthtml-parser";
-      version = "0.4.1";
+      version = "0.4.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/posthtml-parser/-/posthtml-parser-0.4.1.tgz";
-        sha512 = "h7vXIQ21Ikz2w5wPClPakNP6mJeJCK6BT0GpqnQrNNABdR7/TchNlFyryL1Bz6Ww53YWCKkr6tdZuHlxY1AVdQ==";
+        url = "https://registry.npmjs.org/posthtml-parser/-/posthtml-parser-0.4.2.tgz";
+        sha512 = "BUIorsYJTvS9UhXxPTzupIztOMVNPa/HtAm9KHni9z6qEfiJ1bpOBL5DfUOL9XAc3XkLIEzBzpph+Zbm4AdRAg==";
       };
     };
     "posthtml-render-1.1.5" = {
@@ -7858,7 +7858,7 @@ in
       sources."duplexer2-0.1.4"
       sources."ecc-jsbn-0.1.2"
       sources."ee-first-1.1.1"
-      sources."electron-to-chromium-1.3.305"
+      sources."electron-to-chromium-1.3.306"
       sources."elliptic-6.5.1"
       sources."encodeurl-1.0.2"
       sources."entities-1.1.2"
@@ -8208,7 +8208,7 @@ in
       sources."postcss-unique-selectors-4.0.1"
       sources."postcss-value-parser-3.3.1"
       sources."posthtml-0.11.6"
-      sources."posthtml-parser-0.4.1"
+      sources."posthtml-parser-0.4.2"
       sources."posthtml-render-1.1.5"
       sources."prelude-ls-1.1.2"
       sources."private-0.1.8"
