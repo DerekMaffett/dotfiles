@@ -163,6 +163,7 @@ in {
             vim-nix 
             sideways-vim 
             vim-surround 
+            vim-repeat
             fzfWrapper
             fzf-vim 
             vim-eunuch 
