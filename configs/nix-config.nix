@@ -110,7 +110,7 @@ in {
         nodejs-12_x
         yarn
         customNodePackages.pnpm
-        customNodePackages.parcel-bundler
+        # customNodePackages.parcel-bundler
         customNodePackages.deepspeech
 
         git-quick-stats
