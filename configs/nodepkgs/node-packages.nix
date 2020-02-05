@@ -1012,13 +1012,13 @@ let
         sha512 = "VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==";
       };
     };
-    "ansi-to-html-0.6.13" = {
+    "ansi-to-html-0.6.14" = {
       name = "ansi-to-html";
       packageName = "ansi-to-html";
-      version = "0.6.13";
+      version = "0.6.14";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ansi-to-html/-/ansi-to-html-0.6.13.tgz";
-        sha512 = "Ys2/umuaTlQvP9DLkaa7UzRKF2FLrfod/hNHXS9QhXCrw7seObG6ksOGmNz3UoK+adwM8L9vQfG7mvaxfJ3Jvw==";
+        url = "https://registry.npmjs.org/ansi-to-html/-/ansi-to-html-0.6.14.tgz";
+        sha512 = "7ZslfB1+EnFSDO5Ju+ue5Y6It19DRnZXWv8jrGHgIlPna5Mh4jz7BV5jCbQneXNFurQcKoolaaAjHtgSBfOIuA==";
       };
     };
     "ansy-1.0.14" = {
@@ -7809,10 +7809,10 @@ in
   pnpm = nodeEnv.buildNodePackage {
     name = "pnpm";
     packageName = "pnpm";
-    version = "4.9.1";
+    version = "4.9.3";
     src = fetchurl {
-      url = "https://registry.npmjs.org/pnpm/-/pnpm-4.9.1.tgz";
-      sha512 = "NL2J4J4XBsR5gJTJTStplcpfOTowARxw/YVsm59c5S2Y7G6I6UKSkXTBxySw7KjAimqvMNDrPR5d7xdePpW5/w==";
+      url = "https://registry.npmjs.org/pnpm/-/pnpm-4.9.3.tgz";
+      sha512 = "VMfcMBPfBL5jQoby3qSkYtSEDemIygc8quQu6mJprL3gWORHWcHFyuCgvT1C4ZRvqoU6rHu1XmlVVEan1ooM2g==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -7948,7 +7948,7 @@ in
       sources."alphanum-sort-1.0.2"
       sources."ansi-regex-3.0.0"
       sources."ansi-styles-3.2.1"
-      sources."ansi-to-html-0.6.13"
+      sources."ansi-to-html-0.6.14"
       (sources."anymatch-2.0.0" // {
         dependencies = [
           sources."normalize-path-2.1.1"

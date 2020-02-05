@@ -27,6 +27,7 @@ alias connect='eval `ssh-agent -s` && ssh-add ~/.ssh/ec2-access-client'
 
 export TERM="xterm-256color"
 
+. $HOME/.nix-profile/etc/profile.d/nix.sh
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs time)
@@ -38,18 +39,18 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 # POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 
-. $HOME/.nix-profile/etc/profile.d/nix.sh
-
-source "$HOME/.nix-profile/share/powerlevel10k/powerlevel10k.zsh-theme"
+# source "$HOME/.nix-profile/share/powerlevel10k/powerlevel9k.zsh-theme"
 
 if test -f /etc/NIXOS; then
     # Nix-shell use zsh, usually supplanted by direnv nix support
     any-nix-shell zsh --info-right | source /dev/stdin
 else
     # If not NixOS
+    export ZSH_THEME="wezm"
     export ZSH=$HOME/.nix-profile/share/oh-my-zsh
     source "$HOME/.nix-profile/share/oh-my-zsh/oh-my-zsh.sh"
 fi
+
 
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 
