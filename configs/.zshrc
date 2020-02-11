@@ -39,14 +39,14 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 # POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 
-# source "$HOME/.nix-profile/share/powerlevel10k/powerlevel9k.zsh-theme"
+source "$HOME/.nix-profile/share/powerlevel10k/powerlevel9k.zsh-theme"
 
 if test -f /etc/NIXOS; then
     # Nix-shell use zsh, usually supplanted by direnv nix support
     any-nix-shell zsh --info-right | source /dev/stdin
 else
     # If not NixOS
-    export ZSH_THEME="wezm"
+    # export ZSH_THEME="wezm"
     export ZSH=$HOME/.nix-profile/share/oh-my-zsh
     source "$HOME/.nix-profile/share/oh-my-zsh/oh-my-zsh.sh"
 fi
