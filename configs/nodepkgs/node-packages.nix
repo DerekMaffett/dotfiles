@@ -1453,13 +1453,13 @@ let
         sha512 = "Z942RysHXmJrhqk88FmKBVq/v5tqmSkDz7p54G/MGyjMnCFFnC79XWNbg+Vta8W6Wb2qtSZTSxIGkJrRpCFEiA==";
       };
     };
-    "browserslist-4.8.7" = {
+    "browserslist-4.9.0" = {
       name = "browserslist";
       packageName = "browserslist";
-      version = "4.8.7";
+      version = "4.9.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/browserslist/-/browserslist-4.8.7.tgz";
-        sha512 = "gFOnZNYBHrEyUML0xr5NJ6edFaaKbTFX9S9kQHlYfCP0Rit/boRIz4G+Avq6/4haEKJXdGGUnoolx+5MWW2BoA==";
+        url = "https://registry.npmjs.org/browserslist/-/browserslist-4.9.0.tgz";
+        sha512 = "seffIXhwgB84+OCeT/aMjpZnsAsYDiMSC+CEs3UkF8iU64BZGYcu+TZYs/IBpo4nRi0vJywUJWYdbTsOhFTweg==";
       };
     };
     "buffer-4.9.2" = {
@@ -2668,13 +2668,13 @@ let
         sha1 = "590c61156b0ae2f4f0255732a158b266bc56b21d";
       };
     };
-    "electron-to-chromium-1.3.361" = {
+    "electron-to-chromium-1.3.362" = {
       name = "electron-to-chromium";
       packageName = "electron-to-chromium";
-      version = "1.3.361";
+      version = "1.3.362";
       src = fetchurl {
-        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.361.tgz";
-        sha512 = "OzSVjWpsRhJyr9PSAXkeloSe6e9viU2ToGt1wXlXFsGcxuI9vlsnalL+V/AM59Z2pEo3wRxIddtOGsT7Y6x/sQ==";
+        url = "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.362.tgz";
+        sha512 = "xdU5VCoZyMPMOWtCaMgbr48OwWZHrMLbGnAOlEqibXiIGsb4kiCGWEHK5NOghcVLdBVIbr/BW+yuKxVuGTtzEg==";
       };
     };
     "elliptic-6.5.2" = {
@@ -7782,10 +7782,10 @@ in
   pnpm = nodeEnv.buildNodePackage {
     name = "pnpm";
     packageName = "pnpm";
-    version = "4.9.3";
+    version = "4.10.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/pnpm/-/pnpm-4.9.3.tgz";
-      sha512 = "VMfcMBPfBL5jQoby3qSkYtSEDemIygc8quQu6mJprL3gWORHWcHFyuCgvT1C4ZRvqoU6rHu1XmlVVEan1ooM2g==";
+      url = "https://registry.npmjs.org/pnpm/-/pnpm-4.10.0.tgz";
+      sha512 = "u6GAXFPzaQsDN28dWIO0q0eW7sLsbhRlPYoZplqOBU5nI2otJtiSsPJ34ADb29XBzJg8wJC87Y/pJM/AgmJ/uA==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -7988,7 +7988,7 @@ in
           sources."pako-1.0.11"
         ];
       })
-      sources."browserslist-4.8.7"
+      sources."browserslist-4.9.0"
       (sources."buffer-4.9.2" // {
         dependencies = [
           sources."isarray-1.0.0"
@@ -8140,7 +8140,7 @@ in
       sources."duplexer2-0.1.4"
       sources."ecc-jsbn-0.1.2"
       sources."ee-first-1.1.1"
-      sources."electron-to-chromium-1.3.361"
+      sources."electron-to-chromium-1.3.362"
       sources."elliptic-6.5.2"
       sources."emoji-regex-7.0.3"
       sources."encodeurl-1.0.2"
