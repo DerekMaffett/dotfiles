@@ -1,5 +1,12 @@
 let 
   pkgs = import <nixpkgs> {};
+  nixpkgsDarwinSrc = pkgs.fetchFromGitHub {
+    owner = "NixOS";
+    repo = "nixpkgs-channels";
+    rev = "bf7c0f0461e047bec108a5c5d5d1b144289a65ba";
+    sha256 = "01dsh9932x6xcba2p0xg4n563b85i3p7s2sakj7yf2ws8pgmwhq9";
+  };
+  pinnedDarwinPkgs = import "${nixpkgsDarwinSrc}" {};
   customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
   scripts = import "${(fromGithubMaster "scripts")}/default.nix";
 
@@ -25,6 +32,9 @@ let
 in {
   allowUnfree = true;
   allowBroken = true;
+  permittedInsecurePackages = [
+    "openssl-1.0.2u"
+  ];
 
   packageOverrides = _: with pkgs; rec {
     system-update = writeShellScriptBin "system-update" "nix-npm update && nix-github update && nix-env -i all && nix-collect-garbage";
@@ -83,7 +93,6 @@ in {
         private-powerlevel10k
 
         direnv
-        myNeovim
         tmux
         tmuxPlugins.vim-tmux-navigator
         tmuxinator
@@ -139,12 +148,14 @@ in {
       ] ++ ifNotNixOS [
         private-oh-my-zsh
       ] ++ linuxOnly [
+        (myNeovim neovim)
         hydra
         gnome3.gnome-tweak-tool
       ] ++ macOnly [
+        (myNeovim pinnedDarwinPkgs.neovim)
       ];
     };
-    myNeovim = neovim.override {
+    myNeovim = neovimPkg: neovimPkg.override {
       vimAlias = true;
       configure = {
         customRC = vimrc;
