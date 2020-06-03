@@ -4,5 +4,6 @@
     "pnpm",
     "parcel-bundler",
     "deepspeech",
-    "git-stats"
+    "git-stats",
+    "prettier"
 ]

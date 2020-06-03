@@ -106,8 +106,8 @@ in {
         fswatch
         unixtools.netstat
 
-        nodePackages.prettier
         haskellPackages.brittany
+        customNodePackages.prettier
 
         nix-prefetch-github
         cabal-install

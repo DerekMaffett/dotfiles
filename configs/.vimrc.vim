@@ -21,6 +21,8 @@ let g:deoplete#enable_at_startup = 1
 let g:salve_auto_start_repl = 1
 let g:elm_setup_keybindings = 0
 
+" clang-format is bad
+let g:neoformat_enabled_javascript = ['prettier']
 " Comment out to remove verbose logging
 " let g:neoformat_verbose = 1
 
