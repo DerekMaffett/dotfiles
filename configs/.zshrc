@@ -27,7 +27,7 @@ alias connect='eval `ssh-agent -s` && ssh-add ~/.ssh/ec2-access-client'
 
 export TERM="xterm-256color"
 
-. $HOME/.nix-profile/etc/profile.d/nix.sh
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi 
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs time)

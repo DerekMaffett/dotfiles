@@ -100,7 +100,7 @@ in {
         zsh
         any-nix-shell
         powerline-fonts
-        zsh-completions
+        nix-zsh-completions
         autojump
         silver-searcher
         fswatch
@@ -149,7 +149,6 @@ in {
         private-oh-my-zsh
       ] ++ linuxOnly [
         (myNeovim neovim)
-        hydra
         gnome3.gnome-tweak-tool
       ] ++ macOnly [
         (myNeovim pinnedDarwinPkgs.neovim)
