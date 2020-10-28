@@ -28,6 +28,6 @@
 [core]
   autocrlf = input
 [pull]
-  rebase = preserve
+  rebase = merges
 [status]
   showUntrackedFiles = all

@@ -121,6 +121,7 @@ in {
         customNodePackages.pnpm
         # customNodePackages.parcel-bundler
         customNodePackages.deepspeech
+        jdk
 
         git-quick-stats
         customNodePackages.git-stats
@@ -137,17 +138,19 @@ in {
         haskellPackages.fswatcher
         travis
         awscli
+        kubectl
+        vault
         aws-iam-authenticator
         nixops
         terraform_0_12
       ] ++ ifNixOS [
         qutebrowser
-        xclip 
         slack
         postman 
       ] ++ ifNotNixOS [
         private-oh-my-zsh
       ] ++ linuxOnly [
+        xclip 
         (myNeovim neovim)
         gnome3.gnome-tweak-tool
       ] ++ macOnly [
