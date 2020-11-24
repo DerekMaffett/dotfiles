@@ -135,6 +135,9 @@ in {
         elmPackages.elm-test
         elmPackages.elm-format
 
+        python37
+        python37Packages.pip
+
         haskellPackages.fswatcher
         travis
         awscli
