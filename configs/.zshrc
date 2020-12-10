@@ -52,7 +52,6 @@ else
     source "$HOME/.nix-profile/share/oh-my-zsh/oh-my-zsh.sh"
 fi
 
-
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 
 # Direnv for nix
@@ -73,3 +72,5 @@ unsetopt share_history
 
 # added by travis gem
 [ -f /home/derekmaffett/.travis/travis.sh ] && source /home/derekmaffett/.travis/travis.sh
+
+export PATH=$HOME/.local/bin/:$PATH

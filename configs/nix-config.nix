@@ -135,8 +135,9 @@ in {
         elmPackages.elm-test
         elmPackages.elm-format
 
-        python37
-        python37Packages.pip
+        # python37
+        # python37Packages.pip
+        # python37Packages.setuptools
 
         haskellPackages.fswatcher
         travis
