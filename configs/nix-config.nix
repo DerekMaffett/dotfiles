@@ -116,10 +116,10 @@ in {
         nodePackages.node2nix
         elm2nix
 
-        nodejs-12_x
+        nodejs-15_x
         yarn
         customNodePackages.pnpm
-        # customNodePackages.parcel-bundler
+        customNodePackages.parcel-bundler
         customNodePackages.deepspeech
         jdk
 
