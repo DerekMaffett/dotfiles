@@ -1,4 +1,5 @@
 [
+    "pm2",
     "river-cli",
     "git-stats-importer",
     "pnpm",

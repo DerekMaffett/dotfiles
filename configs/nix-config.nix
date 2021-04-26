@@ -127,6 +127,7 @@ in {
         customNodePackages.git-stats
         customNodePackages.git-stats-importer
         customNodePackages.river-cli
+        customNodePackages.pm2
 
         purescript
         stack
@@ -157,6 +158,7 @@ in {
         xclip 
         (myNeovim neovim)
         gnome3.gnome-tweak-tool
+        simplescreenrecorder
       ] ++ macOnly [
         (myNeovim pinnedDarwinPkgs.neovim)
       ];
