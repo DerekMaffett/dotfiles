@@ -12,7 +12,7 @@ alias filecount='find . | cut -d/ -f2 | sort | uniq -c | sort -bn'
 
 alias clean='git branch | grep -v "master" | xargs git branch -D'
 
-alias br='copy-branch | xclip -selection clipboard'
+alias br='copy | xclip -selection clipboard'
 
 alias dot='tmuxinator start dotfiles'
 alias os='tmuxinator start open-source'
