@@ -32,6 +32,7 @@ link .gitconfig .gitconfig
 link .prettierrc.js .prettierrc.js
 link .tmux.conf .tmux.conf
 link .zshrc .zshrc
+link .bashrc .bashrc
 link ssh-init.json .ssh/ssh-init.json
 link .nix-channels .nix-channels
 

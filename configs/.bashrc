@@ -30,32 +30,17 @@ export TERM="xterm-256color"
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi 
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs time)
-POWERLEVEL9K_SHORTEN_STRATEGY="Default"
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-
-# Presentation
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir)
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-# POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-
-source "$HOME/.nix-profile/share/powerlevel10k/powerlevel9k.zsh-theme"
-
-if test -f /etc/NIXOS; then
-    # Nix-shell use zsh, usually supplanted by direnv nix support
-    any-nix-shell zsh --info-right | source /dev/stdin
-else
-    # If not NixOS
-    # export ZSH_THEME="wezm"
-    export ZSH=$HOME/.nix-profile/share/oh-my-zsh
-    source "$HOME/.nix-profile/share/oh-my-zsh/oh-my-zsh.sh"
-fi
+GIT_PROMPT_THEME="Single_line_Ubuntu"
+# GIT_PROMPT_COMMAND_FAIL="${Green}✔"
+# GIT_PROMPT_END=" "
+# GIT_PROMPT_ONLY_IN_REPO=1
+GIT_PROMPT_SHOW_UNTRACKED_FILES=no
+source $HOME/.nix-profile/share/bash-git-prompt/gitprompt.sh
 
 export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 
 # Direnv for nix
-eval "$(direnv hook zsh)"
+eval "$(direnv hook bash)"
 export DIRENV_LOG_FORMAT=
 
 export EDITOR='nvim'
@@ -65,10 +50,7 @@ export VISUAL='nvim'
 export TMUXINATOR_CONFIG="$HOME/dotfiles/configs/tmuxinator"
 
 # Autojump activation, installed through nix
-source $HOME/.nix-profile/share/autojump/autojump.zsh
-
-# Should deactivate shared history from oh-my-zsh
-unsetopt share_history
+source $HOME/.nix-profile/share/autojump/autojump.bash
 
 # added by travis gem
 [ -f /home/derekmaffett/.travis/travis.sh ] && source /home/derekmaffett/.travis/travis.sh

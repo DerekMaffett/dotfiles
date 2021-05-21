@@ -10,5 +10,6 @@
     "benburrill/potato-colors",
     "NixOS/nixpkgs-channels",
     "DerekMaffett/scripts",
-    "machakann/vim-sandwich"
+    "machakann/vim-sandwich",
+    "magicmonty/bash-git-prompt"
 ]

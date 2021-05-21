@@ -38,6 +38,10 @@ in {
 
   packageOverrides = _: with pkgs; rec {
     system-update = writeShellScriptBin "system-update" "nix-npm update && nix-github update && nix-env -i all && nix-collect-garbage";
+    bash-git-prompt = copyToShare {
+        name = "bash-git-prompt";
+        src = fromGithubMaster "bash-git-prompt";
+    };
     private-oh-my-zsh = copyToShare {
         name = "oh-my-zsh";
         src = fromGithubMaster "oh-my-zsh";
@@ -86,21 +90,22 @@ in {
         lastpass-cli
         wmctrl
 
-        kitty
-        kittyThemes
+        # kitty
+        # kittyThemes
         cloc
         jq
-        private-powerlevel10k
+        # private-powerlevel10k
 
         direnv
         tmux
         tmuxPlugins.vim-tmux-navigator
         tmuxinator
         fzf
-        zsh
-        any-nix-shell
-        powerline-fonts
-        nix-zsh-completions
+        # zsh
+        # any-nix-shell
+        # powerline-fonts
+        # nix-zsh-completions
+        bash-git-prompt
         autojump
         silver-searcher
         fswatch
@@ -136,9 +141,9 @@ in {
         elmPackages.elm-test
         elmPackages.elm-format
 
-        # python37
-        # python37Packages.pip
-        # python37Packages.setuptools
+        python37
+        python37Packages.pip
+        python37Packages.setuptools
 
         haskellPackages.fswatcher
         travis
@@ -170,7 +175,7 @@ in {
         plug.plugins = with pkgs.vimPlugins; [
           haskell-vim
           dracula
-          vim-graphql
+          # vim-graphql
         ];
         packages.myVimPackage = with pkgs.vimPlugins; {
           # see examples below how to use custom packages
