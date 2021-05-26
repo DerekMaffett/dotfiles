@@ -79,7 +79,7 @@ in {
     writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
       writeShellScriptBin name "${fswatch}/bin/fswatch -0 --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | xargs -0 -I {} -n 1 ${command}";
 
-    localCabalRun = name: executable: writeShellScriptBin name "cabal new-run ${executable} $@";
+    localCabalRun = name: executable: writeShellScriptBin name "cabal new-run ${executable} -- $@";
 
     all = buildEnv {
       name = "all";
@@ -141,9 +141,9 @@ in {
         elmPackages.elm-test
         elmPackages.elm-format
 
-        python37
-        python37Packages.pip
-        python37Packages.setuptools
+        # python37
+        # python37Packages.pip
+        # python37Packages.setuptools
 
         haskellPackages.fswatcher
         travis
