@@ -110,6 +110,7 @@ in {
         silver-searcher
         fswatch
         unixtools.netstat
+        bfg-repo-cleaner
 
         haskellPackages.brittany
         customNodePackages.prettier
