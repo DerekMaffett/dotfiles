@@ -6,6 +6,7 @@ mkdir -p ~/.config/projects/
 mkdir -p ~/.config/brittany/
 mkdir -p ~/.config/nvim/
 mkdir -p ~/.config/nixpkgs/
+mkdir -p ~/.config/nix/
 mkdir -p ~/.config/terminator/
 mkdir -p ~/.config/kitty/
 mkdir -p ~/.config/qutebrowser/
@@ -17,6 +18,7 @@ mkdir -p ~/.ssh/
 link .projects.json .config/projects/.projects.json
 link brittany.yaml .config/brittany/config.yaml
 link nix-config.nix .config/nixpkgs/config.nix
+link nix.conf .config/nix/nix.conf
 link terminator-config .config/terminator/config
 link kitty.conf .config/kitty/kitty.conf
 link kitty-mac-cmdline-options .config/kitty/macos-launch-services-cmdline

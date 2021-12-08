@@ -16,6 +16,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     defaults write -g ApplePressAndHoldEnabled -bool false
 fi
 
-if test ! -e /etc/NIXOS; then
-    chsh -s "$(which zsh)"
-fi
+# Not using zsh anymore
+# if test ! -e /etc/NIXOS; then
+#     chsh -s "$(which zsh)"
+# fi

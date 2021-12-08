@@ -90,21 +90,19 @@ in {
         lastpass-cli
         wmctrl
 
-        # kitty
-        # kittyThemes
+        kitty
+        kittyThemes
         cloc
         jq
-        # private-powerlevel10k
+        private-powerlevel10k
 
         direnv
         tmux
         tmuxPlugins.vim-tmux-navigator
         tmuxinator
         fzf
-        # zsh
-        # any-nix-shell
-        # powerline-fonts
-        # nix-zsh-completions
+        any-nix-shell
+        powerline-fonts
         bash-git-prompt
         autojump
         silver-searcher
@@ -122,7 +120,7 @@ in {
         nodePackages.node2nix
         elm2nix
 
-        nodejs-15_x
+        nodejs-17_x
         yarn
         customNodePackages.pnpm
         customNodePackages.parcel-bundler
@@ -142,9 +140,9 @@ in {
         elmPackages.elm-test
         elmPackages.elm-format
 
-        # python37
-        # python37Packages.pip
-        # python37Packages.setuptools
+        python39
+        python39Packages.pip
+        python39Packages.setuptools
 
         haskellPackages.fswatcher
         travis
@@ -152,8 +150,8 @@ in {
         kubectl
         vault
         aws-iam-authenticator
-        nixops
-        terraform_0_12
+        # nixops
+        terraform_0_15
 
         jetbrains.datagrip
       ] ++ ifNixOS [
