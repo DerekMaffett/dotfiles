@@ -154,6 +154,8 @@ in {
         aws-iam-authenticator
         nixops
         terraform_0_12
+
+        jetbrains.datagrip
       ] ++ ifNixOS [
         qutebrowser
         slack
