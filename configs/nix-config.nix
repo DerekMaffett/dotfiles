@@ -110,8 +110,11 @@ in {
         unixtools.netstat
         bfg-repo-cleaner
 
+        openconnect
+
         haskellPackages.brittany
         customNodePackages.prettier
+        clang-tools
 
         nix-prefetch-github
         cabal-install
@@ -152,6 +155,7 @@ in {
         aws-iam-authenticator
         # nixops
         terraform_0_15
+        dbeaver
 
         jetbrains.datagrip
       ] ++ ifNixOS [

@@ -17,7 +17,6 @@ alias br='copy | xclip -selection clipboard'
 alias dot='tmuxinator start dotfiles'
 alias os='tmuxinator start open-source'
 alias client='tmuxinator start client' 
-alias happy='tmuxinator start happy' 
 alias tk='tmux kill-session && refresh'
 
 alias start-browser='wmctrl -a google-chrome.Google-chrome -x'

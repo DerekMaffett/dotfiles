@@ -31,3 +31,5 @@
   rebase = merges
 [status]
   showUntrackedFiles = all
+[init]
+	templateDir = /home/derek/.git-templates/git-secrets
