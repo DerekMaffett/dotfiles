@@ -113,7 +113,7 @@ in {
         openconnect
 
         haskellPackages.brittany
-        customNodePackages.prettier
+        # customNodePackages.prettier
         clang-tools
 
         nix-prefetch-github
@@ -125,16 +125,16 @@ in {
 
         nodejs-17_x
         yarn
-        customNodePackages.pnpm
-        customNodePackages.parcel-bundler
-        customNodePackages.deepspeech
+        # customNodePackages.pnpm
+        # customNodePackages.parcel-bundler
+        # customNodePackages.deepspeech
         jdk
 
         git-quick-stats
-        customNodePackages.git-stats
-        customNodePackages.git-stats-importer
-        customNodePackages.river-cli
-        customNodePackages.pm2
+        # customNodePackages.git-stats
+        # customNodePackages.git-stats-importer
+        # customNodePackages.river-cli
+        # customNodePackages.pm2
 
         purescript
         stack
