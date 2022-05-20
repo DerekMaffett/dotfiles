@@ -25,6 +25,7 @@ let g:elm_setup_keybindings = 0
 let g:neoformat_enabled_javascript = ['prettier']
 " Comment out to remove verbose logging
 " let g:neoformat_verbose = 1
+let g:neoformat_try_node_exe = 1
 
 let mapleader = ','
 

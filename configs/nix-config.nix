@@ -113,7 +113,7 @@ in {
         openconnect
 
         haskellPackages.brittany
-        # customNodePackages.prettier
+        customNodePackages.prettier
         clang-tools
 
         nix-prefetch-github
@@ -154,7 +154,7 @@ in {
         vault
         aws-iam-authenticator
         # nixops
-        terraform_0_15
+        terraform
         dbeaver
 
         jetbrains.datagrip
