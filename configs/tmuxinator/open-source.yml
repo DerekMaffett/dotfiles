@@ -1,49 +1,63 @@
 name: open-source
 windows:
-    - river:
-          layout: main-vertical
-          root: ~/projects/river
-          panes:
-              - vim
-              - watch-dev
-              - null
-    - river-bitbucket:
-          layout: main-vertical
-          root: ~/projects/river-bitbucket-test
-          panes:
-              - vim
-              - null
-    - river-github:
-          layout: main-vertical
-          root: ~/projects/river-github-test
-          panes:
-              - vim
-              - null
-    - react-elm:
-          layout: main-vertical
-          root: ~/projects/react-elm
-          panes:
-              - vim
-              - npm run start
-              - null
-    - todo-app:
-          layout: main-vertical
-          root: ~/projects/todo-app
-          panes:
-              - vim
-              - pscid -I src
-              - parcel src/index.html
-    - haskell-presentation:
-          layout: main-vertical
-          root: ~/projects/haskell-presentation
-          panes:
-              - vim
-              - null
-              - null
-    - scripts:
-          layout: main-vertical
-          root: ~/projects/scripts
-          panes:
-              - vim
-              - null
-              - null
+- river:
+    layout: main-vertical
+    panes:
+    - vim
+    - watch-dev
+    - null
+    root: ~/projects/river
+- river-bitbucket:
+    layout: main-vertical
+    panes:
+    - vim
+    - null
+    root: ~/projects/river-bitbucket-test
+- river-github:
+    layout: main-vertical
+    panes:
+    - vim
+    - null
+    root: ~/projects/river-github-test
+- react-elm:
+    layout: main-vertical
+    panes:
+    - vim
+    - npm run start
+    - null
+    root: ~/projects/react-elm
+- todo-app:
+    layout: main-vertical
+    panes:
+    - vim
+    - pscid -I src
+    - parcel src/index.html
+    root: ~/projects/todo-app
+- haskell-presentation:
+    layout: main-vertical
+    panes:
+    - vim
+    - null
+    - null
+    root: ~/projects/haskell-presentation
+- scripts:
+    layout: main-vertical
+    panes:
+    - vim
+    - null
+    - null
+    root: ~/projects/scripts
+- purescript-test:
+    layout: main-vertical
+    panes:
+    - vim
+    - null
+    - null
+    root: ~/projects/purescript-test
+- terraform-test:
+    layout: main-vertical
+    panes:
+    - vim
+    - null
+    - null
+    root: ~/projects/terraform-test

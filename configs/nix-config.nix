@@ -123,7 +123,7 @@ in {
         nodePackages.node2nix
         elm2nix
 
-        nodejs-17_x
+        nodejs-18_x
         yarn
         # customNodePackages.pnpm
         # customNodePackages.parcel-bundler
@@ -138,6 +138,7 @@ in {
 
         purescript
         stack
+        spago
 
         elmPackages.elm
         elmPackages.elm-test
@@ -149,13 +150,14 @@ in {
 
         haskellPackages.fswatcher
         travis
-        awscli
+        awscli2
         kubectl
         vault
         aws-iam-authenticator
         # nixops
         terraform
         dbeaver
+        graphviz
 
         jetbrains.datagrip
       ] ++ ifNixOS [
@@ -167,7 +169,7 @@ in {
       ] ++ linuxOnly [
         xclip 
         (myNeovim neovim)
-        gnome3.gnome-tweak-tool
+        gnome3.gnome-tweaks
         simplescreenrecorder
       ] ++ macOnly [
         (myNeovim pinnedDarwinPkgs.neovim)
@@ -177,17 +179,15 @@ in {
       vimAlias = true;
       configure = {
         customRC = vimrc;
-        plug.plugins = with pkgs.vimPlugins; [
-          haskell-vim
-          dracula
-          # vim-graphql
-        ];
         packages.myVimPackage = with pkgs.vimPlugins; {
           # see examples below how to use custom packages
           # vim-sexp vim-sexp-mappings-for-regular-people cljfmt vim-classpath vim-salve
           start = [
             potato-colors 
 
+            vim-graphql
+            haskell-vim
+            dracula
             vim-css-color
             vim-nix 
             sideways-vim 
