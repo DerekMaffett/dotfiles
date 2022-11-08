@@ -7,39 +7,6 @@ windows:
     - watch-dev
     - null
     root: ~/projects/river
-- river-bitbucket:
-    layout: main-vertical
-    panes:
-    - vim
-    - null
-    root: ~/projects/river-bitbucket-test
-- river-github:
-    layout: main-vertical
-    panes:
-    - vim
-    - null
-    root: ~/projects/river-github-test
-- react-elm:
-    layout: main-vertical
-    panes:
-    - vim
-    - npm run start
-    - null
-    root: ~/projects/react-elm
-- todo-app:
-    layout: main-vertical
-    panes:
-    - vim
-    - pscid -I src
-    - parcel src/index.html
-    root: ~/projects/todo-app
-- haskell-presentation:
-    layout: main-vertical
-    panes:
-    - vim
-    - null
-    - null
-    root: ~/projects/haskell-presentation
 - scripts:
     layout: main-vertical
     panes:
@@ -61,3 +28,10 @@ windows:
     - null
     - null
     root: ~/projects/terraform-test
+- python-examples:
+    layout: main-vertical
+    panes:
+        - vim
+        - null
+        - null
+    root: ~/projects/python-examples
