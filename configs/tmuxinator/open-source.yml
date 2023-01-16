@@ -31,7 +31,14 @@ windows:
 - python-examples:
     layout: main-vertical
     panes:
-        - vim
-        - null
-        - null
+    - vim
+    - null
+    - null
     root: ~/projects/python-examples
+- dotnet-example:
+    layout: main-vertical
+    panes:
+    - vim
+    - null
+    - null
+    root: ~/projects/dotnet-example

@@ -140,6 +140,8 @@ in {
         stack
         spago
 
+        dotnet-sdk_7
+
         elmPackages.elm
         elmPackages.elm-test
         elmPackages.elm-format
