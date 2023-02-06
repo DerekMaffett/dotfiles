@@ -1,8 +1,9 @@
 name: dotfiles
+root: ~/dotfiles
+
 windows:
     - dotfiles:
           layout: main-vertical
-          root: ~/dotfiles
           panes:
               - vim
               - null

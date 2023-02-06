@@ -17,7 +17,6 @@ alias br='copy-branch | xclip -selection clipboard'
 alias dot='tmuxinator start dotfiles'
 alias os='tmuxinator start open-source'
 alias client='tmuxinator start client' 
-alias happy='tmuxinator start happy' 
 alias tk='tmux kill-session && refresh'
 
 alias start-browser='wmctrl -a google-chrome.Google-chrome -x'
@@ -31,7 +30,7 @@ export TERM="xterm-256color"
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi 
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs)
 POWERLEVEL9K_SHORTEN_STRATEGY="Default"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 

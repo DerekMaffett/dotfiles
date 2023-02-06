@@ -116,7 +116,7 @@ in {
 
         openconnect
 
-        haskellPackages.brittany
+        # haskellPackages.brittany
         customNodePackages.prettier
         clang-tools
 

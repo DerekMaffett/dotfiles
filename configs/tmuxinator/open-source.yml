@@ -1,44 +1,46 @@
 name: open-source
+root: ~/projects/river
+
 windows:
-- river:
-    layout: main-vertical
-    panes:
-    - vim
-    - watch-dev
-    - null
-    root: ~/projects/river
-- scripts:
-    layout: main-vertical
-    panes:
-    - vim
-    - null
-    - null
-    root: ~/projects/scripts
-- purescript-test:
-    layout: main-vertical
-    panes:
-    - vim
-    - null
-    - null
-    root: ~/projects/purescript-test
-- terraform-test:
-    layout: main-vertical
-    panes:
-    - vim
-    - null
-    - null
-    root: ~/projects/terraform-test
-- python-examples:
-    layout: main-vertical
-    panes:
-    - vim
-    - null
-    - null
-    root: ~/projects/python-examples
-- dotnet-example:
-    layout: main-vertical
-    panes:
-    - vim
-    - null
-    - null
-    root: ~/projects/dotnet-example
+    - river:
+          layout: main-vertical
+          panes:
+              - vim
+              - watch-dev
+              - null
+          root: ~/projects/river
+    - scripts:
+          layout: main-vertical
+          panes:
+              - vim
+              - null
+              - null
+          root: ~/projects/scripts
+    - purescript-test:
+          layout: main-vertical
+          panes:
+              - vim
+              - null
+              - null
+          root: ~/projects/purescript-test
+    - terraform-test:
+          layout: main-vertical
+          panes:
+              - vim
+              - null
+              - null
+          root: ~/projects/terraform-test
+    - python-examples:
+          layout: main-vertical
+          panes:
+              - vim
+              - null
+              - null
+          root: ~/projects/python-examples
+    - dotnet-example:
+          layout: main-vertical
+          panes:
+              - vim
+              - null
+              - null
+          root: ~/projects/dotnet-example

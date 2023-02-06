@@ -9,6 +9,9 @@ with lib;
 let 
 
 in {
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+
   # Enable the X11 windowing system.
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.xkbOptions = "caps:ctrl_modifier";
