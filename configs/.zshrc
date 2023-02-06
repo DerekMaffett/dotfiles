@@ -57,8 +57,12 @@ export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=
 
-export EDITOR='nvim'
-export VISUAL='nvim'
+export EDITOR='vim'
+export VISUAL='vim'
+
+# Needed to bind they key function to emacs mode, the editor setting messes with that because of 
+# the tmux load order something something
+bindkey -e
 
 # Puts tmuxinator config into dotfiles control
 export TMUXINATOR_CONFIG="$HOME/dotfiles/configs/tmuxinator"
