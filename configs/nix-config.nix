@@ -84,6 +84,10 @@ in {
     all = buildEnv {
       name = "all";
       paths = with pkgs; [
+        # These are necessary for initial installation but replaced here
+        git
+        curl
+
         system-update
         scripts
 
@@ -166,6 +170,7 @@ in {
         qutebrowser
         slack
         postman 
+        teams
       ] ++ ifNotNixOS [
         private-oh-my-zsh
       ] ++ linuxOnly [

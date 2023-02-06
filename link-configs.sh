@@ -40,5 +40,5 @@ link .nix-channels .nix-channels
 
 if test -f /etc/NIXOS; then
     # Link nixos config to root
-    sudo ln -fvs $HOME/dotfiles/configs/nixos-configuration.nix /etc/nixos/configuration.nix
+    sudo ln -fvs $HOME/dotfiles/configs/preferences-configuration.nix /etc/nixos/preferences-configuration.nix
 fi

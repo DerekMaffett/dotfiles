@@ -1,4 +1,4 @@
-#! /bin/bash 
+#! /bin/sh 
 
 # Install nix
 if test ! -f /etc/NIXOS; then
@@ -9,14 +9,15 @@ fi
 ./link-configs.sh
 
 nix-channel --update
-nix-env -i all
+nix-env -i all --remove-all
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     defaults write com.apple.Dock autohide-delay -float 5 && killall Dock
     defaults write -g ApplePressAndHoldEnabled -bool false
 fi
 
-# Not using zsh anymore
-# if test ! -e /etc/NIXOS; then
-#     chsh -s "$(which zsh)"
-# fi
+
+if test -f /etc/NIXOS; then
+    # Swap base settings
+    ./nixos-reboot.sh
+fi
