@@ -1,10 +1,11 @@
 [
-  "pm2",
-  "river-cli",
-  "git-stats-importer",
-  "pnpm",
-  "parcel-bundler",
-  "deepspeech",
-  "git-stats",
-  "prettier"
+    "pm2",
+    "river-cli",
+    "git-stats-importer",
+    "pnpm",
+    "parcel-bundler",
+    "deepspeech",
+    "git-stats",
+    "prettier",
+    "lerna"
 ]

@@ -143,6 +143,7 @@ in {
         purescript
         stack
         spago
+        customNodePackages.lerna
 
         dotnet-sdk_7
 
@@ -160,10 +161,13 @@ in {
         kubectl
         vault
         aws-iam-authenticator
+        google-cloud-sdk
         # nixops
         terraform
         dbeaver
         graphviz
+
+        zip
 
         jetbrains.datagrip
       ] ++ ifNixOS [
