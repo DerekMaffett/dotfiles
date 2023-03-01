@@ -9,6 +9,8 @@ with lib;
 let 
 
 in {
+  imports = [ <home-manager/nixos> ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   programs.zsh.enable = true;
@@ -19,6 +21,22 @@ in {
   services.xserver.xkbOptions = "caps:ctrl_modifier";
 
   services.xserver.exportConfiguration = true;
+
+  # Enable Docker
+  virtualisation.docker.enable = true;
+  users.users.derek.extraGroups = [ "docker" ];
+
+  users.users.derek.isNormalUser = true;
+  home-manager.users.derek = { pkgs, ... }: {
+    home.stateVersion = "22.11";
+    home.packages = [ 
+      pkgs.vim 
+      pkgs.kitty 
+      pkgs.git 
+      pkgs.curl 
+      pkgs.home-manager 
+    ];
+  };
 
   # DISABLED: Using dconf directly instead...
 

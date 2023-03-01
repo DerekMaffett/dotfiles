@@ -32,7 +32,7 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs)
 POWERLEVEL9K_SHORTEN_STRATEGY="Default"
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 
 # Presentation
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir)
@@ -78,3 +78,12 @@ unsetopt share_history
 
 export PATH=$HOME/.local/bin/:$PATH
 if [ -e /home/derek/.nix-profile/etc/profile.d/nix.sh ]; then . /home/derek/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# Added because the nix distribution of the SDK is broken currently (cloud run proxy)
+
+# # The next line updates PATH for the Google Cloud SDK.
+# if [ -f '/home/derek/google-cloud-sdk/path.zsh.inc' ]; then . '/home/derek/google-cloud-sdk/path.zsh.inc'; fi
+#
+# # The next line enables shell command completion for gcloud.
+# if [ -f '/home/derek/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/derek/google-cloud-sdk/completion.zsh.inc'; fi
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"

@@ -18,7 +18,6 @@ mkdir -p ~/.ssh/
 link .projects.json .config/projects/.projects.json
 link brittany.yaml .config/brittany/config.yaml
 link nix-config.nix .config/nixpkgs/config.nix
-link nix.conf .config/nix/nix.conf
 link terminator-config .config/terminator/config
 link kitty.conf .config/kitty/kitty.conf
 link kitty-mac-cmdline-options .config/kitty/macos-launch-services-cmdline
@@ -41,4 +40,5 @@ link .nix-channels .nix-channels
 if test -f /etc/NIXOS; then
     # Link nixos config to root
     sudo ln -fvs $HOME/dotfiles/configs/preferences-configuration.nix /etc/nixos/preferences-configuration.nix
+    link home.nix .config/nixpkgs/home.nix
 fi
