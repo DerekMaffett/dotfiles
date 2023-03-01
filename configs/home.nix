@@ -26,7 +26,7 @@ let
 
   # Packages
 
-  system-update = pkgs.writeShellScriptBin "system-update" "nix-npm update && nix-github update && nix-env -i all && nix-collect-garbage";
+  system-update = pkgs.writeShellScriptBin "system-update" "nix-npm update && nix-github update && home-manager switch && nix-collect-garbage";
 
   bash-git-prompt = copyToShare {
       name = "bash-git-prompt";

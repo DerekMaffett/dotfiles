@@ -9,7 +9,7 @@ with lib;
 let 
 
 in {
-  imports = [ <home-manager/nixos> ];
+  # imports = [ <home-manager/nixos> ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
