@@ -11,6 +11,7 @@ mkdir -p ~/.config/terminator/
 mkdir -p ~/.config/kitty/
 mkdir -p ~/.config/qutebrowser/
 mkdir -p ~/.config/qutebrowser/bookmarks/
+mkdir -p ~/.config/home-manager/
 mkdir -p ~/.xmonad/
 mkdir -p ~/.stack/
 mkdir -p ~/.ssh/
@@ -40,5 +41,5 @@ link .nix-channels .nix-channels
 if test -f /etc/NIXOS; then
     # Link nixos config to root
     sudo ln -fvs $HOME/dotfiles/configs/preferences-configuration.nix /etc/nixos/preferences-configuration.nix
-    link home.nix .config/nixpkgs/home.nix
+    link home.nix .config/home-manager/home.nix
 fi

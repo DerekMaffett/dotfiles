@@ -9,7 +9,7 @@ with lib;
 let 
 
 in {
-  # imports = [ <home-manager/nixos> ];
+  imports = [ <home-manager/nixos> ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -37,6 +37,25 @@ in {
       pkgs.home-manager 
     ];
   };
+
+  nixpkgs.overlays = [
+    (self: super: {
+      fcitx-engines = pkgs.fcitx5;
+    })
+  ];
+
+  # programs.sway.enable = true;
+
+  # xdg = {
+  #   portal = {
+  #     enable = true;
+  #     extraPortals = with pkgs; [
+  #       xdg-desktop-portal-wlr
+  #       xdg-desktop-portal-gtk
+  #     ];
+  #     gtkUsePortal = true;
+  #   };
+  # };
 
   # DISABLED: Using dconf directly instead...
 
