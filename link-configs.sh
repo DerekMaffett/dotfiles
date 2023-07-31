@@ -27,6 +27,7 @@ link qutebrowser-bookmarks .config/qutebrowser/bookmarks/urls
 link qutebrowser-quickmarks .config/qutebrowser/quickmarks
 link xmonad.hs .xmonad/xmonad.hs
 link stack.yaml .stack/config.yaml
+link home.nix .config/home-manager/home.nix
 
 link .Xresources .Xresources
 link .agignore .agignore
@@ -41,5 +42,4 @@ link .nix-channels .nix-channels
 if test -f /etc/NIXOS; then
     # Link nixos config to root
     sudo ln -fvs $HOME/dotfiles/configs/preferences-configuration.nix /etc/nixos/preferences-configuration.nix
-    link home.nix .config/home-manager/home.nix
 fi

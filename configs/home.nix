@@ -170,7 +170,7 @@ in
     nodePackages.node2nix
     elm2nix
 
-    nodejs-19_x
+    nodejs_20
     yarn
     customNodePackages.pnpm
     customNodePackages.parcel-bundler

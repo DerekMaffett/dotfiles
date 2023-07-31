@@ -2,7 +2,7 @@
 
 # Install nix
 if test ! -f /etc/NIXOS; then
-    curl -L https://nixos.org/nix/install | sh 
+    curl -L https://nixos.org/nix/install | sh
     . ~/.nix-profile/etc/profile.d/nix.sh
 fi
 
