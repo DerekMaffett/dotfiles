@@ -65,6 +65,10 @@ let
     name = "vim-graphql";
     src = fromGithubMaster "vim-graphql";
   };
+  # vim-elixir = pkgs.vimUtils.buildVimPlugin {
+  #   name = "elixir-tools";
+  #   src = fromGithubMaster "elixir-tools.nvim";
+  # };
 
   writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
     pkgs.writeShellScriptBin name "${pkgs.fswatch}/bin/fswatch -0 --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | xargs -0 -I {} -n 1 ${command}";
@@ -110,6 +114,7 @@ let
           vim-fireplace
           elm-vim
           vim-terraform
+          # elixir-tools
         ];
         opt = [ ];
       }; 
@@ -121,7 +126,7 @@ in
   home.username = "derek";
   home.homeDirectory = "/home/derek";
 
-  home.stateVersion = "22.11";
+  home.stateVersion = "24.05";
 
   programs.home-manager.enable = true;
 
@@ -197,6 +202,8 @@ in
     python39
     python39Packages.pip
     python39Packages.setuptools
+
+    elixir
 
     haskellPackages.fswatcher
     travis

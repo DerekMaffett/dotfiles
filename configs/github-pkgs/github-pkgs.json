@@ -11,5 +11,6 @@
     "NixOS/nixpkgs-channels",
     "DerekMaffett/scripts",
     "machakann/vim-sandwich",
-    "magicmonty/bash-git-prompt"
+    "magicmonty/bash-git-prompt",
+    "elixir-tools/elixir-tools.nvim"
 ]
