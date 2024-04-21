@@ -190,8 +190,8 @@ in
 
     purescript
     stack
-    spago
-    customNodePackages.lerna
+    # spago
+    # customNodePackages.lerna
 
     dotnet-sdk_7
 
@@ -214,7 +214,7 @@ in
     (google-cloud-sdk.withExtraComponents ([google-cloud-sdk.components.cloud-run-proxy]))
     packer
     docker-compose
-    # nixops
+    #nixops
     terraform
     dbeaver
     graphviz
