@@ -1237,31 +1237,31 @@ let
         sha512 = "Omu0rpA8WXvcGeY6DDzyRoY1i5DkCBkzyJ+m2u7PD6quzb0TvSqdIPOkTn8ZBOj7LbbcbMfZ3c5skwSu6m8y2w==";
       };
     };
-    "@nrwl/devkit-18.3.2" = {
+    "@nrwl/devkit-18.3.3" = {
       name = "_at_nrwl_slash_devkit";
       packageName = "@nrwl/devkit";
-      version = "18.3.2";
+      version = "18.3.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@nrwl/devkit/-/devkit-18.3.2.tgz";
-        sha512 = "srguS6WNE/sP99OTfPqUdI22CNEocvxyz4TOB6Uj5zcFiKIFOlWn0NFwathdWVKwvsszY1Zvt/YiVjzYNUDqWw==";
+        url = "https://registry.npmjs.org/@nrwl/devkit/-/devkit-18.3.3.tgz";
+        sha512 = "3zZLE1vfwsNie7qjVUt9lqaM1slU0RTr/dW+Yt/2lxe8Peu6f8bnCM1Pf3kSlzoxQroctfocRtVHFXJsAuAt4g==";
       };
     };
-    "@nrwl/tao-18.3.2" = {
+    "@nrwl/tao-18.3.3" = {
       name = "_at_nrwl_slash_tao";
       packageName = "@nrwl/tao";
-      version = "18.3.2";
+      version = "18.3.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@nrwl/tao/-/tao-18.3.2.tgz";
-        sha512 = "TQmaUMEIlKcytBpaHVG3VMPhfoJl09u3KaE6F1eJcFi7+za8rivH+HM+jlhwCAOlaC9bmnvJy0GvnFa5WtScsg==";
+        url = "https://registry.npmjs.org/@nrwl/tao/-/tao-18.3.3.tgz";
+        sha512 = "f/PUDLpSMEObiLQ5sIDySJM+5DxSCNunkxxbY1R9rmQ1cFcgrHaXIHQqbSj91mMa3mmtbKACk8u1LbI+oQV0Tg==";
       };
     };
-    "@nx/devkit-18.3.2" = {
+    "@nx/devkit-18.3.3" = {
       name = "_at_nx_slash_devkit";
       packageName = "@nx/devkit";
-      version = "18.3.2";
+      version = "18.3.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@nx/devkit/-/devkit-18.3.2.tgz";
-        sha512 = "H55m7R6zKteZ5DE0o2IOwpwo8RQXiH4RkBELWn9YkSQPvps8K7psyMzPQofP37qD5S0u7pYjGIWiJDzij+OeEQ==";
+        url = "https://registry.npmjs.org/@nx/devkit/-/devkit-18.3.3.tgz";
+        sha512 = "FtkZ6mA5//vEA5lcbT80m080ROVacHYV5F1peztTRA+IY2JZGJoqx425kn5ylDO8aCSAIAwcn2qIdhI8BnpG3Q==";
       };
     };
     "@octokit/auth-token-3.0.4" = {
@@ -3028,13 +3028,13 @@ let
         sha512 = "bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==";
       };
     };
-    "caniuse-lite-1.0.30001611" = {
+    "caniuse-lite-1.0.30001612" = {
       name = "caniuse-lite";
       packageName = "caniuse-lite";
-      version = "1.0.30001611";
+      version = "1.0.30001612";
       src = fetchurl {
-        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001611.tgz";
-        sha512 = "19NuN1/3PjA3QI8Eki55N8my4LzfkMCRLgCVfrl/slbSAchQfV0+GwjPrK3rq37As4UCLlM/DHajbKkAqbv92Q==";
+        url = "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001612.tgz";
+        sha512 = "lFgnZ07UhaCcsSZgWW0K5j4e69dK1u/ltrL9lTUiFOwNHs12S3UMIEYgBV0Z6C6hRDev7iRnMzzYmKabYdXF9g==";
       };
     };
     "caseless-0.12.0" = {
@@ -8671,22 +8671,22 @@ let
         sha512 = "4jbtZXNAsfZbAHiiqjLPBiCl16dES1zI4Hpzzxw61Tk+loF+sBDBKx1ICKKKwIqQ7M0mFn1TmkN7euSncWgHiQ==";
       };
     };
-    "nwsapi-2.2.7" = {
+    "nwsapi-2.2.9" = {
       name = "nwsapi";
       packageName = "nwsapi";
-      version = "2.2.7";
+      version = "2.2.9";
       src = fetchurl {
-        url = "https://registry.npmjs.org/nwsapi/-/nwsapi-2.2.7.tgz";
-        sha512 = "ub5E4+FBPKwAZx0UwIQOjYWGHTEq5sPqHQNRN8Z9e4A7u3Tj1weLJsL59yH9vmvqEtBHaOmT6cYQKIZOxp35FQ==";
+        url = "https://registry.npmjs.org/nwsapi/-/nwsapi-2.2.9.tgz";
+        sha512 = "2f3F0SEEer8bBu0dsNCFF50N0cTThV1nWFYcEYFZttdW0lDAoybv9cQoK7X7/68Z89S7FoRrVjP1LPX4XRf9vg==";
       };
     };
-    "nx-18.3.2" = {
+    "nx-18.3.3" = {
       name = "nx";
       packageName = "nx";
-      version = "18.3.2";
+      version = "18.3.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/nx/-/nx-18.3.2.tgz";
-        sha512 = "kgkfmkwJQQ8Fp5AkvoZlnRaUrdJhckte8RyFhy86VeYjUcWYzV6shrbasKxTB0ZvCikHYjbI7QnmVYmZujEjhQ==";
+        url = "https://registry.npmjs.org/nx/-/nx-18.3.3.tgz";
+        sha512 = "GqC5ANfTWV6SFbgquZwuRMI2Z2nO0c0Yx4JzM3x32aJOgXsmRml3WcV0a5648bIXSen34gylHYl2EHaxVWkzNQ==";
       };
     };
     "oargv-3.4.10" = {
@@ -13415,10 +13415,10 @@ in
   pnpm = nodeEnv.buildNodePackage {
     name = "pnpm";
     packageName = "pnpm";
-    version = "9.0.4";
+    version = "9.0.5";
     src = fetchurl {
-      url = "https://registry.npmjs.org/pnpm/-/pnpm-9.0.4.tgz";
-      sha512 = "w3S1LePeiMWP2DM99mSnNyec2w4TRLpAVNOx//qaGjZwhU91XcpPFq3qPxS+mJan/K8WdAn+DBrWBHUnHa/oGg==";
+      url = "https://registry.npmjs.org/pnpm/-/pnpm-9.0.5.tgz";
+      sha512 = "pyJXXBj9eR+e9x44fG4WzAPJDYWbmwmY0EKMoOMiCCizKpbm3nPOo07bwPUIJHcbGmnH6ja4bao7icfm2aPZEg==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -13703,7 +13703,7 @@ in
       sources."caller-path-2.0.0"
       sources."callsites-2.0.0"
       sources."caniuse-api-3.0.0"
-      sources."caniuse-lite-1.0.30001611"
+      sources."caniuse-lite-1.0.30001612"
       sources."caseless-0.12.0"
       sources."chalk-2.4.2"
       sources."chokidar-2.1.8"
@@ -14104,7 +14104,7 @@ in
       sources."normalize-path-3.0.0"
       sources."normalize-url-3.3.0"
       sources."nth-check-1.0.2"
-      sources."nwsapi-2.2.7"
+      sources."nwsapi-2.2.9"
       sources."oauth-sign-0.9.0"
       sources."object-copy-0.1.0"
       sources."object-inspect-1.4.1"
@@ -14791,9 +14791,9 @@ in
       sources."@npmcli/promise-spawn-7.0.1"
       sources."@npmcli/redact-1.1.0"
       sources."@npmcli/run-script-7.0.2"
-      sources."@nrwl/devkit-18.3.2"
-      sources."@nrwl/tao-18.3.2"
-      sources."@nx/devkit-18.3.2"
+      sources."@nrwl/devkit-18.3.3"
+      sources."@nrwl/tao-18.3.3"
+      sources."@nx/devkit-18.3.3"
       sources."@octokit/auth-token-3.0.4"
       sources."@octokit/core-4.2.4"
       sources."@octokit/endpoint-7.0.6"
@@ -15353,7 +15353,7 @@ in
       })
       sources."npm-run-path-4.0.1"
       sources."npmlog-6.0.2"
-      (sources."nx-18.3.2" // {
+      (sources."nx-18.3.3" // {
         dependencies = [
           sources."ansi-styles-4.3.0"
           sources."cli-spinners-2.6.1"

@@ -22,7 +22,7 @@ let g:salve_auto_start_repl = 1
 let g:elm_setup_keybindings = 0
 
 " clang-format is bad
-let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_javascript = ['prettier', 'rustfmt']
 " Comment out to remove verbose logging
 " let g:neoformat_verbose = 1
 let g:neoformat_try_node_exe = 1

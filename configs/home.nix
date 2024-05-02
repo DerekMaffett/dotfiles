@@ -65,10 +65,10 @@ let
     name = "vim-graphql";
     src = fromGithubMaster "vim-graphql";
   };
-  # vim-elixir = pkgs.vimUtils.buildVimPlugin {
-  #   name = "elixir-tools";
-  #   src = fromGithubMaster "elixir-tools.nvim";
-  # };
+  elixir-tools = pkgs.vimUtils.buildVimPlugin {
+    name = "elixir-tools";
+    src = fromGithubMaster "elixir-tools.nvim";
+  };
 
   writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
     pkgs.writeShellScriptBin name "${pkgs.fswatch}/bin/fswatch -0 --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | xargs -0 -I {} -n 1 ${command}";
@@ -114,7 +114,8 @@ let
           vim-fireplace
           elm-vim
           vim-terraform
-          # elixir-tools
+          elixir-tools
+          rustaceanvim
         ];
         opt = [ ];
       }; 
@@ -175,6 +176,7 @@ in
     nodePackages.node2nix
     elm2nix
 
+
     nodejs_20
     yarn
     customNodePackages.pnpm
@@ -204,6 +206,10 @@ in
     python39Packages.setuptools
 
     elixir
+
+    rustc
+    cargo
+    rustfmt
 
     haskellPackages.fswatcher
     travis
