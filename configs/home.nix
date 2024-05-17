@@ -115,7 +115,9 @@ let
           elm-vim
           vim-terraform
           elixir-tools
+          vim-elixir
           rustaceanvim
+          nvim-treesitter
         ];
         opt = [ ];
       }; 
@@ -206,6 +208,7 @@ in
     python39Packages.setuptools
 
     elixir
+    protobuf
 
     rustc
     cargo

@@ -12,6 +12,7 @@ mkdir -p ~/.config/kitty/
 mkdir -p ~/.config/qutebrowser/
 mkdir -p ~/.config/qutebrowser/bookmarks/
 mkdir -p ~/.config/home-manager/
+mkdir -p ~/.config/direnv/
 mkdir -p ~/.xmonad/
 mkdir -p ~/.stack/
 mkdir -p ~/.ssh/
@@ -28,6 +29,7 @@ link qutebrowser-quickmarks .config/qutebrowser/quickmarks
 link xmonad.hs .xmonad/xmonad.hs
 link stack.yaml .stack/config.yaml
 link home.nix .config/home-manager/home.nix
+link direnv.toml .config/direnv/direnv.toml
 
 link .Xresources .Xresources
 link .agignore .agignore
