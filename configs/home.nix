@@ -203,9 +203,9 @@ in
     elmPackages.elm-test
     elmPackages.elm-format
 
-    python39
-    python39Packages.pip
-    python39Packages.setuptools
+    python3
+    python3Packages.pip
+    python3Packages.setuptools
 
     elixir
     protobuf
@@ -225,7 +225,7 @@ in
     docker-compose
     #nixops
     terraform
-    dbeaver
+    dbeaver-bin
     graphviz
 
     zip
@@ -239,7 +239,7 @@ in
   ] ++ linuxOnly [
     xclip 
     (myNeovim neovim)
-    gnome3.gnome-tweaks
+    gnome-tweaks
     simplescreenrecorder
   ];
 }
