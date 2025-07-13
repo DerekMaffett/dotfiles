@@ -114,10 +114,11 @@ let
           vim-fireplace
           elm-vim
           vim-terraform
-          elixir-tools
-          vim-elixir
+          # elixir-tools
+          # vim-elixir
           rustaceanvim
           nvim-treesitter
+          copilot-vim
         ];
         opt = [ ];
       }; 
@@ -197,11 +198,11 @@ in
     # spago
     # customNodePackages.lerna
 
-    dotnet-sdk_7
+    dotnet-sdk
 
-    elmPackages.elm
-    elmPackages.elm-test
-    elmPackages.elm-format
+    # elmPackages.elm
+    # elmPackages.elm-test
+    # elmPackages.elm-format
 
     python3
     python3Packages.pip
@@ -218,7 +219,7 @@ in
     travis
     awscli2
     kubectl
-    vault
+    # vault
     aws-iam-authenticator
     (google-cloud-sdk.withExtraComponents ([google-cloud-sdk.components.cloud-run-proxy]))
     packer
@@ -231,6 +232,8 @@ in
     zip
 
     jetbrains.datagrip
+
+    gh
   ] ++ ifNixOS [
     # qutebrowser
     slack
