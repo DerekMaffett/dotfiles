@@ -119,6 +119,7 @@ let
           rustaceanvim
           nvim-treesitter
           copilot-vim
+
         ];
         opt = [ ];
       }; 
@@ -133,6 +134,18 @@ in
   home.stateVersion = "24.05";
 
   programs.home-manager.enable = true;
+
+#   programs.vscode = {
+#   enable = true;
+#   profiles.default.extensions = with pkgs.vscode-extensions; [
+#     dracula-theme.theme-dracula
+#     vscodevim.vim
+#     yzhang.markdown-all-in-one
+#     github.copilot
+#     github.copilot-chat
+#
+#   ];
+# };
 
   home.packages = with pkgs; [
     git
@@ -214,6 +227,9 @@ in
     rustc
     cargo
     rustfmt
+
+    sqlite
+    mongodb
 
     haskellPackages.fswatcher
     travis
