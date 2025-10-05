@@ -226,6 +226,7 @@ in
 
     rustc
     cargo
+    cargo-watch
     rustfmt
 
     sqlite
