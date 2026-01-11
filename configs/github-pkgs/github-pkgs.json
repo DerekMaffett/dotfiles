@@ -1,10 +1,8 @@
 [
     "dracula/vim",
     "jparise/vim-graphql",
-    "robbyrussell/oh-my-zsh",
-    "bhilburn/powerlevel9k",
+    "ohmyzsh/oh-my-zsh",
     "romkatv/powerlevel10k",
-    "dexpota/kitty-themes",
     "AndrewRadev/sideways.vim",
     "zerowidth/vim-copy-as-rtf",
     "benburrill/potato-colors",

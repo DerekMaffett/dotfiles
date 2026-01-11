@@ -119,7 +119,6 @@ let
           rustaceanvim
           nvim-treesitter
           copilot-vim
-
         ];
         opt = [ ];
       }; 
@@ -131,7 +130,7 @@ in
   home.username = "derek";
   home.homeDirectory = "/home/derek";
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "25.11";
 
   programs.home-manager.enable = true;
 
@@ -228,6 +227,7 @@ in
     cargo
     cargo-watch
     rustfmt
+    bacon
 
     sqlite
     mongodb
