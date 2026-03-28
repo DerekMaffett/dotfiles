@@ -40,11 +40,6 @@ let
       name = "powerlevel10k";
       src = fromGithubMaster "powerlevel10k";
   };
-  kittyThemes = copyToShare {
-      name = "kittyThemes";
-      dir = "themes";
-      src = fromGithubMaster "kitty-themes";
-  };
   sideways-vim = pkgs.vimUtils.buildVimPlugin {
       name = "sideways.vim";
       src = fromGithubMaster "sideways.vim";
@@ -157,7 +152,6 @@ in
     wmctrl
 
     kitty
-    kittyThemes
     cloc
     jq
     private-powerlevel10k
@@ -192,7 +186,7 @@ in
     elm2nix
 
 
-    nodejs_20
+    nodejs_24
     yarn
     customNodePackages.pnpm
     customNodePackages.parcel-bundler

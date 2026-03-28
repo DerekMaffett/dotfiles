@@ -56,3 +56,6 @@ source $HOME/.nix-profile/share/autojump/autojump.bash
 
 export PATH=$HOME/.local/bin/:$PATH
 if [ -e /home/derek/.nix-profile/etc/profile.d/nix.sh ]; then . /home/derek/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# opencode
+export PATH=/home/derek/.opencode/bin:$PATH
