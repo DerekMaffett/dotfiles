@@ -59,3 +59,4 @@ if [ -e /home/derek/.nix-profile/etc/profile.d/nix.sh ]; then . /home/derek/.nix
 
 # opencode
 export PATH=/home/derek/.opencode/bin:$PATH
+export PATH="$HOME/.npm-global/bin:$PATH"

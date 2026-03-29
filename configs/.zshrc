@@ -87,3 +87,4 @@ if [ -e /home/derek/.nix-profile/etc/profile.d/nix.sh ]; then . /home/derek/.nix
 # # The next line enables shell command completion for gcloud.
 # if [ -f '/home/derek/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/derek/google-cloud-sdk/completion.zsh.inc'; fi
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+export PATH="$HOME/.npm-global/bin:$PATH"
