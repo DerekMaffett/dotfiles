@@ -113,7 +113,6 @@ let
           # vim-elixir
           rustaceanvim
           nvim-treesitter
-          copilot-vim
         ];
         opt = [ ];
       }; 
