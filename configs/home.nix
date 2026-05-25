@@ -1,19 +1,16 @@
 { config, pkgs, ... }:
 
 let
-  customNodePackages = import ./nodepkgs/default.nix { inherit (pkgs) nodejs pkgs; };
+  currentUsername = let user = builtins.getEnv "USER"; in
+    if user != "" then user else throw "USER must be set when evaluating home.nix";
+  currentHome = let home = builtins.getEnv "HOME"; in
+    if home != "" then home else throw "HOME must be set when evaluating home.nix";
   scripts = import "${(fromGithubMaster "scripts")}/default.nix";
 
   vimrc = import ./.vimrc.vim;
 
-  isNixOS = builtins.pathExists /etc/NIXOS;
   isLinux = builtins.currentSystem == "x86_64-linux";
-  isMac = builtins.currentSystem == "x86_64-darwin";
-
-  ifNixOS = derivations: if isNixOS then derivations else [];
-  ifNotNixOS = derivations: if !isNixOS then derivations else [];
   linuxOnly = derivations: if isLinux then derivations else [];
-  macOnly = derivations: if isMac then derivations else [];
 
   fromGithubMaster = name: pkgs.fetchFromGitHub (builtins.fromJSON (builtins.readFile ./github-pkgs/compiled-github-pkgs.json))."${name}";
   copyToShare = { name, src, dir ? "" }: pkgs.stdenv.mkDerivation {
@@ -56,7 +53,7 @@ let
       name = "dracula";
       src = fromGithubMaster "vim"; # Yeah, this is a problem... bad repo names out of context
   };
-  vim-graphql = pkgs.vimUtils.buildVimPluginFrom2Nix { # no clue what the difference is right now
+  vim-graphql = pkgs.vimUtils.buildVimPlugin {
     name = "vim-graphql";
     src = fromGithubMaster "vim-graphql";
   };
@@ -87,7 +84,7 @@ let
           sideways-vim 
           vim-surround 
           vim-repeat
-          fzfWrapper
+          fzf-wrapper
           fzf-vim 
           vim-eunuch 
           tcomment_vim 
@@ -121,8 +118,8 @@ let
 
 in
 {
-  home.username = "derek";
-  home.homeDirectory = "/home/derek";
+  home.username = currentUsername;
+  home.homeDirectory = currentHome;
 
   home.stateVersion = "25.11";
 
@@ -174,34 +171,28 @@ in
     openconnect
 
     # haskellPackages.brittany
-    customNodePackages.prettier
+    prettier
     clang-tools
 
     nix-prefetch-github
     cabal-install
     cabal2nix
     haskellPackages.hpack
-    nodePackages.node2nix
     elm2nix
 
 
     nodejs_24
     yarn
-    customNodePackages.pnpm
-    customNodePackages.parcel-bundler
-    customNodePackages.deepspeech
+    pnpm
     jdk
 
     git-quick-stats
-    customNodePackages.git-stats
-    customNodePackages.git-stats-importer
-    customNodePackages.river-cli
     pm2
 
     purescript
     stack
     # spago
-    # customNodePackages.lerna
+    # lerna
 
     dotnet-sdk
 
@@ -223,10 +214,7 @@ in
     bacon
 
     sqlite
-    mongodb
 
-    haskellPackages.fswatcher
-    travis
     awscli2
     kubectl
     # vault
@@ -236,20 +224,15 @@ in
     docker-compose
     #nixops
     terraform
-    dbeaver-bin
     graphviz
 
     zip
 
-    jetbrains.datagrip
-
     gh
-  ] ++ ifNixOS [
-    # qutebrowser
+  ] ++ linuxOnly [
     slack
     postman 
-    teams
-  ] ++ linuxOnly [
+    teams-for-linux
     xclip 
     (myNeovim neovim)
     gnome-tweaks
