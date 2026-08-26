@@ -7,3 +7,9 @@ windows:
           panes:
               - vim
               - null
+    - interview:
+          root: ~/projects/interview
+          layout: main-vertical
+          panes:
+              - vim
+              - null

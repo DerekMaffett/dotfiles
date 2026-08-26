@@ -51,7 +51,7 @@ else
     source "$HOME/.nix-profile/share/oh-my-zsh/oh-my-zsh.sh"
 fi
 
-export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!.git"'
 
 # Direnv for nix
 eval "$(direnv hook zsh)"

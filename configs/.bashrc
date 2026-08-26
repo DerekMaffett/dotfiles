@@ -36,7 +36,7 @@ GIT_PROMPT_THEME="Single_line_Ubuntu"
 GIT_PROMPT_SHOW_UNTRACKED_FILES=no
 source $HOME/.nix-profile/share/bash-git-prompt/gitprompt.sh
 
-export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!.git"'
 
 # Direnv for nix
 eval "$(direnv hook bash)"

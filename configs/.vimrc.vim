@@ -17,7 +17,6 @@ set wildignore+=.git/,.DS_Store
 let g:auto_save = 0
 nnoremap (( :SidewaysLeft<cr>
 nnoremap )) :SidewaysRight<cr>
-let g:deoplete#enable_at_startup = 1
 let g:salve_auto_start_repl = 1
 let g:elm_setup_keybindings = 0
 
@@ -31,7 +30,57 @@ let mapleader = ','
 
 nnoremap <c-p> :Files<cr>
 nnoremap <Leader>a :Ag<cr>
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+command! -bang -nargs=* Ag call fzf#vim#grep(
+      \ 'rg --column --line-number --no-heading --color=always --smart-case ' . shellescape(<q-args>),
+      \ 1,
+      \ {'options': '--delimiter : --nth 4..'},
+      \ <bang>0)
+
+lua << EOF
+local cmp = require('cmp')
+
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'path' },
+    { name = 'buffer' },
+  }),
+})
+
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' },
+  },
+})
+
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' },
+  }, {
+    { name = 'cmdline' },
+  }),
+})
+EOF
 
 " If tabs happen, keep them reasonable
 set tabstop=4
@@ -98,6 +147,10 @@ set undolevels=1000
 set undoreload=10000
 
 set timeoutlen=1000 ttimeoutlen=0
+
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+autocmd FileType markdown nnoremap <buffer> <Leader>mp :MarkdownPreviewToggle<CR>
 
 " Line numbers
 set number

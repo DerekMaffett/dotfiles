@@ -7,7 +7,11 @@ let
     if home != "" then home else throw "HOME must be set when evaluating home.nix";
   scripts = import "${(fromGithubMaster "scripts")}/default.nix";
 
-  vimrc = import ./.vimrc.vim;
+  python3Host = pkgs.python3.withPackages (ps: [ ps.pynvim ]);
+  vimrc = ''
+    let g:python3_host_prog = '${python3Host}/bin/python3'
+
+  '' + import ./.vimrc.vim;
 
   isLinux = builtins.currentSystem == "x86_64-linux";
   linuxOnly = derivations: if isLinux then derivations else [];
@@ -23,7 +27,13 @@ let
 
   # Packages
 
-  system-update = pkgs.writeShellScriptBin "system-update" "nix-npm update && nix-github update && home-manager switch && nix-collect-garbage";
+  system-update = pkgs.writeShellScriptBin "system-update" ''
+    set -euo pipefail
+
+    nix-github update
+    home-manager switch
+    nix-collect-garbage
+  '';
 
   bash-git-prompt = copyToShare {
       name = "bash-git-prompt";
@@ -96,7 +106,11 @@ let
           vim-vinegar 
           vim-auto-save 
           vim-tmux-navigator
-          deoplete-nvim 
+          nvim-cmp
+          cmp-buffer
+          cmp-path
+          cmp-cmdline
+          cmp-nvim-lsp
           yats-vim 
           vim-javascript
           vim-jsx-pretty
@@ -110,6 +124,7 @@ let
           # vim-elixir
           rustaceanvim
           nvim-treesitter
+          markdown-preview-nvim
         ];
         opt = [ ];
       }; 
@@ -144,7 +159,6 @@ in
     system-update
     scripts
 
-    lastpass-cli
     wmctrl
 
     kitty
@@ -163,7 +177,7 @@ in
     powerline-fonts
     bash-git-prompt
     autojump
-    silver-searcher
+    ripgrep
     fswatch
     unixtools.netstat
     bfg-repo-cleaner
