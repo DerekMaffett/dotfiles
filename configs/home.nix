@@ -199,6 +199,7 @@ in
     yarn
     pnpm
     jdk
+    # android-studio
 
     git-quick-stats
     pm2

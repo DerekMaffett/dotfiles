@@ -29,6 +29,7 @@ mkdir -p "$HOME/.config/qutebrowser"
 mkdir -p "$HOME/.config/qutebrowser/bookmarks"
 mkdir -p "$HOME/.config/home-manager"
 mkdir -p "$HOME/.config/direnv"
+mkdir -p "$HOME/.config/opencode"
 mkdir -p "$HOME/.xmonad"
 mkdir -p "$HOME/.stack"
 mkdir -p "$HOME/.ssh"
@@ -45,6 +46,7 @@ link xmonad.hs .xmonad/xmonad.hs
 link stack.yaml .stack/config.yaml
 link home.nix .config/home-manager/home.nix
 link direnv.toml .config/direnv/direnv.toml
+link opencode.jsonc .config/opencode/opencode.jsonc
 
 link .Xresources .Xresources
 link .agignore .agignore
