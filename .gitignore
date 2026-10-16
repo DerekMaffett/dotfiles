@@ -1,4 +1,2 @@
 *.DS_Store
-configs/tmuxinator/client.yml
-configs/tmuxinator/happy.yml
 configs/openclaw

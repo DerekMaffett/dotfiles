@@ -14,10 +14,9 @@ alias clean='git branch | grep -v "master" | xargs git branch -D'
 
 alias br='copy | xclip -selection clipboard'
 
-alias dot='tmuxinator start dotfiles'
-alias os='tmuxinator start open-source'
-alias client='tmuxinator start client' 
 alias tk='tmux kill-session && refresh'
+
+alias p=projects
 
 alias start-browser='wmctrl -a google-chrome.Google-chrome -x'
 alias start-term='wmctrl -a kitty.kitty -x'
@@ -45,9 +44,6 @@ export DIRENV_LOG_FORMAT=
 export EDITOR='nvim'
 export VISUAL='nvim'
 
-# Puts tmuxinator config into dotfiles control
-export TMUXINATOR_CONFIG="$HOME/dotfiles/configs/tmuxinator"
-
 # Autojump activation, installed through nix
 source $HOME/.nix-profile/share/autojump/autojump.bash
 
@@ -60,3 +56,10 @@ if [ -e /home/derek/.nix-profile/etc/profile.d/nix.sh ]; then . /home/derek/.nix
 # opencode
 export PATH=/home/derek/.opencode/bin:$PATH
 export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="/home/derek/Downloads/flutter/bin:$PATH"
+
+# Workspace launcher: `p <workspace>` plus tab completion
+if command -v projects >/dev/null; then
+    source <(projects --bash-completion-script "$(command -v projects)")
+    complete -o filenames -F _projects p
+fi

@@ -198,7 +198,7 @@ in
     nodejs_24
     yarn
     pnpm
-    jdk
+    jdk17
     # android-studio
 
     git-quick-stats

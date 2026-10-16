@@ -18,7 +18,7 @@ link() {
     ln -fvs "$src" "$dest"
 }
 
-mkdir -p "$HOME/.config/projects"
+mkdir -p "$HOME/projects/personal"
 mkdir -p "$HOME/.config/brittany"
 mkdir -p "$HOME/.config/nvim"
 mkdir -p "$HOME/.config/nixpkgs"
@@ -34,7 +34,8 @@ mkdir -p "$HOME/.xmonad"
 mkdir -p "$HOME/.stack"
 mkdir -p "$HOME/.ssh"
 
-link .projects.json .config/projects/.projects.json
+link workspaces/personal.yml projects/personal/workspace.yml
+ln -sfvn "$REPO_ROOT" "$HOME/projects/personal/dotfiles"
 link brittany.yaml .config/brittany/config.yaml
 link nix-config.nix .config/nixpkgs/config.nix
 link terminator-config .config/terminator/config

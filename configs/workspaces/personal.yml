@@ -1,0 +1,7 @@
+repos:
+  - url: git@personal.github.com:DerekMaffett/dotfiles
+    layout: main-vertical
+    panes: [vim, null]
+  - url: git@personal.github.com:DerekMaffett/scripts
+    layout: main-vertical
+    panes: [vim, null]

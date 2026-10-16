@@ -14,10 +14,9 @@ alias clean='git branch | grep -v "master" | xargs git branch -D'
 
 alias br='copy-branch | xclip -selection clipboard'
 
-alias dot='tmuxinator start dotfiles'
-alias os='tmuxinator start open-source'
-alias client='tmuxinator start client' 
 alias tk='tmux kill-session && refresh'
+
+alias p=projects
 
 alias start-browser='wmctrl -a google-chrome.Google-chrome -x'
 alias start-term='wmctrl -a kitty.kitty -x'
@@ -64,9 +63,6 @@ export VISUAL='vim'
 # the tmux load order something something
 bindkey -e
 
-# Puts tmuxinator config into dotfiles control
-export TMUXINATOR_CONFIG="$HOME/dotfiles/configs/tmuxinator"
-
 # Autojump activation, installed through nix
 source $HOME/.nix-profile/share/autojump/autojump.zsh
 
@@ -88,3 +84,9 @@ if [ -e /home/derek/.nix-profile/etc/profile.d/nix.sh ]; then . /home/derek/.nix
 # if [ -f '/home/derek/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/derek/google-cloud-sdk/completion.zsh.inc'; fi
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+# Workspace launcher: `p <workspace>` plus tab completion (after oh-my-zsh has run compinit)
+if command -v projects >/dev/null; then
+    source <(projects --zsh-completion-script "$(command -v projects)")
+    compdef _projects p
+fi
