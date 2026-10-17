@@ -179,6 +179,7 @@ in
     autojump
     ripgrep
     fswatch
+    watchman
     unixtools.netstat
     bfg-repo-cleaner
 
@@ -219,7 +220,7 @@ in
     python3Packages.pip
     python3Packages.setuptools
 
-    elixir
+    beamPackages.elixir
     protobuf
 
     rustc

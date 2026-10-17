@@ -58,6 +58,9 @@ export PATH=/home/derek/.opencode/bin:$PATH
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="/home/derek/Downloads/flutter/bin:$PATH"
 
+# Android SDK platform-tools (adb)
+export PATH="$HOME/Android/Sdk/platform-tools:$PATH"
+
 # Workspace launcher: `p <workspace>` plus tab completion
 if command -v projects >/dev/null; then
     source <(projects --bash-completion-script "$(command -v projects)")

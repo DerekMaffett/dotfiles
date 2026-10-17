@@ -85,6 +85,9 @@ if [ -e /home/derek/.nix-profile/etc/profile.d/nix.sh ]; then . /home/derek/.nix
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 export PATH="$HOME/.npm-global/bin:$PATH"
 
+# Android SDK platform-tools (adb)
+export PATH="$HOME/Android/Sdk/platform-tools:$PATH"
+
 # Workspace launcher: `p <workspace>` plus tab completion (after oh-my-zsh has run compinit)
 if command -v projects >/dev/null; then
     source <(projects --zsh-completion-script "$(command -v projects)")
