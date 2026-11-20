@@ -32,6 +32,14 @@ DOCKER_KEYRING="/etc/apt/keyrings/docker.gpg"
 DOCKER_SOURCES="/etc/apt/sources.list.d/docker.sources"
 DOCKER_PACKAGES="docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
 
+# Anthropic's apt repo for the Claude desktop app (Linux beta). Paths,
+# repo line and fingerprint are from
+# https://code.claude.com/docs/en/desktop-linux. There's no official snap.
+CLAUDE_KEY_URL="https://downloads.claude.ai/claude-desktop/key.asc"
+CLAUDE_KEY_FINGERPRINT="31DDDE24DDFAB679F42D7BD2BAA929FF1A7ECACE"
+CLAUDE_KEYRING="/usr/share/keyrings/claude-desktop-archive-keyring.asc"
+CLAUDE_SOURCES="/etc/apt/sources.list.d/claude-desktop.list"
+
 require_command() {
     if ! command -v "$1" >/dev/null 2>&1; then
         printf 'Missing required command: %s\n' "$1" >&2
@@ -41,7 +49,8 @@ require_command() {
 
 # add_apt_repo <name> <key url> <key fingerprint> <keyring path> <sources path> <sources body>
 # Downloads a repo signing key, rejects it unless it matches the pinned
-# fingerprint, then installs the keyring and deb822 sources file.
+# fingerprint, then installs the keyring and sources file. A keyring path
+# ending in .asc keeps the key armored; anything else gets the binary form.
 add_apt_repo() {
     name=$1 key_url=$2 key_fingerprint=$3 keyring=$4 sources=$5 sources_body=$6
 
@@ -56,10 +65,13 @@ add_apt_repo() {
         printf 'Expected: %s\nGot: %s\n' "$key_fingerprint" "$fingerprints" >&2
         exit 1
     fi
-    gpg --dearmor -o "$tmp_dir/keyring.gpg" "$tmp_dir/key.pub"
+    case $keyring in
+        *.asc) cp "$tmp_dir/key.pub" "$tmp_dir/keyring" ;;
+        *) gpg --dearmor -o "$tmp_dir/keyring" "$tmp_dir/key.pub" ;;
+    esac
     printf '%s\n' "$sources_body" >"$tmp_dir/repo.sources"
 
-    sudo install -D -m 644 "$tmp_dir/keyring.gpg" "$keyring"
+    sudo install -D -m 644 "$tmp_dir/keyring" "$keyring"
     sudo install -D -m 644 "$tmp_dir/repo.sources" "$sources"
     rm -rf "$tmp_dir"
     trap - EXIT
@@ -81,6 +93,20 @@ Signed-By: $CHROME_KEYRING"
 
     sudo apt-get update
     sudo apt-get install -y google-chrome-stable
+}
+
+install_claude() {
+    if dpkg -s claude-desktop >/dev/null 2>&1; then
+        printf 'claude-desktop already installed, skipping\n'
+        return
+    fi
+
+    add_apt_repo "Claude" "$CLAUDE_KEY_URL" "$CLAUDE_KEY_FINGERPRINT" \
+        "$CLAUDE_KEYRING" "$CLAUDE_SOURCES" \
+        "deb [arch=amd64,arm64 signed-by=$CLAUDE_KEYRING] https://downloads.claude.ai/claude-desktop/apt/stable stable main"
+
+    sudo apt-get update
+    sudo apt-get install -y claude-desktop
 }
 
 install_docker() {
@@ -133,6 +159,11 @@ if [ "$ARCH" = "amd64" ]; then
 else
     printf 'Skipping Google Chrome: no Linux build for %s\n' "$ARCH" >&2
 fi
+
+case $ARCH in
+    amd64 | arm64) install_claude ;;
+    *) printf 'Skipping Claude Desktop: no Linux build for %s\n' "$ARCH" >&2 ;;
+esac
 
 install_docker
 install_snaps "$SNAPS"

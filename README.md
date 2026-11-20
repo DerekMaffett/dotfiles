@@ -27,6 +27,7 @@ This bootstrap currently supports Ubuntu only.
    - Google Chrome (Google's apt repo, amd64 only)
    - Docker Engine with the buildx and compose plugins (Docker's official
      apt repo), and adds you to the `docker` group
+   - Claude Desktop (Anthropic's apt repo, amd64 and arm64)
    - Slack and Postman (snaps)
    - Ghostty, the terminal (classic snap; config in `configs/ghostty.conf`)
 
@@ -40,7 +41,6 @@ Both scripts are safe to re-run.
   into `~/.config/autostart` and starts at login (currently Claude, Ghostty,
   Chrome and Slack). Add or delete a file there, then re-run
   `./link-configs.sh`. Entries for apps that aren't installed are skipped.
-  Claude Desktop itself isn't installed by these scripts.
 
 ## Assumptions
 
