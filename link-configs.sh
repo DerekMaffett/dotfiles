@@ -30,7 +30,19 @@ mkdir -p "$HOME/.ssh"
 mkdir -p "$HOME/.config/autostart"
 
 link workspaces/personal.yml projects/personal/workspace.yml
-ln -sfvn "$REPO_ROOT" "$HOME/projects/personal/dotfiles"
+
+# Make the repo show up in the personal workspace. If it was cloned straight
+# into that path there's nothing to link; if a different real folder is
+# there, linking would put a link inside it instead, so stop.
+workspace_link="$HOME/projects/personal/dotfiles"
+if [ -L "$workspace_link" ] || [ ! -e "$workspace_link" ]; then
+    ln -sfvn "$REPO_ROOT" "$workspace_link"
+elif [ "$(CDPATH= cd -- "$workspace_link" && pwd -P)" != "$(CDPATH= cd -- "$REPO_ROOT" && pwd -P)" ]; then
+    printf '%s is a separate folder, not this repo (%s). Move it aside and re-run.\n' \
+        "$workspace_link" "$REPO_ROOT" >&2
+    exit 1
+fi
+
 link nix-config.nix .config/nixpkgs/config.nix
 link ghostty.conf .config/ghostty/config.ghostty
 link xdg-terminals.list .config/xdg-terminals.list
