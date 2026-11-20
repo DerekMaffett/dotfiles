@@ -2,10 +2,7 @@
     "dracula/vim",
     "jparise/vim-graphql",
     "AndrewRadev/sideways.vim",
-    "zerowidth/vim-copy-as-rtf",
     "benburrill/potato-colors",
     "DerekMaffett/scripts",
-    "machakann/vim-sandwich",
-    "magicmonty/bash-git-prompt",
-    "elixir-tools/elixir-tools.nvim"
+    "magicmonty/bash-git-prompt"
 ]

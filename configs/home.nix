@@ -42,10 +42,6 @@ let
       name = "sideways.vim";
       src = fromGithubMaster "sideways.vim";
   };
-  vimCopyAsRTF = pkgs.vimUtils.buildVimPlugin {
-      name = "vimCopyAsRTF";
-      src = fromGithubMaster "vim-copy-as-rtf";
-  };
   potato-colors = pkgs.vimUtils.buildVimPlugin {
       name = "potato-colors";
       src = fromGithubMaster "potato-colors";
@@ -58,15 +54,6 @@ let
     name = "vim-graphql";
     src = fromGithubMaster "vim-graphql";
   };
-  elixir-tools = pkgs.vimUtils.buildVimPlugin {
-    name = "elixir-tools";
-    src = fromGithubMaster "elixir-tools.nvim";
-  };
-
-  writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
-    pkgs.writeShellScriptBin name "${pkgs.fswatch}/bin/fswatch -0 --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | xargs -0 -I {} -n 1 ${command}";
-
-  localCabalRun = name: executable: pkgs.writeShellScriptBin name "cabal new-run ${executable} -- $@";
 
   myNeovim = neovimPkg: neovimPkg.override {
     vimAlias = true;
@@ -176,8 +163,6 @@ in
 
     system-update
     scripts
-
-    wmctrl
 
     cloc
     jq
