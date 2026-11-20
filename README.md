@@ -9,13 +9,22 @@ username works.
 
 ## Fresh Install
 
-1. Install `git` and `curl`: `sudo apt install -y git curl`
-2. Clone this repository over HTTPS (SSH keys don't exist yet), into
-   `~/dotfiles` or anywhere except `~/projects/personal/dotfiles`, which
-   `link-configs.sh` uses for a link back to the repo:
-   `git clone https://github.com/DerekMaffett/dotfiles.git ~/dotfiles`
-3. Run `~/dotfiles/install.sh`. It asks for your sudo password (to create
-   `/nix`, then again for the apps).
+On a fresh Ubuntu install, open a terminal and run:
+
+```sh
+sh -c "$(wget -qO- https://raw.githubusercontent.com/DerekMaffett/dotfiles/master/bootstrap.sh)"
+```
+
+`bootstrap.sh` installs `git` and `curl`, clones this repo over HTTPS to
+`~/dotfiles` (set `DOTFILES_DIR` to use another folder), then runs
+`install.sh`. It uses `wget` because Ubuntu always has it, and downloads the
+whole script before running it. Re-running it updates the existing clone and
+carries on. It asks for your sudo password (for `git` and `curl` if missing,
+to create `/nix`, then again for the apps).
+
+To do the same by hand: install `git` and `curl`, clone this repo anywhere
+except `~/projects/personal/dotfiles` (`link-configs.sh` puts a link back to
+the repo there), and run `install.sh` from the clone.
 
 `install.sh` will:
 
