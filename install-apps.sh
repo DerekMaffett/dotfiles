@@ -124,6 +124,17 @@ install_chrome_extensions() {
     printf 'Chrome extensions queued: %s (enable them when Chrome asks)\n' "$(echo $ids | wc -w)"
 }
 
+# Default for web links and HTML files, for the current user only (written
+# to ~/.config/mimeapps.list).
+set_default_browser() {
+    if [ "$(xdg-settings get default-web-browser 2>/dev/null)" = "$1" ]; then
+        printf '%s is already the default browser, skipping\n' "$1"
+        return
+    fi
+    xdg-settings set default-web-browser "$1"
+    printf 'Default browser set to %s\n' "$1"
+}
+
 install_claude() {
     if dpkg -s claude-desktop >/dev/null 2>&1; then
         printf 'claude-desktop already installed, skipping\n'
@@ -182,10 +193,12 @@ require_command dpkg
 require_command apt-get
 require_command snap
 require_command sudo
+require_command xdg-settings
 
 if [ "$ARCH" = "amd64" ]; then
     install_chrome
     install_chrome_extensions
+    set_default_browser google-chrome.desktop
 else
     printf 'Skipping Google Chrome: no Linux build for %s\n' "$ARCH" >&2
 fi
