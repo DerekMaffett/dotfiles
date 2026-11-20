@@ -38,14 +38,6 @@ let
       name = "bash-git-prompt";
       src = fromGithubMaster "bash-git-prompt";
   };
-  private-oh-my-zsh = copyToShare {
-      name = "oh-my-zsh";
-      src = fromGithubMaster "oh-my-zsh";
-  };
-  private-powerlevel10k = copyToShare {
-      name = "powerlevel10k";
-      src = fromGithubMaster "powerlevel10k";
-  };
   sideways-vim = pkgs.vimUtils.buildVimPlugin {
       name = "sideways.vim";
       src = fromGithubMaster "sideways.vim";
@@ -183,7 +175,6 @@ in
     kitty
     cloc
     jq
-    private-powerlevel10k
 
     go-task
     gnumake
@@ -192,7 +183,6 @@ in
     tmuxPlugins.vim-tmux-navigator
     tmuxinator
     fzf
-    any-nix-shell
     hack-font # kitty font
     bash-git-prompt
     autojump
