@@ -7,6 +7,8 @@
 
 set -eu
 
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
 SNAPS="slack postman"
 # Classic snaps run unconfined, like a normal app. Ghostty needs this to
 # launch your shell and tools with full access to the system.
@@ -23,6 +25,13 @@ CHROME_KEY_FINGERPRINT="EB4C1BFD4F042F6DDDCCEC917721F63BD38B4796"
 # its updates overwrite them with the same content instead of conflicting.
 CHROME_KEYRING="/usr/share/keyrings/google-chrome.gpg"
 CHROME_SOURCES="/etc/apt/sources.list.d/google-chrome.sources"
+
+# Chrome installs extensions listed here from the Web Store at startup and
+# asks once to enable each. See
+# https://developer.chrome.com/docs/extensions/how-to/distribute/install-extensions
+CHROME_EXTENSIONS_LIST="$SCRIPT_DIR/configs/chrome-extensions.txt"
+CHROME_EXTENSIONS_DIR="/usr/share/google-chrome/extensions"
+CHROME_WEBSTORE_UPDATE_URL="https://clients2.google.com/service/update2/crx"
 
 # Docker's official apt repo, set up as in
 # https://docs.docker.com/engine/install/ubuntu/ with the key fingerprint pinned.
@@ -95,6 +104,26 @@ Signed-By: $CHROME_KEYRING"
     sudo apt-get install -y google-chrome-stable
 }
 
+# Writes one <id>.json per extension in chrome-extensions.txt. Re-running
+# rewrites them with the same content; Chrome skips ones already installed.
+install_chrome_extensions() {
+    ids=$(sed 's/#.*//' "$CHROME_EXTENSIONS_LIST" | tr -s ' \t' '\n' | grep -v '^$' || true)
+    for id in $ids; do
+        if ! printf '%s' "$id" | grep -qx '[a-p]\{32\}'; then
+            printf 'Not a Chrome extension ID in %s: %s\n' "$CHROME_EXTENSIONS_LIST" "$id" >&2
+            exit 1
+        fi
+    done
+
+    sudo mkdir -p "$CHROME_EXTENSIONS_DIR"
+    for id in $ids; do
+        printf '{ "external_update_url": "%s" }\n' "$CHROME_WEBSTORE_UPDATE_URL" |
+            sudo tee "$CHROME_EXTENSIONS_DIR/$id.json" >/dev/null
+        sudo chmod 644 "$CHROME_EXTENSIONS_DIR/$id.json"
+    done
+    printf 'Chrome extensions queued: %s (enable them when Chrome asks)\n' "$(echo $ids | wc -w)"
+}
+
 install_claude() {
     if dpkg -s claude-desktop >/dev/null 2>&1; then
         printf 'claude-desktop already installed, skipping\n'
@@ -156,6 +185,7 @@ require_command sudo
 
 if [ "$ARCH" = "amd64" ]; then
     install_chrome
+    install_chrome_extensions
 else
     printf 'Skipping Google Chrome: no Linux build for %s\n' "$ARCH" >&2
 fi

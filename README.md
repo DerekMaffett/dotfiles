@@ -24,7 +24,8 @@ This bootstrap currently supports Ubuntu only.
    (`projects`, `ssh-init`, `nix-github`, ...).
 6. Run `install-apps.sh`, which installs apps that don't work well from Nix
    on Ubuntu:
-   - Google Chrome (Google's apt repo, amd64 only)
+   - Google Chrome (Google's apt repo, amd64 only) and the extensions in
+     `configs/chrome-extensions.txt`; Chrome asks once to enable each
    - Docker Engine with the buildx and compose plugins (Docker's official
      apt repo), and adds you to the `docker` group
    - Claude Desktop (Anthropic's apt repo, amd64 and arm64)
