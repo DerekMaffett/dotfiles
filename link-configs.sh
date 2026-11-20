@@ -28,7 +28,6 @@ mkdir -p "$HOME/.config/kitty"
 mkdir -p "$HOME/.config/home-manager"
 mkdir -p "$HOME/.config/direnv"
 mkdir -p "$HOME/.config/opencode"
-mkdir -p "$HOME/.xmonad"
 mkdir -p "$HOME/.stack"
 mkdir -p "$HOME/.ssh"
 
@@ -38,7 +37,6 @@ link brittany.yaml .config/brittany/config.yaml
 link nix-config.nix .config/nixpkgs/config.nix
 link terminator-config .config/terminator/config
 link kitty.conf .config/kitty/kitty.conf
-link xmonad.hs .xmonad/xmonad.hs
 link stack.yaml .stack/config.yaml
 link home.nix .config/home-manager/home.nix
 link direnv.toml .config/direnv/direnv.toml
