@@ -98,8 +98,6 @@ let
           vim-fireplace
           elm-vim
           vim-terraform
-          # elixir-tools
-          # vim-elixir
           rustaceanvim
           nvim-treesitter
           markdown-preview-nvim
@@ -145,18 +143,6 @@ in
     done
   '';
 
-#   programs.vscode = {
-#   enable = true;
-#   profiles.default.extensions = with pkgs.vscode-extensions; [
-#     dracula-theme.theme-dracula
-#     vscodevim.vim
-#     yzhang.markdown-all-in-one
-#     github.copilot
-#     github.copilot-chat
-#
-#   ];
-# };
-
   home.packages = with pkgs; [
     git
     curl
@@ -184,7 +170,6 @@ in
 
     openconnect
 
-    # haskellPackages.brittany
     prettier
     clang-tools
 
@@ -194,20 +179,16 @@ in
     haskellPackages.hpack
     elm2nix
 
-
     nodejs_24
     yarn
     pnpm
     jdk17
-    # android-studio
 
     git-quick-stats
     pm2
 
     purescript
     stack
-    # spago
-    # lerna
 
     dotnet-sdk
 
