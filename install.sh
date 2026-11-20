@@ -63,3 +63,5 @@ fi
 require_command home-manager
 
 home-manager switch
+
+"$REPO_ROOT/install-apps.sh"

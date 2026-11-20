@@ -13,8 +13,7 @@ let
 
   '' + import ./.vimrc.vim;
 
-  isLinux = builtins.currentSystem == "x86_64-linux";
-  linuxOnly = derivations: if isLinux then derivations else [];
+  linuxOnly = derivations: if pkgs.stdenv.isLinux then derivations else [];
 
   fromGithubMaster = name: pkgs.fetchFromGitHub (builtins.fromJSON (builtins.readFile ./github-pkgs/compiled-github-pkgs.json))."${name}";
   copyToShare = { name, src, dir ? "" }: pkgs.stdenv.mkDerivation {
@@ -140,6 +139,26 @@ in
 
   programs.home-manager.enable = true;
 
+  # GNOME doesn't notice new apps in ~/.nix-profile/share/applications, since
+  # that path is a symlink into the nix store that gets swapped rather than
+  # modified. Mirror the entries into ~/.local/share/applications, which it
+  # does watch. Only symlinks into /nix/store are managed here.
+  home.activation.linkDesktopEntries = config.lib.dag.entryAfter [ "installPackages" ] ''
+    appsDir="$HOME/.local/share/applications"
+    run mkdir -p "$appsDir"
+    for f in "$appsDir"/*.desktop; do
+      if [ -L "$f" ] && [[ "$(readlink "$f")" == /nix/store/* ]]; then
+        run rm "$f"
+      fi
+    done
+    for f in "$HOME"/.nix-profile/share/applications/*.desktop; do
+      name="$(basename "$f")"
+      if [ ! -e "$appsDir/$name" ]; then
+        run ln -s "$(readlink -f "$f")" "$appsDir/$name"
+      fi
+    done
+  '';
+
 #   programs.vscode = {
 #   enable = true;
 #   profiles.default.extensions = with pkgs.vscode-extensions; [
@@ -174,7 +193,7 @@ in
     tmuxinator
     fzf
     any-nix-shell
-    powerline-fonts
+    hack-font # kitty font
     bash-git-prompt
     autojump
     ripgrep
@@ -223,11 +242,16 @@ in
     beamPackages.elixir
     protobuf
 
+    go_latest
+    gopls
+
     rustc
     cargo
     cargo-watch
     rustfmt
     bacon
+
+    maestro
 
     sqlite
 
@@ -237,7 +261,6 @@ in
     aws-iam-authenticator
     (google-cloud-sdk.withExtraComponents ([google-cloud-sdk.components.cloud-run-proxy]))
     packer
-    docker-compose
     #nixops
     terraform
     graphviz
@@ -246,10 +269,7 @@ in
 
     gh
   ] ++ linuxOnly [
-    slack
-    postman 
-    teams-for-linux
-    xclip 
+    xclip
     (myNeovim neovim)
     gnome-tweaks
     simplescreenrecorder

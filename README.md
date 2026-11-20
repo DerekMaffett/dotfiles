@@ -1,39 +1,64 @@
 # dev-dotfiles
 
-Personal development environment managed with Nix and Home Manager.
+Personal development environment managed with Nix and Home Manager, plus a
+few desktop apps and services installed the Ubuntu-native way.
 
 ## Fresh Install
 
 This bootstrap currently supports Ubuntu only.
 
-1. Clone this repository.
-2. Run `./install.sh` from the repository root.
+1. Install `git` and `curl`: `sudo apt install -y git curl`
+2. Clone this repository over HTTPS (SSH keys don't exist yet):
+   `git clone https://github.com/DerekMaffett/dotfiles.git`
+3. Run `./install.sh` from the repository root. It asks for your sudo
+   password along the way.
 
-The installer will:
+`install.sh` will:
 
 1. Install Nix if it is missing.
-2. Link the tracked config files into your home directory.
+2. Link the tracked config files into your home directory (`link-configs.sh`).
 3. Update Nix channels.
 4. Install Home Manager if needed.
-5. Apply the Home Manager configuration.
+5. Apply the Home Manager configuration (`configs/home.nix`): CLI tools,
+   language toolchains, Neovim, kitty and the `scripts` repo
+   (`projects`, `ssh-init`, `nix-github`, ...).
+6. Run `install-apps.sh`, which installs apps that don't work well from Nix
+   on Ubuntu:
+   - Google Chrome (Google's apt repo, amd64 only)
+   - Docker Engine with the buildx and compose plugins (Docker's official
+     apt repo), and adds you to the `docker` group
+   - Slack and Postman (snaps)
+
+Both scripts are safe to re-run.
 
 ## Assumptions
 
-The Home Manager config now derives the username and home directory from the environment at install time, so it does not require a fixed username like `derek`.
+The Home Manager config derives the username and home directory from the
+environment at install time, so it does not require a fixed username.
 
 The bootstrap expects:
 
 1. Ubuntu
 2. `curl` and `sh`
-3. A user account with permission to install Nix into their own home directory
+3. A user account with sudo rights
 
 ## After Install
 
-Some parts of the environment still depend on accounts, credentials, or machine-specific setup outside this repo. Typical follow-up steps are:
-
-1. Sign into apps and services you use.
-2. Make sure your SSH keys are present.
-3. Re-run `home-manager switch` after any config changes.
+1. Log out and back in, so the new shell config, desktop entries and
+   `docker` group membership take effect.
+2. Run `ssh-init`. It generates the keys listed in
+   `configs/ssh-init.json` and writes `~/.ssh/config` with the
+   `personal.github.com` host alias. Note that it overwrites `~/.ssh/config`.
+3. Add the public key to GitHub (for example `gh auth login`, then
+   `gh ssh-key add ~/.ssh/id_ecdsa.pub`).
+4. Switch this repo to SSH:
+   `git remote set-url origin git@personal.github.com:DerekMaffett/dotfiles`
+5. Run `p personal` to clone the repos in `configs/workspaces/personal.yml`
+   and open the tmux workspace.
+6. Sign into apps and services (Chrome, Slack, Postman, `gh`, `gcloud`,
+   `aws`, ...).
+7. Install anything not managed here that `.bashrc` puts on the `PATH`
+   (opencode, Flutter, the Android SDK).
 
 ## Updating
 
@@ -43,4 +68,5 @@ To refresh packages and re-apply the config, run:
 system-update
 ```
 
-That currently runs the existing Nix and GitHub update helpers, then applies Home Manager again.
+That runs `nix-github update`, applies Home Manager again and collects
+garbage. Re-run `home-manager switch` after editing any config.
