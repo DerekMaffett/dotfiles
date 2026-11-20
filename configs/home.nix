@@ -1,11 +1,13 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   currentUsername = let user = builtins.getEnv "USER"; in
     if user != "" then user else throw "USER must be set when evaluating home.nix";
   currentHome = let home = builtins.getEnv "HOME"; in
     if home != "" then home else throw "HOME must be set when evaluating home.nix";
-  scripts = import "${(fromGithubMaster "scripts")}/default.nix";
+  # What the repo's default.nix builds, but with this pkgs instead of its
+  # <nixpkgs> lookup, which flakes don't allow.
+  scripts = pkgs.haskellPackages.callPackage "${fromGithubMaster "scripts"}/project.nix" {};
 
   python3Host = pkgs.python3.withPackages (ps: [ ps.pynvim ]);
   vimrc = ''
@@ -109,8 +111,10 @@ let
 
 in
 {
-  home.username = currentUsername;
-  home.homeDirectory = currentHome;
+  # Defaults only: on NixOS the system config sets these from the user
+  # account, and the environment lookups above are never evaluated.
+  home.username = lib.mkDefault currentUsername;
+  home.homeDirectory = lib.mkDefault currentHome;
 
   home.stateVersion = "25.11";
 
