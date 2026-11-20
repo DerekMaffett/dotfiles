@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Google Chrome
+Exec=/usr/bin/google-chrome-stable
+TryExec=/usr/bin/google-chrome-stable
+X-GNOME-Autostart-enabled=true

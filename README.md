@@ -32,6 +32,16 @@ This bootstrap currently supports Ubuntu only.
 
 Both scripts are safe to re-run.
 
+## Desktop
+
+- **Default terminal:** `configs/xdg-terminals.list` makes Ghostty the
+  terminal for Ctrl+Alt+T and "Open in Terminal".
+- **Startup apps:** each `.desktop` file in `configs/autostart/` is linked
+  into `~/.config/autostart` and starts at login (currently Claude, Ghostty,
+  Chrome and Slack). Add or delete a file there, then re-run
+  `./link-configs.sh`. Entries for apps that aren't installed are skipped.
+  Claude Desktop itself isn't installed by these scripts.
+
 ## Assumptions
 
 The Home Manager config derives the username and home directory from the

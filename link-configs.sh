@@ -29,16 +29,25 @@ mkdir -p "$HOME/.config/direnv"
 mkdir -p "$HOME/.config/opencode"
 mkdir -p "$HOME/.stack"
 mkdir -p "$HOME/.ssh"
+mkdir -p "$HOME/.config/autostart"
 
 link workspaces/personal.yml projects/personal/workspace.yml
 ln -sfvn "$REPO_ROOT" "$HOME/projects/personal/dotfiles"
 link brittany.yaml .config/brittany/config.yaml
 link nix-config.nix .config/nixpkgs/config.nix
 link ghostty.conf .config/ghostty/config.ghostty
+link xdg-terminals.list .config/xdg-terminals.list
 link stack.yaml .stack/config.yaml
 link home.nix .config/home-manager/home.nix
 link direnv.toml .config/direnv/direnv.toml
 link opencode.jsonc .config/opencode/opencode.jsonc
+
+# Apps started at login. Each file is linked on its own, so apps that add
+# their own entry to ~/.config/autostart don't write into this repo.
+for entry in "$CONFIG_ROOT"/autostart/*.desktop; do
+    name=$(basename "$entry")
+    link "autostart/$name" ".config/autostart/$name"
+done
 
 link .Xresources .Xresources
 link .agignore .agignore
