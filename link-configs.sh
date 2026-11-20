@@ -25,8 +25,6 @@ mkdir -p "$HOME/.config/nixpkgs"
 mkdir -p "$HOME/.config/nix"
 mkdir -p "$HOME/.config/terminator"
 mkdir -p "$HOME/.config/kitty"
-mkdir -p "$HOME/.config/qutebrowser"
-mkdir -p "$HOME/.config/qutebrowser/bookmarks"
 mkdir -p "$HOME/.config/home-manager"
 mkdir -p "$HOME/.config/direnv"
 mkdir -p "$HOME/.config/opencode"
@@ -40,9 +38,6 @@ link brittany.yaml .config/brittany/config.yaml
 link nix-config.nix .config/nixpkgs/config.nix
 link terminator-config .config/terminator/config
 link kitty.conf .config/kitty/kitty.conf
-link qutebrowser-config.py .config/qutebrowser/config.py
-link qutebrowser-bookmarks .config/qutebrowser/bookmarks/urls
-link qutebrowser-quickmarks .config/qutebrowser/quickmarks
 link xmonad.hs .xmonad/xmonad.hs
 link stack.yaml .stack/config.yaml
 link home.nix .config/home-manager/home.nix
