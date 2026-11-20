@@ -189,7 +189,6 @@ in
     tmuxPlugins.vim-tmux-navigator
     tmuxinator
     fzf
-    hack-font # terminal font
     bash-git-prompt
     autojump
     ripgrep
