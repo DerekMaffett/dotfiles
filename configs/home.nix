@@ -131,6 +131,13 @@ in
 
   programs.home-manager.enable = true;
 
+  # GNOME settings, applied on every switch. Changing these in GNOME
+  # Settings only lasts until the next switch.
+  dconf.settings = {
+    # Caps Lock is an extra Ctrl.
+    "org/gnome/desktop/input-sources".xkb-options = [ "ctrl:nocaps" ];
+  };
+
   # GNOME doesn't notice new apps in ~/.nix-profile/share/applications, since
   # that path is a symlink into the nix store that gets swapped rather than
   # modified. Mirror the entries into ~/.local/share/applications, which it
