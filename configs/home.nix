@@ -13,7 +13,7 @@ let
 
   '' + import ./.vimrc.vim;
 
-  linuxOnly = derivations: if pkgs.stdenv.isLinux then derivations else [];
+  linuxOnly = derivations: if pkgs.stdenv.hostPlatform.isLinux then derivations else [];
 
   fromGithubMaster = name: pkgs.fetchFromGitHub (builtins.fromJSON (builtins.readFile ./github-pkgs/compiled-github-pkgs.json))."${name}";
   copyToShare = { name, src, dir ? "" }: pkgs.stdenv.mkDerivation {
