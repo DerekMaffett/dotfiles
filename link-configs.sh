@@ -23,7 +23,7 @@ mkdir -p "$HOME/.config/brittany"
 mkdir -p "$HOME/.config/nvim"
 mkdir -p "$HOME/.config/nixpkgs"
 mkdir -p "$HOME/.config/nix"
-mkdir -p "$HOME/.config/kitty"
+mkdir -p "$HOME/.config/ghostty"
 mkdir -p "$HOME/.config/home-manager"
 mkdir -p "$HOME/.config/direnv"
 mkdir -p "$HOME/.config/opencode"
@@ -34,7 +34,7 @@ link workspaces/personal.yml projects/personal/workspace.yml
 ln -sfvn "$REPO_ROOT" "$HOME/projects/personal/dotfiles"
 link brittany.yaml .config/brittany/config.yaml
 link nix-config.nix .config/nixpkgs/config.nix
-link kitty.conf .config/kitty/kitty.conf
+link ghostty.conf .config/ghostty/config.ghostty
 link stack.yaml .stack/config.yaml
 link home.nix .config/home-manager/home.nix
 link direnv.toml .config/direnv/direnv.toml

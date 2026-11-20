@@ -20,7 +20,7 @@ This bootstrap currently supports Ubuntu only.
 3. Update Nix channels.
 4. Install Home Manager if needed.
 5. Apply the Home Manager configuration (`configs/home.nix`): CLI tools,
-   language toolchains, Neovim, kitty and the `scripts` repo
+   language toolchains, Neovim and the `scripts` repo
    (`projects`, `ssh-init`, `nix-github`, ...).
 6. Run `install-apps.sh`, which installs apps that don't work well from Nix
    on Ubuntu:
@@ -28,6 +28,7 @@ This bootstrap currently supports Ubuntu only.
    - Docker Engine with the buildx and compose plugins (Docker's official
      apt repo), and adds you to the `docker` group
    - Slack and Postman (snaps)
+   - Ghostty, the terminal (classic snap; config in `configs/ghostty.conf`)
 
 Both scripts are safe to re-run.
 

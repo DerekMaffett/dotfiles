@@ -8,6 +8,9 @@
 set -eu
 
 SNAPS="slack postman"
+# Classic snaps run unconfined, like a normal app. Ghostty needs this to
+# launch your shell and tools with full access to the system.
+CLASSIC_SNAPS="ghostty"
 
 ARCH=$(dpkg --print-architecture)
 
@@ -105,12 +108,15 @@ Signed-By: $DOCKER_KEYRING"
     fi
 }
 
+# install_snaps <names> [snap install flags...]
 install_snaps() {
-    for name in $SNAPS; do
+    names=$1
+    shift
+    for name in $names; do
         if snap list "$name" >/dev/null 2>&1; then
             printf '%s already installed, skipping\n' "$name"
         else
-            sudo snap install "$name"
+            sudo snap install "$name" "$@"
         fi
     done
 }
@@ -129,4 +135,5 @@ else
 fi
 
 install_docker
-install_snaps
+install_snaps "$SNAPS"
+install_snaps "$CLASSIC_SNAPS" --classic

@@ -172,7 +172,6 @@ in
 
     wmctrl
 
-    kitty
     cloc
     jq
 
@@ -183,7 +182,7 @@ in
     tmuxPlugins.vim-tmux-navigator
     tmuxinator
     fzf
-    hack-font # kitty font
+    hack-font # terminal font
     bash-git-prompt
     autojump
     ripgrep
