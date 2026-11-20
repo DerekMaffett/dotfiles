@@ -13,8 +13,7 @@ let
 
   '' + import ./.vimrc.vim;
 
-  isLinux = builtins.currentSystem == "x86_64-linux";
-  linuxOnly = derivations: if isLinux then derivations else [];
+  linuxOnly = derivations: if pkgs.stdenv.hostPlatform.isLinux then derivations else [];
 
   fromGithubMaster = name: pkgs.fetchFromGitHub (builtins.fromJSON (builtins.readFile ./github-pkgs/compiled-github-pkgs.json))."${name}";
   copyToShare = { name, src, dir ? "" }: pkgs.stdenv.mkDerivation {
@@ -39,21 +38,9 @@ let
       name = "bash-git-prompt";
       src = fromGithubMaster "bash-git-prompt";
   };
-  private-oh-my-zsh = copyToShare {
-      name = "oh-my-zsh";
-      src = fromGithubMaster "oh-my-zsh";
-  };
-  private-powerlevel10k = copyToShare {
-      name = "powerlevel10k";
-      src = fromGithubMaster "powerlevel10k";
-  };
   sideways-vim = pkgs.vimUtils.buildVimPlugin {
       name = "sideways.vim";
       src = fromGithubMaster "sideways.vim";
-  };
-  vimCopyAsRTF = pkgs.vimUtils.buildVimPlugin {
-      name = "vimCopyAsRTF";
-      src = fromGithubMaster "vim-copy-as-rtf";
   };
   potato-colors = pkgs.vimUtils.buildVimPlugin {
       name = "potato-colors";
@@ -67,15 +54,6 @@ let
     name = "vim-graphql";
     src = fromGithubMaster "vim-graphql";
   };
-  elixir-tools = pkgs.vimUtils.buildVimPlugin {
-    name = "elixir-tools";
-    src = fromGithubMaster "elixir-tools.nvim";
-  };
-
-  writeWatchScript = { name, src ? ".", exclude ? "//", command }: 
-    pkgs.writeShellScriptBin name "${pkgs.fswatch}/bin/fswatch -0 --event=Updated -r -o -l 0.2 -e ${exclude} ${src} | xargs -0 -I {} -n 1 ${command}";
-
-  localCabalRun = name: executable: pkgs.writeShellScriptBin name "cabal new-run ${executable} -- $@";
 
   myNeovim = neovimPkg: neovimPkg.override {
     vimAlias = true;
@@ -140,6 +118,33 @@ in
 
   programs.home-manager.enable = true;
 
+  # GNOME settings, applied on every switch. Changing these in GNOME
+  # Settings only lasts until the next switch.
+  dconf.settings = {
+    # Caps Lock is an extra Ctrl.
+    "org/gnome/desktop/input-sources".xkb-options = [ "ctrl:nocaps" ];
+  };
+
+  # GNOME doesn't notice new apps in ~/.nix-profile/share/applications, since
+  # that path is a symlink into the nix store that gets swapped rather than
+  # modified. Mirror the entries into ~/.local/share/applications, which it
+  # does watch. Only symlinks into /nix/store are managed here.
+  home.activation.linkDesktopEntries = config.lib.dag.entryAfter [ "installPackages" ] ''
+    appsDir="$HOME/.local/share/applications"
+    run mkdir -p "$appsDir"
+    for f in "$appsDir"/*.desktop; do
+      if [ -L "$f" ] && [[ "$(readlink "$f")" == /nix/store/* ]]; then
+        run rm "$f"
+      fi
+    done
+    for f in "$HOME"/.nix-profile/share/applications/*.desktop; do
+      name="$(basename "$f")"
+      if [ ! -e "$appsDir/$name" ]; then
+        run ln -s "$(readlink -f "$f")" "$appsDir/$name"
+      fi
+    done
+  '';
+
 #   programs.vscode = {
 #   enable = true;
 #   profiles.default.extensions = with pkgs.vscode-extensions; [
@@ -159,12 +164,8 @@ in
     system-update
     scripts
 
-    wmctrl
-
-    kitty
     cloc
     jq
-    private-powerlevel10k
 
     go-task
     gnumake
@@ -173,8 +174,6 @@ in
     tmuxPlugins.vim-tmux-navigator
     tmuxinator
     fzf
-    any-nix-shell
-    powerline-fonts
     bash-git-prompt
     autojump
     ripgrep
@@ -223,11 +222,16 @@ in
     beamPackages.elixir
     protobuf
 
+    go_latest
+    gopls
+
     rustc
     cargo
     cargo-watch
     rustfmt
     bacon
+
+    maestro
 
     sqlite
 
@@ -237,7 +241,6 @@ in
     aws-iam-authenticator
     (google-cloud-sdk.withExtraComponents ([google-cloud-sdk.components.cloud-run-proxy]))
     packer
-    docker-compose
     #nixops
     terraform
     graphviz
@@ -246,10 +249,7 @@ in
 
     gh
   ] ++ linuxOnly [
-    slack
-    postman 
-    teams-for-linux
-    xclip 
+    xclip
     (myNeovim neovim)
     gnome-tweaks
     simplescreenrecorder

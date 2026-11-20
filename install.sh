@@ -37,8 +37,15 @@ fi
 require_command curl
 require_command sh
 
+# Single-user Nix (no daemon), which is what NIX_PROFILE_SCRIPT assumes.
+# --yes accepts the installer's prompts; it still asks for sudo once to
+# create /nix. Downloaded to a file first so a failed download stops here
+# instead of piping an empty script into sh.
 if [ ! -f "$NIX_PROFILE_SCRIPT" ]; then
-    curl -L https://nixos.org/nix/install | sh
+    nix_installer=$(mktemp)
+    curl -fsSL -o "$nix_installer" https://nixos.org/nix/install
+    sh "$nix_installer" --no-daemon --yes
+    rm -f "$nix_installer"
 fi
 
 if [ ! -f "$NIX_PROFILE_SCRIPT" ]; then
@@ -63,3 +70,5 @@ fi
 require_command home-manager
 
 home-manager switch
+
+"$REPO_ROOT/install-apps.sh"

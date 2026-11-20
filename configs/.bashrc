@@ -14,15 +14,7 @@ alias clean='git branch | grep -v "master" | xargs git branch -D'
 
 alias br='copy | xclip -selection clipboard'
 
-alias tk='tmux kill-session && refresh'
-
 alias p=projects
-
-alias start-browser='wmctrl -a google-chrome.Google-chrome -x'
-alias start-term='wmctrl -a kitty.kitty -x'
-alias start-slack='wmctrl -a Slack -x'
-
-alias connect='eval `ssh-agent -s` && ssh-add ~/.ssh/ec2-access-client'
 
 export TERM="xterm-256color"
 
@@ -47,16 +39,12 @@ export VISUAL='nvim'
 # Autojump activation, installed through nix
 source $HOME/.nix-profile/share/autojump/autojump.bash
 
-# added by travis gem
-[ -f /home/derekmaffett/.travis/travis.sh ] && source /home/derekmaffett/.travis/travis.sh
-
 export PATH=$HOME/.local/bin/:$PATH
-if [ -e /home/derek/.nix-profile/etc/profile.d/nix.sh ]; then . /home/derek/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 # opencode
-export PATH=/home/derek/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
-export PATH="/home/derek/Downloads/flutter/bin:$PATH"
+export PATH="$HOME/Downloads/flutter/bin:$PATH"
 
 # Android SDK platform-tools (adb)
 export PATH="$HOME/Android/Sdk/platform-tools:$PATH"
@@ -66,3 +54,44 @@ if command -v projects >/dev/null; then
     source <(projects --bash-completion-script "$(command -v projects)")
     complete -o filenames -F _projects p
 fi
+
+# Git worktrees: `wt <branch>` cds to that branch's worktree, `vimw <branch>`
+# opens vim in it and leaves you where you were on exit (fzf picker with no arg)
+_wt_branches() {
+    git worktree list --porcelain 2>/dev/null | sed -n 's|^branch refs/heads/||p'
+}
+
+_wt_path() {
+    local target
+    if [ -n "$1" ]; then
+        target=$(git worktree list --porcelain | awk -v b="refs/heads/$1" '
+            /^worktree /{p=substr($0,10)} $0=="branch "b{print p; exit}')
+    else
+        target=$(git worktree list | fzf --height=40% | awk '{print $1}')
+    fi
+    if [ -z "$target" ]; then
+        [ -n "$1" ] && echo "no worktree for '$1'" >&2
+        return 1
+    fi
+    echo "$target"
+}
+
+wt() {
+    local target
+    target=$(_wt_path "$1") && cd "$target"
+}
+
+vimw() {
+    local target
+    target=$(_wt_path "$1") || return
+    shift
+    (cd "$target" && "${EDITOR:-vim}" "$@")
+}
+
+_wt_complete() {
+    [ "$COMP_CWORD" -eq 1 ] || return
+    COMPREPLY=($(compgen -W "$(_wt_branches)" -- "${COMP_WORDS[COMP_CWORD]}"))
+}
+
+complete -F _wt_complete wt
+complete -o default -F _wt_complete vimw

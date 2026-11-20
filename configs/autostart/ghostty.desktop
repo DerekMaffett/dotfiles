@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Ghostty
+Exec=/snap/bin/ghostty --gtk-single-instance=true
+TryExec=/snap/bin/ghostty
+X-GNOME-Autostart-enabled=true

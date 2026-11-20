@@ -24,7 +24,8 @@
 [rerere]
   enabled = true
 [push]
-  default = tracking
+  default = current
+  autoSetupRemote = true
 [core]
   autocrlf = input
 [pull]

@@ -1,0 +1,3 @@
+# Preferred terminal for Ctrl+Alt+T and "open in terminal" (read by
+# xdg-terminal-exec). Desktop entry IDs, most preferred first.
+ghostty_ghostty.desktop

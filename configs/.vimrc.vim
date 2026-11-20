@@ -80,6 +80,15 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' },
   }),
 })
+
+-- Go language server (built-in LSP client, Neovim 0.11+)
+vim.lsp.config('gopls', {
+  cmd = { 'gopls' },
+  filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+  root_markers = { 'go.work', 'go.mod', '.git' },
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+})
+vim.lsp.enable('gopls')
 EOF
 
 " If tabs happen, keep them reasonable

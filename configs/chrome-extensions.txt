@@ -1,0 +1,7 @@
+# Chrome extensions installed by install-apps.sh, one Web Store ID per line.
+# The ID is the last part of the extension's Web Store URL. Chrome asks once
+# to enable each new one; they can be removed from Chrome as usual.
+
+dbepggeogbaibhgnhhndojpepiihcmeb # Vimium
+hdokiejnpimakedhajhdlcegeplioahd # LastPass
+fmkadmapgofadopljbjfkapdkoienihi # React Developer Tools
