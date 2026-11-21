@@ -14,6 +14,8 @@ alias clean='git branch | grep -v "master" | xargs git branch -D'
 
 alias br='copy | xclip -selection clipboard'
 
+alias tk='tmux kill-session'
+
 alias p=projects
 
 export TERM="xterm-256color"
