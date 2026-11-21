@@ -20,21 +20,6 @@ EOF
     printf 'post-install.sh will open at the next login.\n'
 }
 
-# In a VM, GNOME turning the screen off shows up as "Display output is not
-# active" in the VM window, which looks like a crash. Turn screen blanking
-# and the lock screen off in VMs only; real machines keep GNOME's defaults.
-quiet_vm_screen() {
-    command -v systemd-detect-virt >/dev/null 2>&1 || return 0
-    systemd-detect-virt --vm --quiet || return 0
-    if command -v gsettings >/dev/null 2>&1 &&
-        gsettings set org.gnome.desktop.session idle-delay 0 &&
-        gsettings set org.gnome.desktop.screensaver lock-enabled false; then
-        printf 'Running in a VM: turned off screen blanking and the lock screen.\n'
-    else
-        printf 'Running in a VM, but could not turn off screen blanking (not in a GNOME session?).\n' >&2
-    fi
-}
-
 # reboot_countdown <message>
 reboot_countdown() {
     printf '\n%s\n' "$1"

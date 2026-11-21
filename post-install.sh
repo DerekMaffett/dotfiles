@@ -51,16 +51,6 @@ fi
 chmod 700 "$HOME/.ssh"
 chmod 600 "$HOME/.ssh/config"
 
-step "GitHub's SSH host keys"
-if ssh-keygen -F github.com >/dev/null 2>&1; then
-    printf 'github.com already in known_hosts, skipping\n'
-else
-    # Taken from GitHub's API over HTTPS, so the first SSH connection
-    # doesn't have to trust whatever key it's shown.
-    gh api meta --jq '.ssh_keys[]' | sed 's/^/github.com /' >>"$HOME/.ssh/known_hosts"
-    printf 'Added GitHub host keys to ~/.ssh/known_hosts\n'
-fi
-
 step "GitHub login"
 if gh auth status --hostname github.com >/dev/null 2>&1; then
     printf 'Already logged in, skipping\n'
@@ -71,6 +61,24 @@ fi
 # An older login may lack the scope needed to manage SSH keys.
 if ! gh api user/keys >/dev/null 2>&1; then
     gh auth refresh --hostname github.com --scopes admin:public_key
+fi
+
+step "GitHub's SSH host keys"
+if ssh-keygen -F github.com >/dev/null 2>&1; then
+    printf 'github.com already in known_hosts, skipping\n'
+else
+    # Taken from GitHub's API over HTTPS, so the first SSH connection
+    # doesn't have to trust whatever key it's shown. Needs the login above:
+    # gh makes no API calls before it. Fetched into a variable first so a
+    # failed or empty answer stops here instead of adding nothing and
+    # carrying on.
+    host_keys=$(gh api meta --jq '.ssh_keys[]')
+    if [ -z "$host_keys" ]; then
+        printf 'GitHub returned no SSH host keys, stopping.\n' >&2
+        exit 1
+    fi
+    printf '%s\n' "$host_keys" | sed 's/^/github.com /' >>"$HOME/.ssh/known_hosts"
+    printf 'Added GitHub host keys to ~/.ssh/known_hosts\n'
 fi
 
 step "Upload SSH key to GitHub"

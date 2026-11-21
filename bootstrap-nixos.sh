@@ -36,16 +36,25 @@ if ! cmp -s /etc/nixos/hardware-configuration.nix "$HW_CONFIG"; then
     printf 'Copied this machine'\''s hardware config to %s (commit it to keep it).\n' "$HW_CONFIG"
 fi
 
+# The flake is read as a git repo, so only tracked files are copied into the
+# Nix store, which every user can read. Untracked and ignored files (local
+# secrets, say) stay out. A fresh NixOS has no git until the flake is
+# applied, so borrow one from nixpkgs, as bootstrap.sh does for the clone.
+if command -v git >/dev/null 2>&1; then
+    git_bin=$(dirname "$(command -v git)")
+else
+    git_bin="$(nix-build '<nixpkgs>' -A git --no-out-link)/bin"
+fi
+
 # Builds the system and makes it the default from the next boot, without
 # switching the running desktop over: doing that leaves GNOME's lock screen
 # unable to check passwords until a reboot. Flakes aren't enabled on a fresh
-# install, so they're turned on for this run. The path: form reads the
-# folder as it is, so no git is needed. Suspend is held off while it builds.
+# install, so they're turned on for this run. Suspend is held off while it
+# builds.
 systemd-inhibit --what=sleep:idle --who=dotfiles --why="Building the NixOS system" \
-    sudo env NIX_CONFIG='experimental-features = nix-command flakes' \
-    nixos-rebuild boot --flake "path:$REPO_ROOT#$HOST"
+    sudo env PATH="$git_bin:$PATH" NIX_CONFIG='experimental-features = nix-command flakes' \
+    nixos-rebuild boot --flake "git+file://$REPO_ROOT#$HOST"
 
-quiet_vm_screen
 queue_post_install
 
 reboot_countdown "NixOS is set up. After the reboot, log in and post-install.sh opens to finish setup (SSH key, GitHub login)."

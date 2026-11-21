@@ -67,17 +67,15 @@ the scripts are safe to re-run; an existing clone is updated.
 
 Claude Desktop has no NixOS package yet, so it isn't installed there.
 
-In a VM, both scripts also turn off GNOME's screen blanking and lock screen,
-which otherwise show up as "Display output is not active" in the VM window.
-
 ## After Install
 
 1. Log in. A terminal opens with `post-install.sh`, which:
    - runs `ssh-init`, which generates the keys in `configs/ssh-init.json`
      (asks for a passphrase) and writes `~/.ssh/config` with the
      `personal.github.com` alias (skipped if `~/.ssh/id_ecdsa` exists)
+   - logs in to GitHub with `gh` (in the browser)
    - adds GitHub's published SSH host keys to `~/.ssh/known_hosts`
-   - logs in to GitHub with `gh` (in the browser) and uploads the key
+   - uploads the key to GitHub
    - checks that SSH to GitHub works
    - switches this repo's remote to SSH
    - runs `p personal`, which clones the repos in

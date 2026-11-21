@@ -39,15 +39,18 @@ export VISUAL='nvim'
 # Autojump activation, installed through nix
 source $HOME/.nix-profile/share/autojump/autojump.bash
 
-export PATH=$HOME/.local/bin/:$PATH
+# Folders you can write to go after the system and Nix ones, so nothing
+# dropped in them (a download, an npm install) can stand in for a normal
+# command like ls or git. They only add commands that aren't found earlier.
+export PATH="$PATH:$HOME/.local/bin"
 
 # opencode
-export PATH="$HOME/.opencode/bin:$PATH"
-export PATH="$HOME/.npm-global/bin:$PATH"
-export PATH="$HOME/Downloads/flutter/bin:$PATH"
+export PATH="$PATH:$HOME/.opencode/bin"
+export PATH="$PATH:$HOME/.npm-global/bin"
+export PATH="$PATH:$HOME/Downloads/flutter/bin"
 
 # Android SDK platform-tools (adb)
-export PATH="$HOME/Android/Sdk/platform-tools:$PATH"
+export PATH="$PATH:$HOME/Android/Sdk/platform-tools"
 
 # Workspace launcher: `p <workspace>` plus tab completion
 if command -v projects >/dev/null; then

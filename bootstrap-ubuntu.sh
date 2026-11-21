@@ -79,7 +79,6 @@ home-manager switch
 
 "$REPO_ROOT/install-apps.sh"
 
-quiet_vm_screen
 queue_post_install
 
 # A fresh login picks up the shell config, launcher entries and docker group.
