@@ -26,6 +26,11 @@ in
   time.timeZone = "Europe/Stockholm";
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # Swap to compressed RAM instead of disk: much faster than disk swap and
+  # needs no partition. Any swap the installer set up (swapDevices in
+  # hardware-configuration.nix) stays as a slower fallback behind it.
+  zramSwap.enable = true;
+
   # --- Desktop ---
 
   services.displayManager.gdm.enable = true;
