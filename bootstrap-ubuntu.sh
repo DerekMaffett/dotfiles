@@ -1,10 +1,16 @@
 #!/bin/sh
 
+# Sets up Ubuntu: Nix and Home Manager for the user environment, then the
+# desktop apps and services, then reboots. Run by bootstrap.sh, or by hand
+# from the clone. Safe to re-run.
+
 set -eu
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 REPO_ROOT="$SCRIPT_DIR"
 NIX_PROFILE_SCRIPT="$HOME/.nix-profile/etc/profile.d/nix.sh"
+
+. "$REPO_ROOT/bootstrap-common.sh"
 
 require_command() {
     if ! command -v "$1" >/dev/null 2>&1; then
@@ -23,14 +29,14 @@ refresh_nix_environment() {
 }
 
 if [ ! -f /etc/os-release ]; then
-    printf 'This bootstrap only supports Ubuntu.\n' >&2
+    printf 'This is not Ubuntu. Use bootstrap.sh, which picks the right script.\n' >&2
     exit 1
 fi
 
 . /etc/os-release
 
 if [ "${ID-}" != "ubuntu" ]; then
-    printf 'Unsupported distribution: %s. This bootstrap only supports Ubuntu.\n' "${ID-unknown}" >&2
+    printf 'This is %s, not Ubuntu. Use bootstrap.sh, which picks the right script.\n' "${ID-unknown}" >&2
     exit 1
 fi
 
@@ -72,3 +78,9 @@ require_command home-manager
 home-manager switch
 
 "$REPO_ROOT/install-apps.sh"
+
+quiet_vm_screen
+queue_post_install
+
+# A fresh login picks up the shell config, launcher entries and docker group.
+reboot_countdown "Ubuntu is set up. After the reboot, log in and post-install.sh opens to finish setup (SSH key, GitHub login)."

@@ -1,14 +1,18 @@
 #!/bin/sh
 
-# Finishes setup once install.sh has run and you've logged back in: SSH key,
-# GitHub login and key upload, this repo's remote, then the personal
-# workspace. Safe to re-run: finished steps are skipped.
+# Finishes setup after the bootstrap's reboot: SSH key, GitHub login and key
+# upload, this repo's remote, then the personal workspace. The bootstrap
+# makes it open by itself at login until it has finished once. Safe to
+# re-run: finished steps are skipped.
 #
 # It needs you for the key passphrase and the GitHub sign-in in the browser.
 
 set -eu
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+# Written by queue_post_install in bootstrap-common.sh.
+POST_INSTALL_AUTOSTART="$HOME/.config/autostart/dotfiles-post-install.desktop"
 
 KEY="$HOME/.ssh/id_ecdsa"
 SSH_HOST="personal.github.com"
@@ -97,6 +101,9 @@ else
     git -C "$SCRIPT_DIR" remote set-url origin "$DOTFILES_SSH_URL"
     printf 'origin: %s -> %s\n' "$current_url" "$DOTFILES_SSH_URL"
 fi
+
+# Setup is done, so stop opening this at login.
+rm -f "$POST_INSTALL_AUTOSTART"
 
 step "Open the $WORKSPACE workspace"
 # Clones the workspace repos that are missing, then starts tmux.

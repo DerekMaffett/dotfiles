@@ -32,7 +32,13 @@ let
     set -euo pipefail
 
     nix-github update
-    home-manager switch
+    if [ -e /etc/NIXOS ]; then
+      # Home Manager is part of the system here; picks the flake's
+      # configuration named after this machine's hostname.
+      sudo nixos-rebuild switch --flake "$HOME/dotfiles"
+    else
+      home-manager switch
+    fi
     nix-collect-garbage
   '';
 

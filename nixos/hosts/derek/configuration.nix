@@ -1,4 +1,5 @@
-# The whole machine: what Ubuntu, install.sh and install-apps.sh set up today.
+# The whole machine: what the Ubuntu installer, bootstrap-ubuntu.sh and
+# install-apps.sh set up there. Applied by bootstrap-nixos.sh.
 { lib, pkgs, ... }:
 
 let
