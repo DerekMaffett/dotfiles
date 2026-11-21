@@ -1,14 +1,18 @@
 #!/bin/sh
 
-# Finishes setup once install.sh has run and you've logged back in: SSH key,
-# GitHub login and key upload, this repo's remote, then the personal
-# workspace. Safe to re-run: finished steps are skipped.
+# Finishes setup after the bootstrap's reboot: SSH key, GitHub login and key
+# upload, this repo's remote, then the personal workspace. The bootstrap
+# makes it open by itself at login until it has finished once. Safe to
+# re-run: finished steps are skipped.
 #
 # It needs you for the key passphrase and the GitHub sign-in in the browser.
 
 set -eu
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+# Written by queue_post_install in bootstrap-common.sh.
+POST_INSTALL_AUTOSTART="$HOME/.config/autostart/dotfiles-post-install.desktop"
 
 KEY="$HOME/.ssh/id_ecdsa"
 SSH_HOST="personal.github.com"
@@ -47,16 +51,6 @@ fi
 chmod 700 "$HOME/.ssh"
 chmod 600 "$HOME/.ssh/config"
 
-step "GitHub's SSH host keys"
-if ssh-keygen -F github.com >/dev/null 2>&1; then
-    printf 'github.com already in known_hosts, skipping\n'
-else
-    # Taken from GitHub's API over HTTPS, so the first SSH connection
-    # doesn't have to trust whatever key it's shown.
-    gh api meta --jq '.ssh_keys[]' | sed 's/^/github.com /' >>"$HOME/.ssh/known_hosts"
-    printf 'Added GitHub host keys to ~/.ssh/known_hosts\n'
-fi
-
 step "GitHub login"
 if gh auth status --hostname github.com >/dev/null 2>&1; then
     printf 'Already logged in, skipping\n'
@@ -67,6 +61,24 @@ fi
 # An older login may lack the scope needed to manage SSH keys.
 if ! gh api user/keys >/dev/null 2>&1; then
     gh auth refresh --hostname github.com --scopes admin:public_key
+fi
+
+step "GitHub's SSH host keys"
+if ssh-keygen -F github.com >/dev/null 2>&1; then
+    printf 'github.com already in known_hosts, skipping\n'
+else
+    # Taken from GitHub's API over HTTPS, so the first SSH connection
+    # doesn't have to trust whatever key it's shown. Needs the login above:
+    # gh makes no API calls before it. Fetched into a variable first so a
+    # failed or empty answer stops here instead of adding nothing and
+    # carrying on.
+    host_keys=$(gh api meta --jq '.ssh_keys[]')
+    if [ -z "$host_keys" ]; then
+        printf 'GitHub returned no SSH host keys, stopping.\n' >&2
+        exit 1
+    fi
+    printf '%s\n' "$host_keys" | sed 's/^/github.com /' >>"$HOME/.ssh/known_hosts"
+    printf 'Added GitHub host keys to ~/.ssh/known_hosts\n'
 fi
 
 step "Upload SSH key to GitHub"
@@ -97,6 +109,9 @@ else
     git -C "$SCRIPT_DIR" remote set-url origin "$DOTFILES_SSH_URL"
     printf 'origin: %s -> %s\n' "$current_url" "$DOTFILES_SSH_URL"
 fi
+
+# Setup is done, so stop opening this at login.
+rm -f "$POST_INSTALL_AUTOSTART"
 
 step "Open the $WORKSPACE workspace"
 # Clones the workspace repos that are missing, then starts tmux.

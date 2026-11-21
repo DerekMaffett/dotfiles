@@ -1,11 +1,13 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   currentUsername = let user = builtins.getEnv "USER"; in
     if user != "" then user else throw "USER must be set when evaluating home.nix";
   currentHome = let home = builtins.getEnv "HOME"; in
     if home != "" then home else throw "HOME must be set when evaluating home.nix";
-  scripts = import "${(fromGithubMaster "scripts")}/default.nix";
+  # What the repo's default.nix builds, but with this pkgs instead of its
+  # <nixpkgs> lookup, which flakes don't allow.
+  scripts = pkgs.haskellPackages.callPackage "${fromGithubMaster "scripts"}/project.nix" {};
 
   python3Host = pkgs.python3.withPackages (ps: [ ps.pynvim ]);
   vimrc = ''
@@ -30,7 +32,13 @@ let
     set -euo pipefail
 
     nix-github update
-    home-manager switch
+    if [ -e /etc/NIXOS ]; then
+      # Home Manager is part of the system here; picks the flake's
+      # configuration named after this machine's hostname.
+      sudo nixos-rebuild switch --flake "$HOME/dotfiles"
+    else
+      home-manager switch
+    fi
     nix-collect-garbage
   '';
 
@@ -98,8 +106,6 @@ let
           vim-fireplace
           elm-vim
           vim-terraform
-          # elixir-tools
-          # vim-elixir
           rustaceanvim
           nvim-treesitter
           markdown-preview-nvim
@@ -111,8 +117,10 @@ let
 
 in
 {
-  home.username = currentUsername;
-  home.homeDirectory = currentHome;
+  # Defaults only: on NixOS the system config sets these from the user
+  # account, and the environment lookups above are never evaluated.
+  home.username = lib.mkDefault currentUsername;
+  home.homeDirectory = lib.mkDefault currentHome;
 
   home.stateVersion = "25.11";
 
@@ -145,18 +153,6 @@ in
     done
   '';
 
-#   programs.vscode = {
-#   enable = true;
-#   profiles.default.extensions = with pkgs.vscode-extensions; [
-#     dracula-theme.theme-dracula
-#     vscodevim.vim
-#     yzhang.markdown-all-in-one
-#     github.copilot
-#     github.copilot-chat
-#
-#   ];
-# };
-
   home.packages = with pkgs; [
     git
     curl
@@ -184,7 +180,6 @@ in
 
     openconnect
 
-    # haskellPackages.brittany
     prettier
     clang-tools
 
@@ -194,20 +189,16 @@ in
     haskellPackages.hpack
     elm2nix
 
-
     nodejs_24
     yarn
     pnpm
     jdk17
-    # android-studio
 
     git-quick-stats
     pm2
 
     purescript
     stack
-    # spago
-    # lerna
 
     dotnet-sdk
 
