@@ -43,6 +43,14 @@ fi
 require_command curl
 require_command sh
 
+# Single-user Nix builds in $TMPDIR. Ubuntu's /tmp is a RAM-backed tmpfs where
+# systemd caps each user at 80% of its size, which is too small for big
+# from-source builds such as terraform (unfree, so not in the binary cache).
+# Build on disk instead. Nix deletes each build folder when it finishes.
+TMPDIR="$HOME/.cache/nix-build"
+export TMPDIR
+mkdir -p "$TMPDIR"
+
 # Single-user Nix (no daemon), which is what NIX_PROFILE_SCRIPT assumes.
 # --yes accepts the installer's prompts; it still asks for sudo once to
 # create /nix. Downloaded to a file first so a failed download stops here
