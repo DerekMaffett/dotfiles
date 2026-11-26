@@ -86,12 +86,10 @@ add_apt_repo() {
     trap - EXIT
 }
 
+# The repo is set up even when Chrome is already installed: Chrome only
+# updates through apt, and the repo can be missing (Chrome installed from a
+# downloaded .deb, or the sources file dropped by an Ubuntu release upgrade).
 install_chrome() {
-    if dpkg -s google-chrome-stable >/dev/null 2>&1; then
-        printf 'google-chrome-stable already installed, skipping\n'
-        return
-    fi
-
     add_apt_repo "Google" "$CHROME_KEY_URL" "$CHROME_KEY_FINGERPRINT" \
         "$CHROME_KEYRING" "$CHROME_SOURCES" "Types: deb
 URIs: https://dl.google.com/linux/chrome-stable/deb/
@@ -99,6 +97,11 @@ Suites: stable
 Components: main
 Architectures: amd64
 Signed-By: $CHROME_KEYRING"
+
+    if dpkg -s google-chrome-stable >/dev/null 2>&1; then
+        printf 'google-chrome-stable already installed, skipping (apt upgrade updates it)\n'
+        return
+    fi
 
     sudo apt-get update
     sudo apt-get install -y google-chrome-stable
