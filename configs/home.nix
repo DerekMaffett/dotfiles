@@ -109,6 +109,7 @@ let
           rustaceanvim
           nvim-treesitter
           markdown-preview-nvim
+          claudecode-nvim
         ];
         opt = [ ];
       }; 

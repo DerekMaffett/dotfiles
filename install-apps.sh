@@ -152,6 +152,24 @@ install_claude() {
     sudo apt-get install -y claude-desktop
 }
 
+# The `claude` command. The desktop app keeps its own copy under
+# ~/.config/Claude that isn't on PATH. This is Anthropic's native installer
+# (https://code.claude.com/docs/en/setup): it installs to ~/.local/bin for
+# the current user and updates itself, so a re-run skips it.
+install_claude_code() {
+    if [ -x "$HOME/.local/bin/claude" ]; then
+        printf 'claude already installed, skipping (it updates itself)\n'
+        return
+    fi
+
+    tmp_dir=$(mktemp -d)
+    trap 'rm -rf "$tmp_dir"' EXIT
+    curl -fsSL -o "$tmp_dir/install.sh" https://claude.ai/install.sh
+    bash "$tmp_dir/install.sh"
+    rm -rf "$tmp_dir"
+    trap - EXIT
+}
+
 install_docker() {
     if dpkg -s docker-ce >/dev/null 2>&1; then
         printf 'docker-ce already installed, skipping\n'
@@ -207,8 +225,11 @@ else
 fi
 
 case $ARCH in
-    amd64 | arm64) install_claude ;;
-    *) printf 'Skipping Claude Desktop: no Linux build for %s\n' "$ARCH" >&2 ;;
+    amd64 | arm64)
+        install_claude
+        install_claude_code
+        ;;
+    *) printf 'Skipping Claude Desktop and Claude Code: no Linux build for %s\n' "$ARCH" >&2 ;;
 esac
 
 install_docker

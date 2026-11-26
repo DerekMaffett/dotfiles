@@ -182,6 +182,19 @@ map <leader>gr "+gr
 " Disable wrapping
 set wrap!
 
+" Claude Code (claudecode.nvim). Neovim runs the same IDE server the VS Code
+" extension does, so a `claude` started anywhere in this project (another tmux
+" pane included) can attach with /ide and see selections and open diffs here.
+lua require('claudecode').setup({})
+nnoremap <Leader>cc :ClaudeCode<cr>
+nnoremap <Leader>cf :ClaudeCodeFocus<cr>
+nnoremap <Leader>cr :ClaudeCode --resume<cr>
+nnoremap <Leader>cC :ClaudeCode --continue<cr>
+nnoremap <Leader>cb :ClaudeCodeAdd %<cr>
+xnoremap <Leader>cs :ClaudeCodeSend<cr>
+nnoremap <Leader>ca :ClaudeCodeDiffAccept<cr>
+nnoremap <Leader>cd :ClaudeCodeDiffDeny<cr>
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Below copied from Aaron Jensen: https://github.com/DerekMaffett/vimfiles/blob/master/plugin/expandwindows.vim
