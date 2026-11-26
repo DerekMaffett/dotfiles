@@ -100,3 +100,21 @@ _wt_complete() {
 
 complete -F _wt_complete wt
 complete -o default -F _wt_complete vimw
+
+# Start every prompt on a fresh line. Without this, output that doesn't end
+# in a newline (printf 'x', curl, cat of a file without one) leaves the cursor
+# mid-line, the prompt is drawn after it, and readline's next redraw (a \r
+# back to column 0, on resize, Ctrl-L or typing) overwrites that text so it
+# looks like it never printed. Same trick as zsh's PROMPT_EOL_MARK: print a
+# dim "%" and pad to the line width. At column 0 the padding fits on the line
+# and \r\e[K wipes it; mid-line it wraps, leaving "text%" visible and the
+# cursor on a new line. Runs first in PROMPT_COMMAND and keeps $? intact so
+# the ✔/✘ indicator still sees the command's exit status.
+__prompt_fresh_line() {
+    local status=$?
+    printf '\e[2m%%\e[0m%*s\r\e[K' "$(( ${COLUMNS:-80} - 1 ))" ''
+    return $status
+}
+if [[ $- == *i* ]]; then
+    PROMPT_COMMAND=(__prompt_fresh_line "${PROMPT_COMMAND[@]}")
+fi
